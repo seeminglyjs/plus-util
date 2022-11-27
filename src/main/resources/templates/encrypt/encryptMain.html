@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- ============================bootStrap start=================================  -->
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+<!-- ============================bootStrap end=================================== -->
+<!-- <script src=/js/default.js" type="text/javascript"></script> -->
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script><!-- 제이쿼리  -->
+<script src="/js/layoutLoad.js"></script><!-- 레이아웃로드스크립트  -->
+<meta charset="UTF-8">
+<!--  -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PLUS-UTIL</title>
+</head>
+<body>
+<div id="header-load"></div>
+<div id="nav-load"></div>
+<div class="container-md">
+<!-----------------------------------------------------------------------------------------  -->
+
+
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        AES 암호화
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <a href="/encrypt/aes256/main"><button type="button" class="btn btn-secondary btn-sm"><strong>Advanced Encryption Standard</strong></button></a>  
+        '고급 암호화 표준'라는 의미이다. AES는 미국 표준 기술 연구소에 의해서 연방 정보 처리 표준으로 지정된 암호화 방식이며 
+        NSA에 의해 1급 비밀에 사용할 수 있도록 승인된 암호화 알고리즘 중 유일하게 공개된 알고리즘이다. 
+        대칭키를 쓰는 블럭 암호이다. 높은 안전성과 속도로 인해 인기를 얻어 전 세계적으로 많이 이용되고 있다. 
+        이러한 이점으로 인해서 랜섬웨어에 많이 이용되고 있기도 하다.
+        암호화 블럭 비트 수에 따라 각각 AES-128, AES-192, AES-256으로 불린다.
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingTwo">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        RSA 암호화
+      </button>
+    </h2>
+    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+         <a href="/encrypt/rsa/main"><button type="button" class="btn btn-secondary btn-sm"><strong>Rivest, Adi Shamir, Leonard Adleman</strong></button></a>   
+         현재 SSL/TLS에 가장 많이 사용되는 공개키 암호화 알고리즘이다. 전세계 대부분의 인터넷 뱅킹(대한민국 포함)이 이 RSA-2048 암호화를 사용한다.
+         '암호화할 때에는 마음대로였겠지만 해독할 때에는 아니다'를 기본 모토로 한 공개키 암호체계 중 하나이다.[1] 공개키와 개인키가 한 쌍을 이루며, 
+         공개키로 암호화한 내용은 개인키로만, 개인키로 암호화한 내용은 공개키로만 해독할 수 있다.[2] 엄청 큰 숫자는 소인수분해하기가 힘들다는 것을 이용한다. 
+         1977년[3] 이 체제를 개발한 Ron Rivest, Adi Shamir, Leonard Adleman 세 사람의 성을 따서 RSA 라고 이름이 붙은 암호 방식이다.
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingThree">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        Accordion Item #3
+      </button>
+    </h2>
+    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+      </div>
+    </div>
+  </div>
+</div>
+	
+
+
+<!-----------------------------------------------------------------------------------------  -->
+</div>
+<div id="footer-load"></div>
+</body>
+</html>
