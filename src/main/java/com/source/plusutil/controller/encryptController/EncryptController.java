@@ -54,7 +54,7 @@ public class EncryptController {
 	 * @return
 	 */
 	@RequestMapping("/aes256/encrypt")
-	public String ase256Encrypt(@RequestParam String aes256Key, String aes256Iv, String aes256Content
+	public String ase256Encrypt(@RequestParam String aes256Key, @RequestParam String aes256Iv, @RequestParam String aes256Content
 			,HttpServletRequest request) {
 		Aes256EncryptRequestDto aes256EncryptRequestDto = new Aes256EncryptRequestDto();
 		aes256EncryptRequestDto.setAes256Key(aes256Key);
@@ -82,7 +82,7 @@ public class EncryptController {
 	 * @return
 	 */
 	@RequestMapping("/aes256/decrypt")
-	public String ase256Decrypt(@RequestParam String aes256Key, String aes256Iv, String aes256Content
+	public String ase256Decrypt(@RequestParam String aes256Key, @RequestParam String aes256Iv, @RequestParam String aes256Content
 			,HttpServletRequest request) {
 		String url = "/encrypt/aes256/aes256Decrypt";
 		encryptService.makeAse256DecryptContent(aes256Key, aes256Iv, aes256Content, request);		
@@ -133,7 +133,7 @@ public class EncryptController {
 	 * @return
 	 */
 	@RequestMapping("/rsa/content/encrypt")
-	public String rsaContentEncrpyt(@RequestParam String rsaPublicKey, String rsaBeforeContent, HttpServletRequest request) {
+	public String rsaContentEncrpyt(@RequestParam String rsaPublicKey, @RequestParam  String rsaBeforeContent, HttpServletRequest request) {
 		RsaEncryptRequestDto rsaEncryptRequestDto = new RsaEncryptRequestDto();
 		rsaEncryptRequestDto.setContent(rsaBeforeContent);
 		rsaEncryptRequestDto.setRsaPublicKey(rsaPublicKey);
@@ -155,7 +155,7 @@ public class EncryptController {
 	 * @return
 	 */
 	@RequestMapping("/rsa/content/decrypt")
-	public String rsaContentDecrpyt(@RequestParam String rsaPrivateKey, String rsaAfterContent, HttpServletRequest request) {
+	public String rsaContentDecrpyt(@RequestParam String rsaPrivateKey,@RequestParam String rsaAfterContent, HttpServletRequest request) {
 		RsaDecryptRequestDto rsaEncryptRequestDto = new RsaDecryptRequestDto();
 		rsaEncryptRequestDto.setRsaPrivateKey(rsaPrivateKey);
 		rsaEncryptRequestDto.setContent(rsaAfterContent);

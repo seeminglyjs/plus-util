@@ -52,7 +52,10 @@ public class SecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeRequests()//보호된 리소스 URI에 접근할 수 있는 권한을 설정
 		.antMatchers(HttpMethod.DELETE).hasRole("ADMIN")
-		.antMatchers("/home", "/join/**","/encrypt/**").permitAll() //홈페이지/회원가입페이지 누구나 접근 가능
+		.antMatchers("/home"
+				, "/join/**"
+				,"/encrypt/**"
+				,"/util/**").permitAll() //홈페이지/회원가입페이지 누구나 접근 가능
 		.antMatchers("/setting/**", "/admin/**").hasRole("ADMIN") //관리자(Admin)만 접근 허용
 		.antMatchers("/user/**").hasAnyRole("USER","ADMIN") //유저(USER) / 관리자(Admin)만 접근 허용
 		.antMatchers("/login/**", "/logout/**").permitAll() //로그인 url 권한 전체 허용
