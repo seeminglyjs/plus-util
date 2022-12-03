@@ -31,10 +31,15 @@ jobs:
       with:
         arguments: build
         build-root-directory: /home/seeminglyjs/project/plus-util    
-        gradle-executable: /home/seeminglyjs/github/plus-util/gradlew   
+        gradle-executable: /home/seeminglyjs/github/plus-util/   
         
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
     
+    - name: Make gradlew executable
+      run: chmod +x ./gradlew
+
     - name: Execute Gradle build
       run: ./gradlew build
+      
+
