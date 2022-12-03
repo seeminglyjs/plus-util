@@ -27,34 +27,40 @@ public class TimeUtilService {
 		Optional<String> monthOp = Optional.ofNullable(month);
 		Optional<String> dayOp = Optional.ofNullable(day);
 		
-		if(yearOp.isPresent() && monthOp.isPresent() && dayOp.isPresent()) {//모든 파라미터 정보가 존재한다.
-			log.info("[getDayOfTheWeek request param is present] =====");
-			String answer = "";
-			LocalDate date = LocalDate.of(
-					Integer.parseInt(yearOp.get())
-					, Integer.parseInt(monthOp.get())
-					, Integer.parseInt(dayOp.get())); 
-			//연 월 일 순으로 적어준다.
-			DayOfWeek dayOfWeek = date.getDayOfWeek();
-			if(dayOfWeek.getValue() == 1) {
-				answer = "MON";
-			}else if (dayOfWeek.getValue() == 2) {
-				answer = "TUE";
-			}else if (dayOfWeek.getValue() == 3) {
-				answer = "WED";
-			}else if (dayOfWeek.getValue() == 4) {
-				answer = "THU";
-			}else if (dayOfWeek.getValue() == 5) {
-				answer = "FRI";
-			}else if (dayOfWeek.getValue() == 6) {
-				answer = "SAT";
-			}else if (dayOfWeek.getValue() == 7) {
-				answer = "SUN";
+		try {
+			if(yearOp.isPresent() && monthOp.isPresent() && dayOp.isPresent()) {//모든 파라미터 정보가 존재한다.
+				log.info("[getDayOfTheWeek request param is present] =====");
+				String answer = "";
+				LocalDate date = LocalDate.of(
+						Integer.parseInt(yearOp.get())
+						, Integer.parseInt(monthOp.get())
+						, Integer.parseInt(dayOp.get())); 
+				//연 월 일 순으로 적어준다.
+				DayOfWeek dayOfWeek = date.getDayOfWeek();
+				if(dayOfWeek.getValue() == 1) {
+					answer = "MON [월요일]";
+				}else if (dayOfWeek.getValue() == 2) {
+					answer = "TUE [화요일]";
+				}else if (dayOfWeek.getValue() == 3) {
+					answer = "WED [수요일]";
+				}else if (dayOfWeek.getValue() == 4) {
+					answer = "THU [목요일]";
+				}else if (dayOfWeek.getValue() == 5) {
+					answer = "FRI [금요일]";
+				}else if (dayOfWeek.getValue() == 6) {
+					answer = "SAT [토요일]";
+				}else if (dayOfWeek.getValue() == 7) {
+					answer = "SUN [일요일]";
+				}
+				request.setAttribute("dayOfTheWeek", answer);
 			}
-			request.setAttribute("getDayOfTheWeekCheck", true);
-			request.setAttribute("dayOfTheWeek", answer);
-		}else {
-			request.setAttribute("getDayOfTheWeekCheck", false);
+		}catch (NumberFormatException e) {
+			request.setAttribute("dayOfTheWeek", "적절하지 않은 값이 입력되었습니다.");
+			log.info("exception", e);
+		}catch (Exception e) {
+			request.setAttribute("dayOfTheWeek", "예상치 못한 오류가 발생했습니다.");
+			log.info("exception", e);
 		}
+		
 	}
 }

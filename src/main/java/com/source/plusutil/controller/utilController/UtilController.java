@@ -56,7 +56,7 @@ public class UtilController {
 	@RequestMapping("/time/get/day/ofthe/week")
 	public String requestGetDayOfTheWeek(@RequestParam String year, String month, String day, HttpServletRequest request) {
 		timeUtilService.getDayOfTheWeek(year, month, day, request);
-		return "/util/time/getDayOfTheWeek";
+		return "/util/time/getDayOfTheWeekMain";
 	}
 	
 }

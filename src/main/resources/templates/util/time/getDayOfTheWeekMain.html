@@ -25,22 +25,22 @@
 
 	
 	<div class="container-md" id="rsaContentEncryptFormContainer">
-		<form action="">
+		<form action="/util/time/get/day/ofthe/week" method="post">
 		  <div class="mb-3">
 		    <label for="year" class="form-label">Year</label>
-		    <input type="text" class="form-control" id="year" name="year" aria-describedby="yearHelp">
+		    <input type="number" placeholder="Only Number ex) 2022 " class="form-control" id="year" name="year" aria-describedby="yearHelp">
 		    <div id="yearHelp" class="form-text">연도를 입력해주세요.</div>
 		  </div>
 		  
 		  <div class="mb-3">
 		    <label for="month" class="form-label">Month</label>
-		    <input type="text" class="form-control" id="month"  name="month" aria-describedby="monthHelp">
+		    <input type="number" placeholder="Only Number  ex) 6" class="form-control" id="month"  name="month" aria-describedby="monthHelp">
 		    <div id="monthHelp" class="form-text">월을 입력해주세요.</div>
 		  </div>
 		  
 		  <div class="mb-3">
 		    <label for="day" class="form-label">Day</label>
-		    <input type="text" class="form-control" id="day"  name="day" aria-describedby="dayHelp">
+		    <input type="number" placeholder="Only Number  ex) 15 " class="form-control" id="day"  name="day" aria-describedby="dayHelp">
 		    <div id="dayHelp" class="form-text">날짜를 입력해주세요.</div>
 		  </div>
 		    
@@ -49,16 +49,15 @@
 		
 		<br>
 		<div class="p-2 bg-light border">
-		  	<span class="badge bg-secondary">After Encrypt</span> 
+		  	<span class="badge bg-secondary">요일 정보</span> 
 		  	<br>
 		  	<br>
 		  	<div class="form-floating">
-			  <textarea class="form-control" id="encryptContentSpan" placeholder="Leave a comment here" th:if="${not #strings.isEmpty(encryptContent)}" th:text="${encryptContent}" style="height: 100px"></textarea> <!-- 암호화 한 값이 있을경우  -->
-			  <textarea class="form-control" id="encryptContentSpan" placeholder="Leave a comment here" th:if="${#strings.isEmpty(encryptContent)}" style="height: 100px">암호화를 먼저 진행해 주세요.</textarea> <!-- 암호화 한 값이 없을경우  -->
-			<label for="floatingSelect">RSA 암호화 데이터</label>
+			  <textarea class="form-control" id="dayOfTheWeekSpan" placeholder="Leave a comment here" th:if="${not #strings.isEmpty(dayOfTheWeek)}" th:text="${dayOfTheWeek}" style="height: 100px"></textarea> 
+			  <textarea class="form-control" id="dayOfTheWeekSpan" placeholder="Leave a comment here" th:if="${#strings.isEmpty(dayOfTheWeek)}" style="height: 100px">요일 정보를 먼저 입력해 주세요.</textarea> 
+			<label for="floatingSelect">요일 정보</label>
 			</div>
 			<br>
-			<button class="clipboardMinBtn btn btn-primary btn-sm" data-clipboard-action="copy" data-clipboard-target="#encryptContentSpan">copy</button><!--clipboard.min.js 호출버튼  -->		
 	  	</div>
 	</div>
 
