@@ -31,7 +31,7 @@ jobs:
       with:
         arguments: build
         build-root-directory: /home/seeminglyjs/project/plus-util    
-        gradle-executable: /home/seeminglyjs/github/plus-util   
+        gradle-executable: /home/seeminglyjs/github/plus-util/gradlew   
         
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
