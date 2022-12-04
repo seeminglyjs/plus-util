@@ -41,8 +41,9 @@ jobs:
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
       with:
-        gradle-executable: /home/seeminglyjs/github/plus-util  
-    
+        gradle-executable: /home/seeminglyjs/github/$projectName
+        build-root-directory: /home/seeminglyjs/project/$projectName 
+        
     - name: Make gradlew executable
       run: chmod +x ./gradlew
 
