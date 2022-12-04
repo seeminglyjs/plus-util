@@ -18,7 +18,10 @@ jobs:
       matrix:
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
-
+    
+    env:
+      working-directory: /home/seeminglyjs/project/plus-uti
+    
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-java@v3
@@ -49,5 +52,5 @@ jobs:
 
     # Jar 파일 Copy
     - name: Copy Jar
-      run: cp ./build/libs/*.jar ./deploy/
+      run: touch test
 
