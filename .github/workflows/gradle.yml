@@ -20,7 +20,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     
     env:
-      working-directory: /home/seeminglyjs/project/plus-uti
+      working-directory: /home/seeminglyjs/project/plus-util
     
     steps:
     - uses: actions/checkout@v3
@@ -52,5 +52,5 @@ jobs:
 
     # Jar 파일 Copy
     - name: Copy Jar
-      run: touch test
+      run: ls -al && touch test
 
