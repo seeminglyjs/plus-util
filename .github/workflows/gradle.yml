@@ -16,7 +16,7 @@ jobs:
    gradle:
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [self-hosted]
     runs-on: ${{ matrix.os }}
     
     env:
