@@ -18,6 +18,9 @@ jobs:
       matrix:
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
+    env:
+          working-directory: /home/seeminglyjs/project/plus-util
+          
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-java@v3
