@@ -20,9 +20,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     
     env:
-      project-name: plus-util
-      target-dir: /home/seeminglyjs/deploy/$project-name
-      from-dir: ./
+      projectName: plus-util
+      targetDir: /home/seeminglyjs/deploy/$project-name
+      fromDir: ./
 #       GIT_STRATEGY: clone
     
     steps:
@@ -50,11 +50,11 @@ jobs:
       run: ./gradlew build
       
     - name: Make Directory for deliver
-      run: mkdir -p $target-dir
+      run: mkdir -p $targetDir
       
     - name: rsync delete
-      run: rsync -avz --delete $from-dir $target-dir
+      run: rsync -avz --delete $fromDir $targetDir
 
     - name: after rsync
-      run: cd .. && rm -rf $project-name/*
+      run: cd .. && rm -rf $projectName/*
 
