@@ -20,7 +20,10 @@ jobs:
     runs-on: ${{ matrix.os }}
     
     env:
-      working-directory: /home/seeminglyjs/project/plus-util
+      project-name: plus-util
+      target-dir: /home/seeminglyjs/deploy/$project-name
+      from-dir: ./
+#       GIT_STRATEGY: clone
     
     steps:
     - uses: actions/checkout@v3
@@ -46,11 +49,12 @@ jobs:
     - name: Execute Gradle build
       run: ./gradlew build
       
-    # 전송할 파일을 담을 디렉토리 생성
     - name: Make Directory for deliver
-      run: mkdir deploy
+      run: mkdir -p $target-dir
+      
+    - name: rsync delete
+      run: rsync -avz --delete $from-dir $target-dir
 
-    # Jar 파일 Copy
-    - name: Copy Jar
-      run: ls -al && touch test
+    - name: after rsync
+      run: cd .. && rm -rf $project-name/*
 
