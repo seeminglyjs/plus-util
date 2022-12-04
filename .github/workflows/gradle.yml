@@ -49,12 +49,12 @@ jobs:
     - name: Execute Gradle build
       run: ./gradlew build
       
-    - name: Make Directory for deliver
-      run: mkdir -p $targetDir
+#     - name: Make Directory for deliver
+#       run: mkdir -p $targetDir
       
-    - name: rsync delete
-      run: rsync -avz --delete $fromDir $targetDir
+#     - name: rsync delete
+#       run: rsync -avz --delete $fromDir $targetDir
 
-    - name: after rsync
-      run: cd .. && rm -rf $projectName/*
+#     - name: after rsync
+#       run: cd .. && rm -rf $projectName/*
 
