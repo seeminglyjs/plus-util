@@ -11,10 +11,7 @@ on:
   push:
     branches:
     - master
-
-permissions:
-  contents: read
-
+    
 jobs:
    gradle:
     strategy:
@@ -27,14 +24,23 @@ jobs:
       with:
         distribution: temurin
         java-version: 17
-    - uses: gradle/gradle-build-action@v2
-      with:
-        arguments: build
-        build-root-directory: /home/seeminglyjs/project/plus-util    
-        gradle-executable: /home/seeminglyjs/github/plus-util   
+#     - uses: gradle/gradle-build-action@v2
+#       with:
+#         arguments: build
+#        build-root-directory: /home/seeminglyjs/github/plus-util     
+#         build-root-directory: /home/seeminglyjs/project/plus-util    
+#         gradle-executable: /home/seeminglyjs/github/plus-util  
         
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
+      with:
+        build-root-directory: /home/seeminglyjs/project/plus-util    
+        gradle-executable: /home/seeminglyjs/github/plus-util  
     
+    - name: Make gradlew executable
+      run: chmod +x ./gradlew
+
     - name: Execute Gradle build
       run: ./gradlew build
+      
+
