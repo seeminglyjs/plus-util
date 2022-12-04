@@ -18,9 +18,7 @@ jobs:
       matrix:
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
-    env:
-          working-directory: /home/seeminglyjs/project/plus-util
-          
+
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-java@v3
@@ -37,7 +35,6 @@ jobs:
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
       with:
-        build-root-directory: /home/seeminglyjs/project/plus-util    
         gradle-executable: /home/seeminglyjs/github/plus-util  
     
     - name: Make gradlew executable
@@ -48,9 +45,9 @@ jobs:
       
     # 전송할 파일을 담을 디렉토리 생성
     - name: Make Directory for deliver
-      run: cd /home/seeminglyjs/deploy
-      
+      run: mkdir deploy
+
     # Jar 파일 Copy
     - name: Copy Jar
-      run: cp ./build/libs/*.jar /home/seeminglyjs/deploy
+      run: cp ./build/libs/*.jar ./deploy/
 
