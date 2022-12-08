@@ -1,8 +1,14 @@
 package com.source.plusutil.service.utilService.timeUtil;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -57,10 +63,50 @@ public class TimeUtilService {
 		}catch (NumberFormatException e) {
 			request.setAttribute("dayOfTheWeek", "적절하지 않은 값이 입력되었습니다.");
 			log.info("exception", e);
+			return;
 		}catch (Exception e) {
 			request.setAttribute("dayOfTheWeek", "예상치 못한 오류가 발생했습니다.");
 			log.info("exception", e);
+			return;
 		}
 		
 	}
+	
+	/**
+	 * 전달받은 데이터 기준으로 시간차이를 계산한다.
+	 * 
+	 * @param startDateStr
+	 * @param EndDateStr
+	 * @param request
+	 */
+	public void calculateDate(String startDateStr, String EndDateStr, HttpServletRequest request) {
+		String regex = "^\\d{4}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])$"; //날짜포멧정규식
+		if(Pattern.matches(regex, startDateStr) && Pattern.matches(regex, EndDateStr) ) {
+			SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+			Date startDate = null;
+			Date endDate = null;
+			try {
+				startDate = df.parse(startDateStr);
+				endDate = df.parse(EndDateStr);
+			} catch (ParseException e) {
+				request.setAttribute("calculateDay", "적절하지 않은 값이 입력되었습니다.");
+				log.info("exception", e);
+				return;
+			} catch (Exception e) {
+				request.setAttribute("calculateDay", "적절하지 않은 값이 입력되었습니다.");
+				log.info("exception", e);
+				return;
+			}
+			
+			//밀리 초를 -> 일자단위로 나누어준다.
+			long calculateDay = ((endDate.getTime() - startDate.getTime()) / (24 * 60 * 60)) / 1000;
+			log.info("calculateDay info - > " + calculateDay);
+			request.setAttribute("startDateStr", startDateStr);
+			request.setAttribute("endDateStr", EndDateStr);
+			request.setAttribute("calculateDay", String.valueOf(calculateDay) + " 일");
+		}else {
+			request.setAttribute("calculateDay", "적절하지 않은 값이 입력되었습니다.");
+		}
+	}
+	
 }
