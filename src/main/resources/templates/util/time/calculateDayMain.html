@@ -16,6 +16,16 @@
 <!--  -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PLUS-UTIL</title>
+<style type="text/css">
+@font-face {
+    font-family: 'MonoplexKR-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_Monoplex-kr@1.0/MonoplexKR-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+body{font-family: "MonoplexKR-Regular", MonoplexKR-Regular}
+</style>
 </head>
 <body>
 <div id="header-load"></div>
@@ -27,13 +37,13 @@
 	<div class="container-md" id="rsaContentEncryptFormContainer">
 		<form action="/util/time/calculate/day" method="post">
 		  <div class="mb-3">
-		    <label for="startDateStr" class="form-label">Year</label>
+		    <label for="startDateStr" class="form-label">Start Date</label>
 		    <input type="text" placeholder="ex) 20221208 " class="form-control" id="startDateStr" name="startDateStr" aria-describedby="startDateStrHelp" th:value="${startDateStr}">
 		    <div id="startDateStrHelp" class="form-text">시작 날짜를 입력해 주세요.</div>
 		  </div>
 		  
 		  <div class="mb-3">
-		    <label for="EndDateStr" class="form-label">Year</label>
+		    <label for="EndDateStr" class="form-label">End Date</label>
 		    <input type="text" placeholder="ex) 20221208 " class="form-control" id="EndDateStr" name="EndDateStr" aria-describedby="EndDateStrHelp" th:value="${endDateStr}">
 		    <div id="EndDateStrHelp" class="form-text">끝나는 날짜를 입력해 주세요.</div>
 		  </div>
