@@ -17,6 +17,7 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 import com.source.plusutil.handler.login.UserLoginFailureHandler;
 import com.source.plusutil.handler.login.UserLoginSuccessHandler;
 import com.source.plusutil.handler.login.UserLogoutSuccessHandler;
+import com.source.plusutil.service.userService.UserInfoService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,6 +28,7 @@ public class SecurityConfig {
 
 	private final UserLoginSuccessHandler userLoginSuccessHandler; //로그인 성공 핸들러
 	private final UserLoginFailureHandler userLoginFailureHandler; //로그인 실패 핸들러
+	private final UserInfoService userInfoService;
 	//	private final UserInfoService userInfoService; 
 	//	어떠한 빈(Bean)에 생성자가 오직 하나만 있고, 
 	//	생성자의 파라미터 타입이 빈으로 등록 가능한 존재라면 
@@ -52,15 +54,14 @@ public class SecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeRequests()//보호된 리소스 URI에 접근할 수 있는 권한을 설정
 		.antMatchers(HttpMethod.DELETE).hasRole("ADMIN")
+		.antMatchers("/login/**").anonymous() //로그인 url 권한 전체 허용
 		.antMatchers("/home"
 				, "/join/**"
 				,"/encrypt/**"
 				,"/util/**"
-				,"/algorithm/**").permitAll() //홈페이지/회원가입페이지 누구나 접근 가능
+				,"/algorithm/**").permitAll() //누구나 접근가능한 페이지 적용
 		.antMatchers("/setting/**", "/admin/**").hasRole("ADMIN") //관리자(Admin)만 접근 허용
-		.antMatchers("/user/**").hasAnyRole("USER","ADMIN") //유저(USER) / 관리자(Admin)만 접근 허용
-		.antMatchers("/login/**", "/logout/**").permitAll() //로그인 url 권한 전체 허용
-//		.antMatchers("/encrypt/**").hasRole("USER")
+		.antMatchers("/user/**", "/logout/**").hasAnyRole("USER","ADMIN") //유저(USER) / 관리자(Admin)만 접근 허용
 		.anyRequest().authenticated() //나머지 경로에 대해서는 인가된 사용자만 접근할 수 있다.
 		.and()
 			.formLogin() //html form 형식으로 요청을 받아적용하겠다.
@@ -79,10 +80,17 @@ public class SecurityConfig {
 			.disable();//해당 기능을 사용하기 위해서는 프론트단에서 csrf토큰값 보내줘야함
 			// Cross site Request forgery로 사이즈간 위조 요청인데, 즉 정상적인 사용자가 의도치 않은 위조요청을 보내는 것을 의미한다.
 		
-		http
-		.sessionManagement()
-		.maximumSessions(1) // 최대 접속수를 1개로 제한한다. 다른 사용자가 로그인하면 이전 사용자 로그인 풀림
-        .expiredUrl("/login"); // 세션이 제한 되었을 경우 리다이렉트 할 URL
+		http.sessionManagement()
+			.maximumSessions(1) // 최대 접속수를 1개로 제한한다. 다른 사용자가 로그인하면 이전 사용자 로그인 풀림
+	        .expiredUrl("/login"); // 세션이 제한 되었을 경우 리다이렉트 할 URL
+		
+		http.rememberMe()
+			.rememberMeParameter("remember-me")
+			.tokenValiditySeconds(3600) //초단위로 설정가능
+			.alwaysRemember(false) // remember-me가 활성화 안되어도 되게하는 설정 default 가 false
+			.userDetailsService(userInfoService); //인증객체 정보 저장
+			
+		
 		
 		http.headers().frameOptions().sameOrigin();
 		return http.build();
