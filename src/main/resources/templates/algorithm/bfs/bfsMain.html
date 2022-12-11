@@ -33,27 +33,53 @@ body{font-family: "MonoplexKR-Regular", MonoplexKR-Regular}
 <div class="container-md">
 <!-----------------------------------------------------------------------------------------  -->
 
-	<!-- test2 -->
-	<div class="container-md" id="calculateDayContainer">
-		<form action="/util/time/calculate/day" method="post">
+
+
+	<div class="container-md" id="bfsContainer">
+		<form action="/algorithm/bfs/search/short/distance" method="post">
 		  <div class="mb-3">
-		    <label for="startDateStr" class="form-label">Start Date</label>
-		    <input type="text" placeholder="ex) 20221208 " class="form-control" id="startDateStr" name="startDateStr" aria-describedby="startDateStrHelp" th:value="${startDateStr}">
-		    <div id="startDateStrHelp" class="form-text">시작 날짜를 입력해 주세요.</div>
+		    <label for="bfsrow" class="form-label">Row</label>
+		    <input type="number" placeholder="ex) 3, 4, 5, . . ." class="form-control" id="bfsrow" name="bfsrow" aria-describedby="bfsrowHelp" th:value="${bfsrow}">
+		    <div id="bfsrowHelp" class="form-text">행을 입력해 주세요.</div>
 		  </div>
 		  
 		  <div class="mb-3">
-		    <label for="EndDateStr" class="form-label">End Date</label>
-		    <input type="text" placeholder="ex) 20221208 " class="form-control" id="EndDateStr" name="EndDateStr" aria-describedby="EndDateStrHelp" th:value="${endDateStr}">
-		    <div id="EndDateStrHelp" class="form-text">끝나는 날짜를 입력해 주세요.</div>
+		    <label for="bfscol" class="form-label">Col</label>
+		    <input type="number" placeholder="ex) 3, 4, 5, . . ." class="form-control" id="bfscol" name="bfscol" aria-describedby="bfscolHelp" th:value="${bfscol}">
+		    <div id="bfscolHelp" class="form-text">열을 입력해 주세요.</div>
 		  </div>
 		  
-		  <button type="submit" class="btn btn-primary">날짜 차이 확인하기</button>
+  		  <div class="mb-3">
+		    <label for="bfsStartRow" class="form-label">StartRow</label>
+		    <input type="number" placeholder="ex) 3, 4, 5, . . ." class="form-control" id="bfsStartRow" name="bfsStartRow" aria-describedby="bfsStartRowHelp" th:value="${bfsStartRow}">
+		    <div id="bfsStartRowHelp" class="form-text">시작행을 입력해 주세요.</div>
+		  </div>
+
+  		  <div class="mb-3">
+		    <label for="bfsStartCol" class="form-label">StartCol</label>
+		    <input type="number" placeholder="ex) 3, 4, 5, . . ." class="form-control" id="bfsStartCol" name="bfsStartCol" aria-describedby="bfsStartColHelp" th:value="${bfsStartCol}">
+		    <div id="bfsStartColHelp" class="form-text">시작열을 입력해 주세요.</div>
+		  </div>
+		  
+   		  <div class="mb-3">
+		    <label for="bfsEndRow" class="form-label">EndRow</label>
+		    <input type="number" placeholder="ex) 3, 4, 5, . . ." class="form-control" id="bfsEndRow" name="bfsEndRow" aria-describedby="bfsEndRowHelp" th:value="${bfsEndRow}">
+		    <div id="bfsEndRowHelp" class="form-text">도착행을 입력해 주세요.</div>
+		  </div>
+
+   		  <div class="mb-3">
+		    <label for="bfsEndCol" class="form-label">EndCol</label>
+		    <input type="number" placeholder="ex) 3, 4, 5, . . ." class="form-control" id="bfsEndCol" name="bfsEndCol" aria-describedby="bfsEndColHelp" th:value="${bfsEndCol}">
+		    <div id="bfsEndColHelp" class="form-text">도착열을 입력해 주세요.</div>
+		  </div>
+			
+		  
+		  <button type="submit" class="btn btn-primary">BFS 탐색 시작</button>
 		</form>
 		
 		<br>
 		<div class="p-2 bg-light border">
-		  	<span class="badge bg-secondary">날짜 정보</span> 
+		  	<span class="badge bg-secondary">탐색 정보</span> 
 		  	<br>
 		  	<br>
 		  	<div class="form-floating">
@@ -64,6 +90,8 @@ body{font-family: "MonoplexKR-Regular", MonoplexKR-Regular}
 			<br>
 	  	</div>
 	</div>
+	
+
 
 <!-----------------------------------------------------------------------------------------  -->
 </div>

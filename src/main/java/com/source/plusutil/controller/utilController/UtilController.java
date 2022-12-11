@@ -15,8 +15,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UtilController {
 	
-	private final TimeUtilService timeUtilService;
-	
 	/**
 	 * 유틸메이지 메인 맵핑
 	 * 
@@ -26,56 +24,6 @@ public class UtilController {
 	@RequestMapping("/main")
 	public String utilMain(HttpServletRequest request) {
 		return "/util/utilMain";
-	}
-	
-	/**
-	 * 시간 관련 유틸 메인 맵핑
-	 * 
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping("/time/main")
-	public String timeUtilMain(HttpServletRequest request) {
-		return "/util/time/timeMain";
-	}
-	
-
-	@RequestMapping("/time/get/day/ofthe/week/main")
-	public String requestGetDayOfTheWeek() {
-		return "/util/time/getDayOfTheWeekMain";
-	}	
-	/**
-	 * 주어진 년 / 월 / 일 기준으로 요일을 구한다.
-	 * 
-	 * @param year
-	 * @param month
-	 * @param day
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping("/time/get/day/ofthe/week")
-	public String requestGetDayOfTheWeekCall(@RequestParam String year, @RequestParam String month, String day, HttpServletRequest request) {
-		timeUtilService.getDayOfTheWeek(year, month, day, request);
-		return "/util/time/getDayOfTheWeekMain";
-	}
-	
-	
-	@RequestMapping("/time/calculate/day/main")
-	public String requestCalculateDay() {
-		return "/util/time/calculateDayMain";
-	}
-	/**
-	 * 주어진 시작날짜와 끝나는 날짜 기준으로 
-	 * 
-	 * @param startDateStr
-	 * @param EndDateStr
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping("/time/calculate/day")
-	public String requestCalculateDayCall(@RequestParam String startDateStr, @RequestParam String EndDateStr, HttpServletRequest request) {
-		timeUtilService.calculateDate(startDateStr, EndDateStr, request);
-		return "/util/time/calculateDayMain";
 	}
 	
 }
