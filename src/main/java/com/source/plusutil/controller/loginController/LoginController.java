@@ -30,7 +30,7 @@ public class LoginController {
         			if(ipOp.isPresent() && sessionIdOp.isPresent()) {
         				log.info("IP : " + authInfo.getRemoteAddress());
         				log.info("Session ID : " + authInfo.getSessionId());
-        				
+
         				// 권한 리스트
         				@SuppressWarnings("unchecked")
         				List<GrantedAuthority> authList = (List<GrantedAuthority>) authentication.getAuthorities();

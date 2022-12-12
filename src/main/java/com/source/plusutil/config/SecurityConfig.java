@@ -90,8 +90,7 @@ public class SecurityConfig {
 			.alwaysRemember(false) // remember-me가 활성화 안되어도 되게하는 설정 default 가 false
 			.userDetailsService(userInfoService); //인증객체 정보 저장
 			
-		
-		
+
 		http.headers().frameOptions().sameOrigin();
 		return http.build();
 	}
