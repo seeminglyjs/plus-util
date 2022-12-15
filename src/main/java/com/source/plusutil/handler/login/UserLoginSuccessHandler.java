@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -44,7 +45,11 @@ public class UserLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandl
 		for(int i = 0; i< authList.size(); i++) {
 			log.info(authList.get(i).getAuthority() + " ");
 		}
-
+		Cookie loginCheckCookie = new Cookie("loginOk", "success");
+		loginCheckCookie.setMaxAge(60*60*24); //수명지정하기 하루로 설정
+		loginCheckCookie.setPath("/"); //모든 url 적용
+		response.addCookie(loginCheckCookie);
+		
 		setDefaultTargetUrl("/home"); //로그인 성공시 홈페이지로 보낸다.	
 		super.onAuthenticationSuccess(request, response, authentication);
 	}

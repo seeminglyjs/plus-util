@@ -3,6 +3,7 @@ package com.source.plusutil.handler.login;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,6 +21,12 @@ public class UserLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler{//�
 		public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
 				throws IOException, ServletException {
 			log.info("[UserLogoutSuccessHandler Success] =====");
+			
+			Cookie loginCheckCookie = new Cookie("loginOk", null); //기존쿠키값 null 할당
+			loginCheckCookie.setMaxAge(0); //수명죽이기
+			loginCheckCookie.setPath("/"); //모든 url 적용
+			response.addCookie(loginCheckCookie);
+			
 			super.onLogoutSuccess(request, response, authentication);
 		}
 }

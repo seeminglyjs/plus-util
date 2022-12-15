@@ -18,10 +18,12 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.core.annotation.Order;
 
 import lombok.extern.slf4j.Slf4j;
 
 @WebFilter(urlPatterns="/*")
+@Order(1) //가장 처음동작 필터
 @Slf4j
 public class SqlInjectionFilter implements Filter {
 	

@@ -8,7 +8,8 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="navFragment">
+<div th:fragment="navFragment">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-md">
     <a class="navbar-brand" href="/home">Plus-Util</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,20 +65,22 @@
   			<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
 		</button>
            
-        <th:block th:if="${not #strings.isEmpty(JSESSIONID)}">       		
+        <th:block th:if="${not #strings.isEmpty(loginCookieInfo)}">       		
 			<a href="/logout"><button class="btn btn-outline-success  me-2" type="button">Logout</button></a>
-		<th:block>
+		</th:block>
         
-        <th:block th:if="${#strings.isEmpty(JSESSIONID)}">
+        <th:block th:if="${#strings.isEmpty(loginCookieInfo)}">
 			<a href="/login"><button class="btn btn-outline-success  me-2" type="button">Login</button></a>
 	    	<a href="/join"><button class="btn btn-outline-success  me-2" type="button">Join</button></a>
-		<th:block>
+		</th:block>
+		
       </form>
     </div>
   </div>
-  	
 </nav>
-
+<br>
+<br>
+</div>
 
 
 </body>
