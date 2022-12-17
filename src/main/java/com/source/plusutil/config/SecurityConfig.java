@@ -59,6 +59,7 @@ public class SecurityConfig {
 				, "/join/**"
 				,"/encrypt/**"
 				,"/util/**"
+				,"/notice/**"
 				,"/algorithm/**").permitAll() //누구나 접근가능한 페이지 적용
 		.antMatchers("/setting/**", "/admin/**").hasRole("ADMIN") //관리자(Admin)만 접근 허용
 		.antMatchers("/user/**", "/logout/**").hasAnyRole("USER","ADMIN") //유저(USER) / 관리자(Admin)만 접근 허용
