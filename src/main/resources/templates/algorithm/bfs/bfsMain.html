@@ -15,37 +15,37 @@
 		  <div class="mb-3">
 		    <label for="bfsrow" class="form-label">Row</label>
 		    <input type="number" placeholder="ex) 3, 4, 5, . . ." class="form-control" id="bfsrow" name="bfsrow" aria-describedby="bfsrowHelp" th:value="${bfsrow}">
-		    <div id="bfsrowHelp" class="form-text">행을 입력해 주세요.</div>
+		    <div id="bfsrowHelp" class="form-text">행을 입력해 주세요. [15 까지 입력가능]</div>
 		  </div>
 		  
 		  <div class="mb-3">
 		    <label for="bfscol" class="form-label">Col</label>
 		    <input type="number" placeholder="ex) 3, 4, 5, . . ." class="form-control" id="bfscol" name="bfscol" aria-describedby="bfscolHelp" th:value="${bfscol}">
-		    <div id="bfscolHelp" class="form-text">열을 입력해 주세요.</div>
+		    <div id="bfscolHelp" class="form-text">열을 입력해 주세요. [15 까지 입력가능]</div>
 		  </div>
 		  
   		  <div class="mb-3">
 		    <label for="bfsStartRow" class="form-label">StartRow</label>
 		    <input type="number" placeholder="ex) 3, 4, 5, . . ." class="form-control" id="bfsStartRow" name="bfsStartRow" aria-describedby="bfsStartRowHelp" th:value="${bfsStartRow}">
-		    <div id="bfsStartRowHelp" class="form-text">시작행을 입력해 주세요.</div>
+		    <div id="bfsStartRowHelp" class="form-text">시작행을 입력해 주세요. [14 까지 입력가능]</div>
 		  </div>
 
   		  <div class="mb-3">
 		    <label for="bfsStartCol" class="form-label">StartCol</label>
 		    <input type="number" placeholder="ex) 3, 4, 5, . . ." class="form-control" id="bfsStartCol" name="bfsStartCol" aria-describedby="bfsStartColHelp" th:value="${bfsStartCol}">
-		    <div id="bfsStartColHelp" class="form-text">시작열을 입력해 주세요.</div>
+		    <div id="bfsStartColHelp" class="form-text">시작열을 입력해 주세요. [14 까지 입력가능]</div>
 		  </div>
 		  
    		  <div class="mb-3">
 		    <label for="bfsEndRow" class="form-label">EndRow</label>
 		    <input type="number" placeholder="ex) 3, 4, 5, . . ." class="form-control" id="bfsEndRow" name="bfsEndRow" aria-describedby="bfsEndRowHelp" th:value="${bfsEndRow}">
-		    <div id="bfsEndRowHelp" class="form-text">도착행을 입력해 주세요.</div>
+		    <div id="bfsEndRowHelp" class="form-text">도착행을 입력해 주세요. [15 까지 입력가능]</div>
 		  </div>
 
    		  <div class="mb-3">
 		    <label for="bfsEndCol" class="form-label">EndCol</label>
 		    <input type="number" placeholder="ex) 3, 4, 5, . . ." class="form-control" id="bfsEndCol" name="bfsEndCol" aria-describedby="bfsEndColHelp" th:value="${bfsEndCol}">
-		    <div id="bfsEndColHelp" class="form-text">도착열을 입력해 주세요.</div>
+		    <div id="bfsEndColHelp" class="form-text">도착열을 입력해 주세요. [15 까지 입력가능]</div>
 		  </div>
 			
 		  
@@ -58,9 +58,9 @@
 		  	<br>
 		  	<br>
 		  	<div class="form-floating">
-			  <textarea class="form-control" id="calculateDaySpan" placeholder="Leave a comment here" th:if="${not #strings.isEmpty(calculateDay)}" th:text="${calculateDay}" style="height: 100px"></textarea> 
-			  <textarea class="form-control" id="calculateDaySpan" placeholder="Leave a comment here" th:if="${#strings.isEmpty(calculateDay)}" style="height: 100px">날짜 정보를 먼저 입력해 주세요.</textarea> 
-			<label for="floatingSelect">날짜 정보</label>
+			  <textarea class="form-control" id="bfsSearchResultSpan" placeholder="Leave a comment here" th:if="${not #strings.isEmpty(bfsSearchResult)}" th:text="${bfsSearchResult}" style="height: 100px"></textarea> 
+			  <textarea class="form-control" id="bfsSearchResultSpan" placeholder="Leave a comment here" th:if="${#strings.isEmpty(bfsSearchResult)}" style="height: 100px">탐색에 필요한 데이터를 입력해 주세요.</textarea> 
+			<label for="floatingSelect">탐색 정보</label>
 			</div>
 			<br>
 	  	</div>
