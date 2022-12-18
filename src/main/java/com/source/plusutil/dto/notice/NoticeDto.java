@@ -6,19 +6,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import com.source.plusutil.dto.userDto.UserInfoDto;
-import com.source.plusutil.dto.userDto.UserJoinDto;
-import com.source.plusutil.enums.UserRoleEnum;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @Entity(name="tb_notice_info") //db상에 테이블명을 명시한다. [다른 dto / vo 객체에 똑같은 entity 선언하면 충돌남
 public class NoticeDto {

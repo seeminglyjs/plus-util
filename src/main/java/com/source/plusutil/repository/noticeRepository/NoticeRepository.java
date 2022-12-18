@@ -6,4 +6,5 @@ import com.source.plusutil.dto.notice.NoticeDto;
 
 public interface NoticeRepository extends JpaRepository<NoticeDto, Integer> {
 
+	
 }

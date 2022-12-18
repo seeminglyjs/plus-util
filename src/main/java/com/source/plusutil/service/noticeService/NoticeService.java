@@ -7,6 +7,8 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,8 +34,20 @@ public class NoticeService {
 	private final NoticeRepository noticeRepository;
 	
 	
-	public void getNoticeList(HttpServletRequest request) {
+	public void getNoticeList(HttpServletRequest request, Authentication authentication, Integer page) {
+		if(authenticationService.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
+			request.setAttribute("noticeWriteRole", "ok"); //관리자일 경우 게시글 쓰기 권한 있음
+		}
+		Integer size = 10;
+		if(page == null) {page = 0;}//만약 페이지 null이면 0으로 초기화
+		PageRequest pageRequest = PageRequest.of(page, size); //10개 까지 가져오도록 페이징 설정
+		Page<NoticeDto> noticePageList = noticeRepository.findAll(pageRequest);
+		for(NoticeDto nd : noticePageList) {
+			log.info("noticePageList info -> " + nd.toString());
+		}
 		
+		request.setAttribute("noticePageList", noticePageList);
+
 	}
 
 	/**
