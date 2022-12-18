@@ -6,12 +6,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.source.plusutil.dto.userDto.UserInfoDto;
+import com.source.plusutil.dto.userDto.UserJoinDto;
+import com.source.plusutil.enums.UserRoleEnum;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity(name="tb_notice_info") //db상에 테이블명을 명시한다. [다른 dto / vo 객체에 똑같은 entity 선언하면 충돌남
 public class NoticeDto {
@@ -52,4 +59,16 @@ public class NoticeDto {
 		this.writer = writer;
 		this.writeDate = writeDate;
 	}
+	
+	//게시글 작성
+    public static NoticeDto writeNotice(NoticeWriteDto noticeWriteDto) {
+    	NoticeDto notice = NoticeDto.builder()
+    			.title(noticeWriteDto.getTitle())
+    			.content(noticeWriteDto.getContent())
+    			.writer(noticeWriteDto.getWriter())
+    			.writeDate(noticeWriteDto.getWriteTime())
+    			.build();
+        return notice;
+    }
+    
 }
