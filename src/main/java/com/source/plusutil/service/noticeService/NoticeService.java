@@ -2,15 +2,12 @@ package com.source.plusutil.service.noticeService;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -34,18 +31,31 @@ public class NoticeService {
 	private final NoticeRepository noticeRepository;
 	
 	
+	
 	public void getNoticeList(HttpServletRequest request, Authentication authentication, Integer page) {
+		if(page == null) { 			//만약 페이지 null이면 0으로 초기화
+			page = 0;
+		}else {
+			log.info("getNoticeList page -> "+ page);
+		}
+		
 		if(authenticationService.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
 			request.setAttribute("noticeWriteRole", "ok"); //관리자일 경우 게시글 쓰기 권한 있음
 		}
-		Integer size = 10;
-		if(page == null) {page = 0;}//만약 페이지 null이면 0으로 초기화
+		Integer size = 1;
+		
 		PageRequest pageRequest = PageRequest.of(page, size); //10개 까지 가져오도록 페이징 설정
+		
 		Page<NoticeDto> noticePageList = noticeRepository.findAll(pageRequest);
+		Integer totalPage = noticePageList.getTotalPages();
+		
 		for(NoticeDto nd : noticePageList) {
 			log.info("noticePageList info -> " + nd.toString());
 		}
 		
+		int totalNotice = noticePageList.getSize();
+		
+		request.setAttribute("totalPage", totalPage);
 		request.setAttribute("noticePageList", noticePageList);
 
 	}
