@@ -25,8 +25,8 @@ public class NoticeController {
 	private final AuthenticationService authenticationService;
 	
 	@GetMapping("/main")
-	public String noticeMain(HttpServletRequest request, Authentication authentication, Integer page) {
-		noticeService.getNoticeList(request, authentication, page);
+	public String noticeMain(HttpServletRequest request, Authentication authentication, Integer currentPage) {
+		noticeService.getNoticeList(request, authentication, currentPage);
 		return "/notice/noticeMain";
 	}
 	

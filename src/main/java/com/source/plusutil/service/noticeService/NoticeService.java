@@ -17,6 +17,7 @@ import com.source.plusutil.dto.notice.NoticeWriteDto;
 import com.source.plusutil.enums.UserRolePlusEnum;
 import com.source.plusutil.repository.noticeRepository.NoticeRepository;
 import com.source.plusutil.service.authService.AuthenticationService;
+import com.source.plusutil.utils.etc.PagingUtil;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,32 +33,36 @@ public class NoticeService {
 	
 	
 	
-	public void getNoticeList(HttpServletRequest request, Authentication authentication, Integer page) {
-		if(page == null) { 			//만약 페이지 null이면 0으로 초기화
-			page = 0;
+	public void getNoticeList(HttpServletRequest request, Authentication authentication, Integer currentPage) {
+		if(currentPage == null) { 			//만약 페이지 null이면 0으로 초기화
+			currentPage = 0;
 		}else {
-			log.info("getNoticeList page -> "+ page);
+			log.info("getNoticeList page -> "+ currentPage);
 		}
 		
 		if(authenticationService.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
 			request.setAttribute("noticeWriteRole", "ok"); //관리자일 경우 게시글 쓰기 권한 있음
 		}
-		Integer size = 1;
+		Integer listSize = 1;
 		
-		PageRequest pageRequest = PageRequest.of(page, size); //10개 까지 가져오도록 페이징 설정
+		PageRequest pageRequest = PageRequest.of(currentPage, listSize); //10개 까지 가져오도록 페이징 설정
 		
 		Page<NoticeDto> noticePageList = noticeRepository.findAll(pageRequest);
-		Integer totalPage = noticePageList.getTotalPages();
+		Integer totalNoticePage = noticePageList.getTotalPages();
 		
 		for(NoticeDto nd : noticePageList) {
 			log.info("noticePageList info -> " + nd.toString());
 		}
 		
-		int totalNotice = noticePageList.getSize();
+		Long totalNoticeCount = noticePageList.getTotalElements();
+				
+		PagingUtil noticePaging = new PagingUtil(totalNoticeCount, currentPage, listSize);
+		log.info("noticePaging -> " + noticePaging.toString());
 		
-		request.setAttribute("totalPage", totalPage);
+		request.setAttribute("startPage", noticePaging.getStartPage());
+		request.setAttribute("endPage", noticePaging.getEndPage());
+		request.setAttribute("totalPage", totalNoticePage);
 		request.setAttribute("noticePageList", noticePageList);
-
 	}
 
 	/**

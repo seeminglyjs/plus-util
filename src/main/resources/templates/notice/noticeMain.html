@@ -29,6 +29,8 @@
 		  </tbody>
 		</table>
 		
+
+		
 		<nav aria-label="Page navigation example">
 		  <ul class="pagination">
 		    <li class="page-item">
@@ -36,10 +38,11 @@
 		        <span aria-hidden="true">&laquo;</span>
 		      </a>
 		    </li>
-		    <li class="page-item"><a class="page-link" href="/notice/main?page=1">1</a></li>
-		    <li class="page-item"><a class="page-link" href="/notice/main?page=1">1</a></li>
-		    <li class="page-item"><a class="page-link" href="/notice/main?page=2">2</a></li>
-		    <li class="page-item"><a class="page-link" href="/notice/main?page=3">3</a></li>
+			
+			<th:block th:each="num : ${#numbers.sequence(startPage,endPage)}">
+				<li class="page-item"><a class="page-link" th:href="@{/notice/main(currentPage=${num})}" th:text="${num}"></a></li>
+			</th:block>
+		    
 		    <li class="page-item">
 		      <a class="page-link" href="#" aria-label="Next">
 		        <span aria-hidden="true">&raquo;</span>
