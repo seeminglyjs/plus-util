@@ -58,7 +58,7 @@ public class PagingUtil {
 		if( totalCount == 0 )	return; //게시글이 없는 경우 중단
 		
 		//기본값 설정
-		if(curPage == 0)	setCurPage(0);//첫 페이지를 기본 페이지로 설정
+		if(curPage <= 0)	setCurPage(0);//첫 페이지를 기본 페이지로 설정
 		if(pageCount == 0)	setPageCount(3);//화면에 보여질 페이지 수 기본설정
 		if(listCount == 0)	setListCount(10);//화면에 보여질 게시글 수 기본설정
 
