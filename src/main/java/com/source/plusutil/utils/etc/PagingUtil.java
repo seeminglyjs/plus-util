@@ -51,8 +51,6 @@ public class PagingUtil {
 		makePaging();
 	}
 	
-	
-	
 	//페이징 정보를 생성하는 메소드
 	private void makePaging() {
 		if( totalCount == 0 )	return; //게시글이 없는 경우 중단

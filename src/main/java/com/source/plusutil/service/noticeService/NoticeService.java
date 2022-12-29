@@ -65,6 +65,7 @@ public class NoticeService {
 		request.setAttribute("endPage", noticePaging.getEndPage());
 		request.setAttribute("totalPage", totalNoticePage);
 		request.setAttribute("noticePageList", noticePageList);
+		request.setAttribute("currentPage", currentPage);
 	}
 
 	/**
