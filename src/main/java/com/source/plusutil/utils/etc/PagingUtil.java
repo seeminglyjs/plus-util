@@ -57,7 +57,7 @@ public class PagingUtil {
 		
 		//기본값 설정
 		if(curPage <= 0)	setCurPage(0);//첫 페이지를 기본 페이지로 설정
-		if(pageCount == 0)	setPageCount(3);//화면에 보여질 페이지 수 기본설정
+		if(pageCount == 0)	setPageCount(2);//화면에 보여질 페이지 수 기본설정
 		if(listCount == 0)	setListCount(10);//화면에 보여질 게시글 수 기본설정
 
 		//총 페이지 수 계산
@@ -69,13 +69,20 @@ public class PagingUtil {
 		if(totalPage < curPage)	curPage = totalPage;
 
 		//화면에 보여질 페이지네이션의 시작번호와 끝번호
-		startPage = ( (curPage-1)/pageCount ) * pageCount + 1;
-		endPage = startPage + pageCount - 1;
-
-		//끝페이지값 보정
+//		startPage = ( (curPage-1)/pageCount ) * pageCount + 1;
+		startPage = ( (curPage-1)/pageCount ) * pageCount;
+//		endPage = startPage + pageCount - 1;
+		endPage = startPage + pageCount;
+		
+		//끝페이지값 보정 totalPage 전체 페이지 수 0 부터 시작 때문에  -1
 		//	끝 페이지가 총 페이지보다 클 때 총 페이지를 마지막으로 고정
-		if( endPage > totalPage ) endPage = totalPage;
-
+//		if( endPage > totalPage ) endPage = totalPage;
+		if(totalPage >= 1) {
+			if( endPage > totalPage - 1) endPage = totalPage - 1;
+		}else {
+			if( endPage > totalPage ) endPage = totalPage;
+		}
+	
 		//화면에 보여질 게시글 시작번호와 끝번호
 		startNo = (curPage-1) * listCount + 1;
 		endNo = curPage * listCount;

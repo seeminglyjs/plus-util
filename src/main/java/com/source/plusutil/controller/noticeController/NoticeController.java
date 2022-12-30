@@ -31,10 +31,11 @@ public class NoticeController {
 	}
 	
 	@GetMapping("/write")
-	public String noticeWrite(HttpServletRequest request, Authentication authentication) {
+	public String noticeWrite(HttpServletRequest request, Authentication authentication, Integer currentPage) {
 		if(authenticationService.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
 			return "/notice/noticeWrite";
 		}else {
+			noticeService.getNoticeList(request, authentication, currentPage);
 			return "/notice/noticeMain";
 		}
 	}
@@ -44,8 +45,10 @@ public class NoticeController {
 			String noticeTitle
 			, String noticeContent
 			,HttpServletRequest request
-			,Authentication authentication) {
+			,Authentication authentication
+			, Integer currentPage) {
 		noticeService.writeNotice(noticeTitle, noticeContent, request, authentication);
+		noticeService.getNoticeList(request, authentication, currentPage);
 		return "/notice/noticeMain";
 	}
 }

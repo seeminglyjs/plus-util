@@ -36,16 +36,14 @@ public class NoticeService {
 	public void getNoticeList(HttpServletRequest request, Authentication authentication, Integer currentPage) {
 		if(currentPage == null) { 			//만약 페이지 null이면 0으로 초기화
 			currentPage = 0;
-		}else {
-			currentPage -= 1;
-			log.info("getNoticeList page -> "+ currentPage);
 		}
+		
 		if(currentPage < 0) {currentPage = 0;} // 0보다 작은 페이지 넘버는 존재할 수 없음
 		
 		if(authenticationService.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
 			request.setAttribute("noticeWriteRole", "ok"); //관리자일 경우 게시글 쓰기 권한 있음
 		}
-		Integer listSize = 1;
+		Integer listSize = 5;
 		
 		PageRequest pageRequest = PageRequest.of(currentPage, listSize); //10개 까지 가져오도록 페이징 설정
 		
