@@ -3,6 +3,7 @@ package com.source.plusutil.controller;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 //@RestControllerAdvice //바디 형식으로 맵핑됨
 @ControllerAdvice 	//url 형식으로 맵핑됨
@@ -11,6 +12,14 @@ public class RestErrorController {
 	// 지원되지 않는 메소드 요청 시
 	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
 	public String httpRequestMethodNotSupportedExceptionAdvice(HttpRequestMethodNotSupportedException e) { 
+		String result = "/error/errorMain";
+		return result;
+	}
+	
+	
+	// 잘못된 타입에 대한 요청 시
+	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
+	public String methodArgumentTypeMismatchExceptionAdvice(MethodArgumentTypeMismatchException e) { 
 		String result = "/error/errorMain";
 		return result;
 	}

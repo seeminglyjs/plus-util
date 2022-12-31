@@ -30,25 +30,42 @@ public class NoticeController {
 		return "/notice/noticeMain";
 	}
 	
+	/**
+	 * 공지사항 작성 페이지 호출
+	 * 
+	 * @param request
+	 * @param authentication
+	 * @param currentPage
+	 * @return
+	 */
 	@GetMapping("/write")
 	public String noticeWrite(HttpServletRequest request, Authentication authentication, Integer currentPage) {
 		if(authenticationService.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
 			return "/notice/noticeWrite";
 		}else {
-			noticeService.getNoticeList(request, authentication, currentPage);
+			noticeService.getNoticeList(request, authentication, currentPage); //리스트 조회
 			return "/notice/noticeMain";
 		}
 	}
-	
+	/**
+	 * 공지사항 작성 호출
+	 * 
+	 * @param noticeTitle
+	 * @param noticeContent
+	 * @param request
+	 * @param authentication
+	 * @param currentPage
+	 * @return
+	 */
 	@PostMapping("/write/action")
-	public String noticeWriteAction(//계시글 작성
+	public String noticeWriteAction(
 			String noticeTitle
 			, String noticeContent
 			,HttpServletRequest request
 			,Authentication authentication
 			, Integer currentPage) {
 		noticeService.writeNotice(noticeTitle, noticeContent, request, authentication);
-		noticeService.getNoticeList(request, authentication, currentPage);
+		noticeService.getNoticeList(request, authentication, currentPage); //리스트 조회
 		return "/notice/noticeMain";
 	}
 }
