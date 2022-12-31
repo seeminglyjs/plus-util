@@ -80,9 +80,10 @@ public class NoticeController {
 	@GetMapping("/detail")
 	public String noticeDetail(
 			HttpServletRequest request
+			,Authentication authentication
 			, Integer noticeNo
 			) {
-		noticeService.getNoticeDetailInfo(request,noticeNo);
+		noticeService.getNoticeDetailInfo(request, authentication, noticeNo);
 		return "/notice/noticeDetail";
 	}
 }

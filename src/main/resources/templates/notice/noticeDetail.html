@@ -8,13 +8,26 @@
 
 <div class="container-md">
 <!-----------------------------------------------------------------------------------------  -->
-<div class="container-md border rounded" style="height: 700px">
 
+<div class="container-md border rounded" style="height: 700px">
 	<br>
-	<h3 th:text="${noticeDetail.title}"></h3>
+
+	<h3 th:text="${noticeDetail.title}"></h3> 
 	<strong th:text="${noticeDetail.writer}"></strong>
 	<br>
+	<div class="position-relative">
 	<span th:text="${noticeDetail.writeDate}"></span>
+		<div class="position-absolute top-0 end-0">
+			<th:block th:if="${updateRoleCheck}"> 
+				<nav aria-label="breadcrumb">
+				  <ol class="breadcrumb">
+				    <li class="breadcrumb-item"><a class="link-primary" href="#">수정</a></li>
+				    <li class="breadcrumb-item"><a class="link-danger" href="#">삭제</a></li>
+				  </ol>
+				</nav>
+		 	</th:block>
+		</div>
+	</div>	
 	<hr>
 	<br>
 	<div>
@@ -23,8 +36,16 @@
 	</div>
 </div>
 
-<a href="javascript:window.history.back();">뒤로</a>
-<a th:href="@{/notice/main(currentPage=0)}">목록</a>
+<br>
+<br>
+<div class="position-relative">
+	<div class="position-absolute bottom-0 end-0">
+		<a href="javascript:window.history.back();"><button type="button" class="btn btn-secondary btn-sm">뒤로</button></a>
+		<a th:href="@{/notice/main(currentPage=0)}"><button type="button" class="btn btn-secondary btn-sm">목록</button></a>
+	</div>
+</div>
+
+<hr>
 
 <!-----------------------------------------------------------------------------------------  -->
 </div>

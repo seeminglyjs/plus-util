@@ -124,10 +124,16 @@ public class NoticeServiceImpl implements NoticeService{
 
 	/**
 	 * 조회 번호에 따라 공지사항의 상세 정보를 가져온다.
+	 * @param authentication 
 	 * 
 	 */
-	public void getNoticeDetailInfo(HttpServletRequest request, Integer noticeNo) {
+	public void getNoticeDetailInfo(HttpServletRequest request, Authentication authentication, Integer noticeNo) {
 		log.info("getNoticeDetailInfo noticeNo -> ["+noticeNo+"]");
+		if(authenticationService.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
+			request.setAttribute("updateRoleCheck", true); //조회한 유저가 관리자면 게시글 수정 권한이 있음
+		}else {
+			request.setAttribute("updateRoleCheck", false);
+		}
 		if(noticeNo != null) {//조회한 공지사항 번호가 null 값이 아닐 경우
 			Optional<NoticeDto> noticeDetailInfo = noticeRepository.findById(noticeNo);
 			if(noticeDetailInfo.isPresent()) {//조회번호에 따른 공지사항 정보가 존재하면
