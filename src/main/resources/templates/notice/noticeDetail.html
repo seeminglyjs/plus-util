@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<div id="header-load" th:replace="html/head.html :: headFragment"></div>
+<div id="nav-load" th:insert="html/nav.html :: navFragment"></div>
+
+<div class="container-md">
+<!-----------------------------------------------------------------------------------------  -->
+<div class="container-md border rounded" style="height: 700px">
+
+	<br>
+	<h3 th:text="${noticeDetail.title}"></h3>
+	<strong th:text="${noticeDetail.writer}"></strong>
+	<br>
+	<span th:text="${noticeDetail.writeDate}"></span>
+	<hr>
+	<br>
+	<div>
+		<p th:text="${noticeDetail.content}">
+		</p>
+	</div>
+</div>
+
+<a href="javascript:window.history.back();">뒤로</a>
+
+<!-----------------------------------------------------------------------------------------  -->
+</div>
+<div id="footer-load" class="container-md" th:insert="html/footer.html :: footerFragment"></div>.
+</body>
+</html>

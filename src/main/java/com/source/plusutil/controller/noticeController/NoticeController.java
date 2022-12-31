@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.source.plusutil.enums.UserRolePlusEnum;
 import com.source.plusutil.service.authService.AuthenticationService;
-import com.source.plusutil.service.noticeService.NoticeService;
+import com.source.plusutil.service.noticeService.NoticeServiceImpl;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class NoticeController {
 
-	private final NoticeService noticeService;
+	private final NoticeServiceImpl noticeService;
 	
 	private final AuthenticationService authenticationService;
 	
@@ -47,6 +47,7 @@ public class NoticeController {
 			return "/notice/noticeMain";
 		}
 	}
+	
 	/**
 	 * 공지사항 작성 호출
 	 * 
@@ -67,5 +68,21 @@ public class NoticeController {
 		noticeService.writeNotice(noticeTitle, noticeContent, request, authentication);
 		noticeService.getNoticeList(request, authentication, currentPage); //리스트 조회
 		return "/notice/noticeMain";
+	}
+	
+	/**
+	 * 공지사항 상세페이지 이동 호출
+	 * 
+	 * @param request
+	 * @param noticeNo
+	 * @return
+	 */
+	@GetMapping("/detail")
+	public String noticeDetail(
+			HttpServletRequest request
+			, Integer noticeNo
+			) {
+		noticeService.getNoticeDetailInfo(request,noticeNo);
+		return "/notice/noticeDetail";
 	}
 }
