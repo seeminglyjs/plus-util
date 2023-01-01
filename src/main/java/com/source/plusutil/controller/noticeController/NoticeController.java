@@ -100,9 +100,38 @@ public class NoticeController {
 			HttpServletRequest request
 			,Authentication authentication
 			, Integer noticeNo
-			, Integer currentPage) {
+			, Integer currentPage
+			) {
 		noticeService.deleteNoticeInfo(request, authentication, noticeNo);
 		noticeService.getNoticeList(request, authentication, currentPage); //리스트 조회
 		return "/notice/noticeMain";
 	}
+	
+	@GetMapping("/update/main")
+	public String updateNotice(
+			HttpServletRequest request
+			,Authentication authentication
+			, Integer noticeNo
+			, String noticeTitle
+			, String noticeContent
+			) {
+		request.setAttribute("noticeNo", noticeNo);
+		request.setAttribute("noticeTitle", noticeTitle);
+		request.setAttribute("noticeContent", noticeContent);
+		return "/notice/noticeUpdate";
+	}
+	
+	@PostMapping("/update/action")
+	public String updateNoticeAction(
+			HttpServletRequest request
+			,Authentication authentication
+			, Integer noticeNo
+			, String noticeTitle
+			, String noticeContent
+			) {
+		noticeService.updateNoticeInfo(request, authentication, noticeNo, noticeTitle, noticeContent);
+		noticeService.getNoticeDetailInfo(request, authentication, noticeNo);
+		return "/notice/noticeDetail";
+	}
+	
 }

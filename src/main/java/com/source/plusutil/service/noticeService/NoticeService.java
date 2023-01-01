@@ -15,4 +15,6 @@ public interface NoticeService {
 	public void getNoticeDetailInfo(HttpServletRequest request, Authentication authentication, Integer noticeNo);
 	
 	public void deleteNoticeInfo(HttpServletRequest request, Authentication authentication, Integer noticeNo);
+	
+	public void updateNoticeInfo(HttpServletRequest request, Authentication authentication, Integer noticeNo , String noticeTitle, String noticeContent);
 }

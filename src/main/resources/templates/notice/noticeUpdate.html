@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<div id="header-load" th:replace="html/head.html :: headFragment"></div>
+<div id="nav-load" th:insert="html/nav.html :: navFragment"></div>
+
+<div class="container-md">
+<!-----------------------------------------------------------------------------------------  -->
+
+<script type="text/javascript">
+/* 공지사항 폼 전달전 확인 사항  */
+function noticeDataCheck (){
+	//제목 정규식 확인
+	var title = /^[ㄱ-ㅎㅏ-ㅣ가-힣A-Za-z0-9`~!@#$%^&*|\\\'\";:\/?]{2,50}$/ /* 제목 정규식 체크 2 ~ 50 자 */
+		if(!title.test($("#noticeTitle").val())){
+			$("#titleCheckSpan").text("제목은 2 ~ 50 글자를 맞추어야 합니다.").addClass("red")
+			$("#noticeTitle").focus()
+			return false;
+		}else{
+			$("#titleCheckSpan").text("")
+			$("#titleCheckSpan").removeClass("red")
+		}
+	
+	//내용 정규식 확인
+	var content = /^[ㄱ-ㅎㅏ-ㅣ가-힣A-Za-z0-9`~!@#$%^&*|\\\'\";:\/?]{2,500}$$/ 
+		if(!content.test($("#noticeContent").val())){ /* 내용 정규식 체크 2 ~ 500 자  */
+			$("#contentCheckSpan").text("내용은 2 ~ 500 글자를 맞추어야 합니다.").addClass("red")
+			$("#noticeContent").focus()
+			return false;
+		}else{
+			$("#contentCheckSpan").text("")
+			$("#contentCheckSpan").removeClass("red")
+		}
+	
+}
+
+
+</script>
+
+	
+	<form action="/notice/update/action" method="post" onsubmit="return noticeDataCheck()">
+		<input type="hidden" name="noticeNo" th:value="${noticeNo}">
+		<div class="mb-3">
+		  <label for="noticeTitle" class="form-label">제목</label>
+		  <input type="text" class="form-control" id="noticeTitle" name ="noticeTitle" th:value="${noticeTitle}">
+		  <span id="titleCheckSpan"></span>
+		</div>
+		<div class="mb-3">
+		  <label for="noticeContent" class="form-label">내용</label>
+		  <textarea class="form-control" id="noticeContent"  name ="noticeContent" rows="20" th:text="${noticeContent}"></textarea>
+		  <span id="contentCheckSpan"></span>
+		</div>
+		  <br>
+		  <button type="submit" class="btn btn-primary">수정</button>
+	</form>	
+
+
+<!-----------------------------------------------------------------------------------------  -->
+</div>
+<div id="footer-load" class="container-md" th:insert="html/footer.html :: footerFragment"></div>.
+</body>
+</html>

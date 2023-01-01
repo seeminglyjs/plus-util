@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +20,7 @@ import com.source.plusutil.dto.notice.NoticeWriteDto;
 import com.source.plusutil.enums.UserRolePlusEnum;
 import com.source.plusutil.repository.noticeRepository.NoticeRepository;
 import com.source.plusutil.service.authService.AuthenticationService;
+import com.source.plusutil.utils.etc.DateUtil;
 import com.source.plusutil.utils.etc.PagingUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -58,7 +60,7 @@ public class NoticeServiceImpl implements NoticeService{
 			currentPage = totalNoticePage -1; //현재 페이지를 마지막 페이지로 변경해버린다. 페이지는 0부터 시작이기 때문 -1
 		}
 		
-		PageRequest pageRequest = PageRequest.of(currentPage, listSize); //10개 까지 가져오도록 페이징 설정
+		PageRequest pageRequest = PageRequest.of(currentPage, listSize, Sort.by("noticeNo")); //현재 페이지와 리스트 크기 공지사항 번호기준 오름차순 정렬
 		Page<NoticeDto> noticePageList = noticeRepository.findAll(pageRequest); //공지사항 리스트 정보를 가져온다.
 
 		for(NoticeDto nd : noticePageList) {//정보 출력
@@ -87,12 +89,7 @@ public class NoticeServiceImpl implements NoticeService{
 	 */
 	@Override
 	public void writeNotice(String noticeTitle, String noticeContent, HttpServletRequest request, Authentication authentication) {	
-		if(authenticationService.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-			Date writeTime = new Date();
-			String writeTimeStr = sdf.format(writeTime);
-			log.info("writeNotice TIME -> " + writeTimeStr);
-			
+		if(authenticationService.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크		
 			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			String userEmail = ((UserDetails) principal).getUsername();
 			
@@ -100,7 +97,7 @@ public class NoticeServiceImpl implements NoticeService{
 						noticeTitle
 						,noticeContent
 						,userEmail
-						,writeTimeStr);
+						,DateUtil.getDateString());
 			log.info("noticeWriteDto -> " + noticeWriteDto.toString());
 			noticeRepository.save(NoticeDto.writeNotice(noticeWriteDto));
 		}else {
@@ -189,9 +186,33 @@ public class NoticeServiceImpl implements NoticeService{
 			return; //권한 없으면 리턴
 		}else {
 			if(noticeNo == null) {
+				log.info("noticeNo [uull parameter] Return" );
 				return;
 			}
 			noticeRepository.deleteById(noticeNo); //공지사항 번호 기준으로 해당 게시글 삭제
+		}
+	}
+	
+	/**
+	 * 공지사항 수정건에 대한 반영
+	 * 
+	 */
+	@Override
+	public void updateNoticeInfo(HttpServletRequest request, Authentication authentication, Integer noticeNo, String noticeTitle, String noticeContent) {
+		log.info("updateNoticeInfo noticeNo -> ["+noticeNo+"]" + "noticeTitle ->["+noticeTitle+"]" + "noticeContent -> ["+noticeContent+"]");
+		if(!authenticationService.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
+			return; //권한 없으면 리턴
+		}else {
+			if(noticeNo == null || noticeTitle == null || noticeContent == null) {
+				log.info("updateNoticeInfo [uull parameter] Return" );
+				return;
+			}	
+			Optional<NoticeDto> noticeDetailInfo = noticeRepository.findById(noticeNo); //변경할 공지사항 정보를 우선적으로 가져온다.
+			NoticeDto noticeDto = noticeDetailInfo.get();
+			noticeDto.setTitle(noticeTitle); //제목 재설정
+			noticeDto.setContent(noticeContent); // 내용 재설정
+			noticeDto.setUpDateDate(DateUtil.getDateString()); //변경날짜 재설정
+			noticeRepository.save(noticeDto); //변경정보 저장
 		}
 	}
 }

@@ -23,7 +23,7 @@ function deleteConfirm(){
 
 
 <!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="noticeDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -60,11 +60,11 @@ function deleteConfirm(){
 			<th:block th:if="${updateRoleCheck}"> 
 				<nav aria-label="breadcrumb">
 				  <ol class="breadcrumb">
-				    <li class="breadcrumb-item"><a class="link-primary" href="#">수정</a></li>
 				    <li class="breadcrumb-item">
-						<a class="link-danger" href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-							삭제
-						</a>
+				    	<a class="link-primary" th:href="@{/notice/update/main(noticeNo=${noticeDetail.noticeNo}, noticeTitle=${noticeDetail.title}, noticeContent=${noticeDetail.content})}">수정</a>
+				    </li>
+				    <li class="breadcrumb-item">
+						<a class="link-danger" href="#" data-bs-toggle="modal" data-bs-target="#noticeDeleteModal">삭제</a>
 					</li>
 				  </ol>
 				</nav>
