@@ -86,4 +86,23 @@ public class NoticeController {
 		noticeService.getNoticeDetailInfo(request, authentication, noticeNo);
 		return "/notice/noticeDetail";
 	}
+	
+	/**
+	 * 요청받은 게시글 정보를 삭제한다.
+	 * 
+	 * @param request
+	 * @param authentication
+	 * @param noticeNo
+	 * @return
+	 */
+	@PostMapping("/delete")
+	public String deleteNotice(	
+			HttpServletRequest request
+			,Authentication authentication
+			, Integer noticeNo
+			, Integer currentPage) {
+		noticeService.deleteNoticeInfo(request, authentication, noticeNo);
+		noticeService.getNoticeList(request, authentication, currentPage); //리스트 조회
+		return "/notice/noticeMain";
+	}
 }

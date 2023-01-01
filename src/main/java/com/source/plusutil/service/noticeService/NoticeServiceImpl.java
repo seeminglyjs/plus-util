@@ -40,6 +40,7 @@ public class NoticeServiceImpl implements NoticeService{
 	 * @param authentication
 	 * @param currentPage
 	 */
+	@Override
 	public void getNoticeList(HttpServletRequest request, Authentication authentication, Integer currentPage) {
 		if(currentPage == null) {//만약 페이지 null이면 0으로 초기화
 			currentPage = 0;
@@ -84,6 +85,7 @@ public class NoticeServiceImpl implements NoticeService{
 	 * @param request
 	 * @param authentication
 	 */
+	@Override
 	public void writeNotice(String noticeTitle, String noticeContent, HttpServletRequest request, Authentication authentication) {	
 		if(authenticationService.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
@@ -114,6 +116,7 @@ public class NoticeServiceImpl implements NoticeService{
 	 * @param listSize
 	 * @return
 	 */
+	@Override
 	public Integer getNoticeTotalPage(Integer currentPage, Integer listSize) {
 		Integer totalCount = 0;
 		PageRequest pageRequest = PageRequest.of(currentPage, listSize);
@@ -128,6 +131,7 @@ public class NoticeServiceImpl implements NoticeService{
 	 * @param authentication 
 	 * 
 	 */
+	@Override
 	public void getNoticeDetailInfo(HttpServletRequest request, Authentication authentication, Integer noticeNo) {
 		log.info("getNoticeDetailInfo noticeNo -> ["+noticeNo+"]");
 		if(authenticationService.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
@@ -147,7 +151,12 @@ public class NoticeServiceImpl implements NoticeService{
 		}
 	}
 
-	
+	/**
+	 * 상세 정보 조회시 날짜 포맷을 정돈 하는 메소드
+	 * 
+	 * @param noticeDetail
+	 * @return
+	 */
 	private DateDto getDateInfo(NoticeDto noticeDetail) {
 		DateDto dateDto = new DateDto();
 		String updateDate = null;
@@ -167,5 +176,22 @@ public class NoticeServiceImpl implements NoticeService{
 		}
 		log.info("getDateInfo ->" + dateDto.toString());
 		return dateDto;
+	}
+
+	/**
+	 * 전달받은 공지사항번호 기준으로 해당 공지사항을 삭제처리한다.
+	 * 
+	 */
+	@Override
+	public void deleteNoticeInfo(HttpServletRequest request, Authentication authentication, Integer noticeNo) {
+		log.info("deleteNoticeInfo noticeNo -> ["+noticeNo+"]");
+		if(!authenticationService.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
+			return; //권한 없으면 리턴
+		}else {
+			if(noticeNo == null) {
+				return;
+			}
+			noticeRepository.deleteById(noticeNo); //공지사항 번호 기준으로 해당 게시글 삭제
+		}
 	}
 }

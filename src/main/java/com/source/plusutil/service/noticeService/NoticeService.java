@@ -13,4 +13,6 @@ public interface NoticeService {
 	public Integer getNoticeTotalPage(Integer currentPage, Integer listSize);
 	
 	public void getNoticeDetailInfo(HttpServletRequest request, Authentication authentication, Integer noticeNo);
+	
+	public void deleteNoticeInfo(HttpServletRequest request, Authentication authentication, Integer noticeNo);
 }
