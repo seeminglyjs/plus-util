@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import com.source.plusutil.dto.etc.DateDto;
 import com.source.plusutil.dto.notice.NoticeDto;
 import com.source.plusutil.dto.notice.NoticeWriteDto;
 import com.source.plusutil.enums.UserRolePlusEnum;
@@ -53,7 +54,7 @@ public class NoticeServiceImpl implements NoticeService{
 		
 		Integer totalNoticePage = getNoticeTotalPage(currentPage, listSize); //전체 페이지 정보를 가져온다.
 		if(currentPage > totalNoticePage - 1) {//요청된 페이지가 전체 페이지 보다 클경우
-			currentPage = totalNoticePage -1; //현재 페이지를 마지막 페이지로 변경해버린다. 페이지는 0부터 시작이기 때문 -1 한다.
+			currentPage = totalNoticePage -1; //현재 페이지를 마지막 페이지로 변경해버린다. 페이지는 0부터 시작이기 때문 -1
 		}
 		
 		PageRequest pageRequest = PageRequest.of(currentPage, listSize); //10개 까지 가져오도록 페이징 설정
@@ -139,8 +140,32 @@ public class NoticeServiceImpl implements NoticeService{
 			if(noticeDetailInfo.isPresent()) {//조회번호에 따른 공지사항 정보가 존재하면
 				log.info("NoticeDetailInfo -> " + noticeDetailInfo.get().toString());
 				NoticeDto noticeDetail = noticeDetailInfo.get();
+				DateDto dateDto = getDateInfo(noticeDetail);
 				request.setAttribute("noticeDetail", noticeDetail); //객체 저장
+				request.setAttribute("dateDto", dateDto); //날짜 객체 저장
 			}
 		}
+	}
+
+	
+	private DateDto getDateInfo(NoticeDto noticeDetail) {
+		DateDto dateDto = new DateDto();
+		String updateDate = null;
+		String writeDate = null;
+		try {
+			updateDate = noticeDetail.getUpDateDate();
+		}catch (Exception e) {
+			log.info("updateDate is Empty ====");
+		}
+		if(updateDate != null && !updateDate.equals("")) {//수정 정보 존재함
+			dateDto.setDay(updateDate.substring(0,4) + "." + updateDate.substring(4,6) + "." + updateDate.substring(6,8));
+			dateDto.setTime(updateDate.substring(8,10) + ":" + updateDate.substring(10,12) + ":" + updateDate.substring(12,14));
+		}else {
+			writeDate = noticeDetail.getWriteDate();
+			dateDto.setDay(writeDate.substring(0,4) + "." + writeDate.substring(4,6) + "." + writeDate.substring(6,8));
+			dateDto.setTime(writeDate.substring(8,10) + ":" + writeDate.substring(10,12) + ":" + writeDate.substring(12,14));
+		}
+		log.info("getDateInfo ->" + dateDto.toString());
+		return dateDto;
 	}
 }
