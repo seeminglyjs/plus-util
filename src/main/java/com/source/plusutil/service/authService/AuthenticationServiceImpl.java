@@ -11,10 +11,10 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class AuthenticationService { //서비스 요청 유저 권한 확인 서비스
-
+public class AuthenticationServiceImpl implements AuthService{ //서비스 요청 유저 권한 확인 서비스
 
 	@SuppressWarnings("unchecked")
+	@Override
 	public boolean authenticationConfirm(Authentication authentication, String role) {
 		Optional<List<GrantedAuthority>> authListOp = null;
 		try {

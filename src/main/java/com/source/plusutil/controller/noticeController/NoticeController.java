@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.source.plusutil.enums.UserRolePlusEnum;
-import com.source.plusutil.service.authService.AuthenticationService;
+import com.source.plusutil.service.authService.AuthenticationServiceImpl;
 import com.source.plusutil.service.noticeService.NoticeServiceImpl;
 
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class NoticeController {
 
 	private final NoticeServiceImpl noticeService;
 	
-	private final AuthenticationService authenticationService;
+	private final AuthenticationServiceImpl authenticationService;
 	
 	@GetMapping("/main")
 	public String noticeMain(HttpServletRequest request, Authentication authentication, Integer currentPage) {
@@ -65,9 +65,14 @@ public class NoticeController {
 			,HttpServletRequest request
 			,Authentication authentication
 			, Integer currentPage) {
-		noticeService.writeNotice(noticeTitle, noticeContent, request, authentication);
-		noticeService.getNoticeList(request, authentication, currentPage); //리스트 조회
-		return "/notice/noticeMain";
+		if(authenticationService.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
+			noticeService.writeNotice(noticeTitle, noticeContent, request, authentication);
+			noticeService.getNoticeList(request, authentication, currentPage); //리스트 조회
+			return "/notice/noticeMain";
+		}else {
+			noticeService.getNoticeList(request, authentication, currentPage); //리스트 조회
+			return "/notice/noticeMain";
+		}
 	}
 	
 	/**
@@ -102,9 +107,14 @@ public class NoticeController {
 			, Integer noticeNo
 			, Integer currentPage
 			) {
-		noticeService.deleteNoticeInfo(request, authentication, noticeNo);
-		noticeService.getNoticeList(request, authentication, currentPage); //리스트 조회
-		return "/notice/noticeMain";
+		if(authenticationService.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
+			noticeService.deleteNoticeInfo(request, authentication, noticeNo);
+			noticeService.getNoticeList(request, authentication, currentPage); //리스트 조회
+			return "/notice/noticeMain";
+		}else {
+			noticeService.getNoticeList(request, authentication, currentPage); //리스트 조회
+			return "/notice/noticeMain";
+		}
 	}
 	
 	@GetMapping("/update/main")
@@ -115,10 +125,16 @@ public class NoticeController {
 			, String noticeTitle
 			, String noticeContent
 			) {
-		request.setAttribute("noticeNo", noticeNo);
-		request.setAttribute("noticeTitle", noticeTitle);
-		request.setAttribute("noticeContent", noticeContent);
-		return "/notice/noticeUpdate";
+		if(authenticationService.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
+			request.setAttribute("noticeNo", noticeNo);
+			request.setAttribute("noticeTitle", noticeTitle);
+			request.setAttribute("noticeContent", noticeContent);
+			return "/notice/noticeUpdate";
+		}else {
+			noticeService.getNoticeDetailInfo(request, authentication, noticeNo);
+			return "/notice/noticeDetail";
+		}
+
 	}
 	
 	@PostMapping("/update/action")
@@ -129,9 +145,14 @@ public class NoticeController {
 			, String noticeTitle
 			, String noticeContent
 			) {
-		noticeService.updateNoticeInfo(request, authentication, noticeNo, noticeTitle, noticeContent);
-		noticeService.getNoticeDetailInfo(request, authentication, noticeNo);
-		return "/notice/noticeDetail";
+		if(authenticationService.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
+			noticeService.updateNoticeInfo(request, authentication, noticeNo, noticeTitle, noticeContent);
+			noticeService.getNoticeDetailInfo(request, authentication, noticeNo);
+			return "/notice/noticeDetail";
+		}else {
+			noticeService.getNoticeDetailInfo(request, authentication, noticeNo);
+			return "/notice/noticeDetail";
+		}
 	}
 	
 }

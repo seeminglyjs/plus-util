@@ -19,7 +19,7 @@ import com.source.plusutil.dto.notice.NoticeDto;
 import com.source.plusutil.dto.notice.NoticeWriteDto;
 import com.source.plusutil.enums.UserRolePlusEnum;
 import com.source.plusutil.repository.noticeRepository.NoticeRepository;
-import com.source.plusutil.service.authService.AuthenticationService;
+import com.source.plusutil.service.authService.AuthenticationServiceImpl;
 import com.source.plusutil.utils.etc.DateUtil;
 import com.source.plusutil.utils.etc.PagingUtil;
 
@@ -31,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class NoticeServiceImpl implements NoticeService{
 
-	private final AuthenticationService authenticationService;
+	private final AuthenticationServiceImpl authenticationService;
 	
 	private final NoticeRepository noticeRepository;
 	
@@ -164,12 +164,12 @@ public class NoticeServiceImpl implements NoticeService{
 			log.info("updateDate is Empty ====");
 		}
 		if(updateDate != null && !updateDate.equals("")) {//수정 정보 존재함
-			dateDto.setDay(updateDate.substring(0,4) + "." + updateDate.substring(4,6) + "." + updateDate.substring(6,8));
-			dateDto.setTime(updateDate.substring(8,10) + ":" + updateDate.substring(10,12) + ":" + updateDate.substring(12,14));
+			dateDto.setDay(DateUtil.getDateStrCommaLen14(updateDate));
+			dateDto.setTime(DateUtil.getTimeStrCommaLen14(updateDate));
 		}else {
 			writeDate = noticeDetail.getWriteDate();
-			dateDto.setDay(writeDate.substring(0,4) + "." + writeDate.substring(4,6) + "." + writeDate.substring(6,8));
-			dateDto.setTime(writeDate.substring(8,10) + ":" + writeDate.substring(10,12) + ":" + writeDate.substring(12,14));
+			dateDto.setDay(DateUtil.getDateStrCommaLen14(writeDate));
+			dateDto.setTime(DateUtil.getTimeStrCommaLen14(writeDate));
 		}
 		log.info("getDateInfo ->" + dateDto.toString());
 		return dateDto;

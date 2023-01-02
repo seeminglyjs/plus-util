@@ -54,7 +54,7 @@ function deleteConfirm(){
 	<br>
 	<div class="position-relative">
 	<div style="font-size: 11px">
-		<span th:text="${dateDto.day}"></span><span> </span><span th:text="${dateDto.time}"></span>
+		<span th:text="|${dateDto.day} ${dateDto.time}|"></span>
 	</div>
 		<div class="position-absolute top-0 end-0">
 			<th:block th:if="${updateRoleCheck}"> 
