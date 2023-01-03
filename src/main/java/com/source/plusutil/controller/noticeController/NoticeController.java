@@ -62,11 +62,12 @@ public class NoticeController {
 	public String noticeWriteAction(
 			String noticeTitle
 			, String noticeContent
+			, String category
 			,HttpServletRequest request
 			,Authentication authentication
 			, Integer currentPage) {
 		if(authenticationService.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
-			noticeService.writeNotice(noticeTitle, noticeContent, request, authentication);
+			noticeService.writeNotice(noticeTitle, noticeContent, category, request, authentication);
 			noticeService.getNoticeList(request, authentication, currentPage); //리스트 조회
 			return "/notice/noticeMain";
 		}else {

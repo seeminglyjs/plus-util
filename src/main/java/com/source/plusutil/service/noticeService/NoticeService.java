@@ -8,7 +8,7 @@ public interface NoticeService {
 
 	public void getNoticeList(HttpServletRequest request, Authentication authentication, Integer currentPage);
 	
-	public void writeNotice(String noticeTitle, String noticeContent, HttpServletRequest request, Authentication authentication);
+	public void writeNotice(String noticeTitle, String noticeContent, String category, HttpServletRequest request, Authentication authentication);
 	
 	public Integer getNoticeTotalPage(Integer currentPage, Integer listSize);
 	

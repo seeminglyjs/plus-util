@@ -11,21 +11,21 @@ public class NoticeWriteDto { //게시글 작성 DTO
 
 	private String title;
 	private String content;
+	private String category;
 	private String writer;
 	private String writeTime;
 
 	@Builder
-	public NoticeWriteDto(String title, String content, String writer, String writeTime) {
+	public NoticeWriteDto(String title, String content, String category, String writer, String writeTime) {
 		this.title = title;
 		this.content = content;
+		this.category = category;
 		this.writer = writer;
 		this.writeTime = writeTime;
-	}
-	
+	}	
 	public String getTitle() {
 		return title;
 	}
-	
 	public void setTitle(String title) {
 		this.title = title;
 	}
@@ -34,6 +34,12 @@ public class NoticeWriteDto { //게시글 작성 DTO
 	}
 	public void setContent(String content) {
 		this.content = content;
+	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
 	}
 	public String getWriter() {
 		return writer;
@@ -47,5 +53,7 @@ public class NoticeWriteDto { //게시글 작성 DTO
 	public void setWriteTime(String writeTime) {
 		this.writeTime = writeTime;
 	}
+
+
 
 }

@@ -40,6 +40,9 @@ public class NoticeDto {
 	@Column(name="writer") //명시적으로 적어두는게 좋다.
 	private String writer; //작성자
 	
+	@Column(name="category", length = 10) //명시적으로 적어두는게 좋다.
+	private String category; //카테고리
+	
 	@Column(name="sub_info1")
 	private String subInfo1;
 	
@@ -50,9 +53,10 @@ public class NoticeDto {
 	private String subInfo3;
 	
 	@Builder //빌더형식으로 객체를 생성할건지에 대한 어노테이션 게시글 생성
-	public NoticeDto(String title, String content, String writer, String writeDate) {
+	public NoticeDto(String title, String content, String category, String writer, String writeDate) {
 		this.title = title;
 		this.content = content;
+		this.category = category;
 		this.writer = writer;
 		this.writeDate = writeDate;
 	}
@@ -62,10 +66,10 @@ public class NoticeDto {
     	NoticeDto notice = NoticeDto.builder()
     			.title(noticeWriteDto.getTitle())
     			.content(noticeWriteDto.getContent())
+    			.category(noticeWriteDto.getCategory())
     			.writer(noticeWriteDto.getWriter())
     			.writeDate(noticeWriteDto.getWriteTime())
     			.build();
         return notice;
     }
-    
 }

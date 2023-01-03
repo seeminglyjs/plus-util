@@ -53,7 +53,7 @@ public class NoticeServiceImpl implements NoticeService{
 		if(authenticationService.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
 			request.setAttribute("noticeWriteRole", "ok"); //관리자일 경우 게시글 쓰기 권한 있음
 		}
-		Integer listSize = 5;
+		Integer listSize = 10;
 		
 		Integer totalNoticePage = getNoticeTotalPage(currentPage, listSize); //전체 페이지 정보를 가져온다.
 		if(currentPage > totalNoticePage - 1) {//요청된 페이지가 전체 페이지 보다 클경우
@@ -88,7 +88,7 @@ public class NoticeServiceImpl implements NoticeService{
 	 * @param authentication
 	 */
 	@Override
-	public void writeNotice(String noticeTitle, String noticeContent, HttpServletRequest request, Authentication authentication) {	
+	public void writeNotice(String noticeTitle, String noticeContent, String category, HttpServletRequest request, Authentication authentication) {	
 		if(authenticationService.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크		
 			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			String userEmail = ((UserDetails) principal).getUsername();
@@ -96,6 +96,7 @@ public class NoticeServiceImpl implements NoticeService{
 			NoticeWriteDto noticeWriteDto = new NoticeWriteDto(
 						noticeTitle
 						,noticeContent
+						,category
 						,userEmail
 						,DateUtil.getDateString());
 			log.info("noticeWriteDto -> " + noticeWriteDto.toString());

@@ -46,6 +46,13 @@ function noticeDataCheck (){
 		  <input type="text" class="form-control" id="noticeTitle" name ="noticeTitle" placeholder="공지사항 제목을 입력해 주세요.">
 		  <span id="titleCheckSpan"></span>
 		</div>
+		<div class="mb-3" style="width: 10%">
+		<select name="category" class="form-select form-select-sm" aria-label="Default select example">
+		  <option selected value="notice">공지사항</option>
+		  <option value="updateNote">업데이트</option>
+		  <option value="etc">ETC</option>
+		</select>
+		</div>
 		<div class="mb-3">
 		  <label for="noticeContent" class="form-label">내용</label>
 		  <textarea class="form-control" id="noticeContent"  name ="noticeContent" rows="20"></textarea>

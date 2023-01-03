@@ -48,8 +48,16 @@ function deleteConfirm(){
 
 <div class="container-md border rounded" style="height: 700px">
 	<br>
-
-	<h3 th:text="${noticeDetail.title}"></h3> 
+	
+	<p style="height: 30px;">
+	<span th:switch="${noticeDetail.category}">
+		<span style="font-size: 11px; font-weight: 600;" class="text-primary border border-primary rounded-1 p-1 align-text-top" th:case="notice">공지사항</span>
+		<span style="font-size: 11px; font-weight: 600;" class="text-success border border-success rounded-1 p-1 align-text-top" th:case="updateNote">업데이트</span>
+		<span style="font-size: 11px; font-weight: 600;" class="text-secondary border border-secondary rounded-1 p-1 align-text-top" th:case="etc">기타</span>
+	</span>
+		<strong style="font-size: 23px" th:text="${noticeDetail.title}" class=""></strong>
+	</p>
+	 
 	<strong th:text="${noticeDetail.writer}"></strong>
 	<br>
 	<div class="position-relative">
