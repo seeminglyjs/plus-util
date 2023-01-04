@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<div id="header-load" th:replace="html/head.html :: headFragment"></div>
+<div id="nav-load" th:insert="html/nav.html :: navFragment"></div>
+
+<div class="container-md">
+<!-----------------------------------------------------------------------------------------  -->
+
+
+
+    <!-- Three columns of text below the carousel -->
+	<div class="row">
+	  <div class="col-sm-6">
+	    <div class="card">
+	      <div class="card-body">
+	        <h5 class="card-title">글자 바이트 구하기</h5>
+	        <p class="card-text">입력한 글자에 따른 바이트를 계산할 수 있습니다.</p>
+	        <a href="/util/string/get/byte/main" class="btn btn-primary">Go Util</a>
+	      </div>
+	    </div>
+	  </div>
+	  <div class="col-sm-6">
+	    <div class="card">
+	      <div class="card-body">
+	        <h5 class="card-title">날짜 차이 계산</h5>
+	        <p class="card-text">주어진 두 날짜간의 차이를 구할 수 있습니다.</p>
+	        <a href="/util/time/calculate/day/main" class="btn btn-primary">Go Util</a>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+
+
+<!-----------------------------------------------------------------------------------------  -->
+</div>
+<div id="footer-load" class="container-md" th:insert="html/footer.html :: footerFragment"></div>.
+</body>
+</html>
