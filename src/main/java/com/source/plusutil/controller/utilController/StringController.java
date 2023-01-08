@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.source.plusutil.service.utilService.stringUtil.StringUtilServiceImpl;
+
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -15,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class StringController {
 
+	private final StringUtilServiceImpl stringUtilServiceImpl;
+	
 	@GetMapping("/string/main")
 	public String stringMain(HttpServletRequest request, Authentication authentication) {
 		return "/util/string/stringMain.html";
@@ -26,7 +30,8 @@ public class StringController {
 	}
 	
 	@PostMapping("/string/get/byte/action")
-	public String stringGetByteAction(HttpServletRequest request, Authentication authentication, String stringContent) {
+	public String stringGetByteAction(HttpServletRequest request, Authentication authentication, String stringContent, String encoding, String emptyYn) {
+		stringUtilServiceImpl.getStringByte(request, stringContent, encoding, emptyYn);
 		return "/util/string/getByteMain.html";
 	}
 }
