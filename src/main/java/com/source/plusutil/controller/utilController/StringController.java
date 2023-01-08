@@ -42,6 +42,7 @@ public class StringController {
 	
 	@PostMapping("/string/get/initial/action")
 	public String stringGetInitialAction(HttpServletRequest request, Authentication authentication, String stringContent) {
+		stringUtilServiceImpl.getInitialString(request, stringContent);
 		return "/util/string/getStringInitial.html";
 	}
 }

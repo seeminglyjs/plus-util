@@ -42,8 +42,8 @@ function DataCheck (){
 		  	<br>
 		  	<br>
 		  	<div class="form-floating">
-			  <textarea class="form-control" id="stringContentByteSpan" placeholder="Leave a comment here" th:if="${not #strings.isEmpty(stringContentByte)}" th:text="${stringContentByte}" style="height: 100px"></textarea> 
-			  <textarea class="form-control" id="stringContentByteSpan" placeholder="Leave a comment here" th:if="${#strings.isEmpty(stringContentByte)}" style="height: 100px">한글 문장을 우선 입력해주세요.</textarea> 
+			  <textarea class="form-control" id="initialStringSpan" placeholder="Leave a comment here" th:if="${not #strings.isEmpty(initialString)}" th:text="${initialString}" style="height: 100px"></textarea> 
+			  <textarea class="form-control" id="initialStringSpan" placeholder="Leave a comment here" th:if="${#strings.isEmpty(initialString)}" style="height: 100px">한글 문장을 우선 입력해주세요.</textarea> 
 			<label for="floatingSelect">초성 정보</label>
 			</div>
 			<br>
