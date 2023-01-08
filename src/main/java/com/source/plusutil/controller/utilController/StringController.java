@@ -34,4 +34,14 @@ public class StringController {
 		stringUtilServiceImpl.getStringByte(request, stringContent, encoding, emptyYn);
 		return "/util/string/getByteMain.html";
 	}
+	
+	@GetMapping("/string/get/initial/main")
+	public String stringGetInitialMain(HttpServletRequest request, Authentication authentication) {
+		return "/util/string/getStringInitial.html";
+	}
+	
+	@PostMapping("/string/get/initial/action")
+	public String stringGetInitialAction(HttpServletRequest request, Authentication authentication, String stringContent) {
+		return "/util/string/getStringInitial.html";
+	}
 }
