@@ -1,6 +1,8 @@
 package com.source.plusutil.service.utilService.stringUtil;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -66,7 +68,7 @@ public class StringUtilServiceImpl implements StringUtilService{
 			for(int i = 0; i < stringContentOp.get().length(); i++) {
 				String stringLocationInfo = String.valueOf(stringContentOp.get().charAt(i)); //현재 위치의 한글자 추출
 				if(stringLocationInfo.matches(".*[가-힣]+.*")) {// 한글일 경우
-					if(stringLocationInfo.charAt(0) >= 0xAC00)
+					if(stringLocationInfo.charAt(0) >= 0xAC00) // 음절 시작코드(10진값, 문자) : 0xAC00 (44032 ,'가' )
 					{
 						int unicode = stringLocationInfo.charAt(0) - 0xAC00;
 						int index = ((unicode - (unicode % 28))/28)/21;
@@ -83,6 +85,13 @@ public class StringUtilServiceImpl implements StringUtilService{
 			request.setAttribute("stringContent", "잘못된 정보가 입력되었습니다.");
 			request.setAttribute("initialString", initialString);
 		}
-
+	}
+	
+	@Override
+	public Map<String,String> getLengthString(HttpServletRequest request, String stringContent) {
+		Map<String,String> responseMap = new HashMap<>();
+		responseMap.put("stringContent", stringContent);
+		responseMap.put("stringLength", String.valueOf(stringContent.length()));
+		return responseMap;
 	}
 }
