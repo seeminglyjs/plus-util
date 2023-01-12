@@ -23,7 +23,7 @@ public class StringController {
 	private final StringUtilServiceImpl stringUtilServiceImpl;
 
 	@GetMapping("/string/main")
-	public String stringMain(HttpServletRequest request, Authentication authentication) {
+	public String stringMain() {
 		return "/util/string/stringMain.html";
 	}
 
@@ -39,7 +39,7 @@ public class StringController {
 	}
 
 	@GetMapping("/string/get/initial/main")
-	public String stringGetInitialMain(HttpServletRequest request, Authentication authentication) {
+	public String stringGetInitialMain(Authentication authentication) {
 		return "/util/string/getStringInitial.html";
 	}
 
@@ -58,5 +58,10 @@ public class StringController {
 	@ResponseBody
 	public Map<String,String> stringGetLengthAction(HttpServletRequest request, Authentication authentication, String stringContent) {
 		return stringUtilServiceImpl.getLengthString(request, stringContent);
+	}
+
+	@GetMapping("/string/convert/ual/main")
+	public String stringConvertUpperAndLowerMain(HttpServletRequest request, Authentication authentication, String stringContent) {
+		return "/util/string/getLengthMain.html";
 	}
 }
