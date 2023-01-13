@@ -62,6 +62,6 @@ public class StringController {
 
 	@GetMapping("/string/convert/ual/main")
 	public String stringConvertUpperAndLowerMain(HttpServletRequest request, Authentication authentication, String stringContent) {
-		return "/util/string/getLengthMain.html";
+		return "/util/string/covertUpperAndLower.html";
 	}
 }

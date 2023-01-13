@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<div id="header-load" th:replace="html/head.html :: headFragment"></div>
+<div id="nav-load" th:insert="html/nav.html :: navFragment"></div>
+
+<div class="container-md">
+    <!-----------------------------------------------------------------------------------------  -->
+
+    <script type="text/javascript">
+        /* 공지사항 폼 전달전 확인 사항  */
+        function DataCheck() {
+            //글자 입력칸 정규식 확인
+            var content = /^[ㄱ-ㅎㅏ-ㅣ가-힣A-Za-z0-9`~!\{|\}\<|\>.\,\)\(\[|\]@#$%^&*|\\\'\";:\/?\s]{2,1000}$$/
+            if (!content.test($("#stringContent").val())) { /* 내용 정규식 체크 2 ~ 500 자  */
+                $("#contentCheckSpan").text("글자는 2 ~ 1000 의 제한이 있습니다.").addClass("red")
+                $("#noticeContent").focus()
+                return false;
+            } else {
+                $("#contentCheckSpan").text("").removeClass("red")
+            }
+        }
+    </script>
+
+    <!-- test2 -->
+    <div class="container-md" id="stringGetByteContainer">
+        <form action="/util/string/get/byte/action" method="post" onsubmit="return DataCheck()">
+            <div class="row g-3">
+                <div class="col-md-2">
+                    <label for="encoding" class="form-label">인코딩 설정</label>
+                    <select id="encoding" name="encoding" class="form-select">
+                        <option value="UTF-8" th:selected="${encoding}=='UTF-8'">UTF-8</option>
+                        <option value="EUC-KR" th:selected="${encoding}=='EUC-KR'">EUC-KR</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="emptyYn" class="form-label">공백</label>
+                    <select id="emptyYn" name="emptyYn" class="form-select">
+                        <option value="No" th:selected="${emptyYn}=='No'">유지</option>
+                        <option value="Yes" th:selected="${emptyYn}=='Yes'">제거</option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class="mb-3">
+                <textarea class="form-control" id="stringContent" name="stringContent" rows="20"
+                          placeholder="내용을 입력해주세요." th:text="${stringContent}"></textarea>
+                <span id="contentCheckSpan"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">바이트 계산</button>
+        </form>
+
+        <br>
+        <div class="p-2 bg-light border">
+            <span class="badge bg-secondary">바이트 정보 확인</span>
+            <br>
+            <br>
+            <div class="form-floating">
+                <textarea class="form-control" id="stringContentByteSpan" placeholder="Leave a comment here"
+                          th:if="${not #strings.isEmpty(stringContentByte)}" th:text="|${stringContentByte}Byte|"
+                          style="height: 100px"></textarea>
+                <textarea class="form-control" id="stringContentByteSpan" placeholder="Leave a comment here"
+                          th:if="${#strings.isEmpty(stringContentByte)}"
+                          style="height: 100px">계산하고자 하는 글자를 우선 입력해 주세요.</textarea>
+            </div>
+            <br>
+        </div>
+    </div>
+
+    <br>
+    <br>
+    <div class="position-relative">
+        <div class="position-absolute bottom-0 end-50">
+            <a href="/util/string/main">
+                <button type="button" class="btn btn-primary">목록</button>
+            </a>
+        </div>
+
+    </div>
+
+    <!-----------------------------------------------------------------------------------------  -->
+</div>
+<div id="footer-load" class="container-md" th:insert="html/footer.html :: footerFragment"></div>
+</body>
+</html>
