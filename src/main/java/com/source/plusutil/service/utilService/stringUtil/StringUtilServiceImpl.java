@@ -86,12 +86,35 @@ public class StringUtilServiceImpl implements StringUtilService{
 			request.setAttribute("initialString", initialString);
 		}
 	}
-	
+
+	/**
+	 * 문자열에 길이를 계산하는 메소드
+	 *
+	 * @param request
+	 * @param stringContent
+	 * @return
+	 */
 	@Override
 	public Map<String,String> getLengthString(HttpServletRequest request, String stringContent) {
 		Map<String,String> responseMap = new HashMap<>();
 		responseMap.put("stringContent", stringContent);
 		responseMap.put("stringLength", String.valueOf(stringContent.length()));
 		return responseMap;
+	}
+
+	@Override
+	public void convertUpperAndLowerMain(HttpServletRequest request, String stringContent, String upperOrLower) {
+		String convertStringContent = ""; //변환된 문자열이 들어갈 변수
+		Optional<String> caseInfo = Optional.ofNullable(upperOrLower);
+
+		if(caseInfo.get().equals("upper")){
+			convertStringContent = stringContent.toUpperCase();
+		} else if (caseInfo.get().equals("lower")) {
+			convertStringContent = stringContent.toLowerCase();
+		}
+
+		request.setAttribute("convertStringContent", convertStringContent);
+		request.setAttribute("stringContent", stringContent);
+		request.setAttribute("upperOrLower", upperOrLower);
 	}
 }

@@ -61,7 +61,13 @@ public class StringController {
 	}
 
 	@GetMapping("/string/convert/ual/main")
-	public String stringConvertUpperAndLowerMain(HttpServletRequest request, Authentication authentication, String stringContent) {
-		return "/util/string/covertUpperAndLower.html";
+	public String stringConvertUpperAndLowerMain(HttpServletRequest request, Authentication authentication, String stringContent, String upperOrLower) {
+		return "/util/string/convertUpperAndLower.html";
+	}
+
+	@PostMapping("/string/convert/ual/action")
+	public String stringConvertUpperAndLowerAction(HttpServletRequest request, Authentication authentication, String stringContent, String upperOrLower) {
+		stringUtilServiceImpl.convertUpperAndLowerMain(request, stringContent, upperOrLower);
+		return "/util/string/convertUpperAndLower.html";
 	}
 }

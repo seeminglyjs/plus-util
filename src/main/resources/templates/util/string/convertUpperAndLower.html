@@ -25,21 +25,14 @@
     </script>
 
     <!-- test2 -->
-    <div class="container-md" id="stringGetByteContainer">
-        <form action="/util/string/get/byte/action" method="post" onsubmit="return DataCheck()">
+    <div id="stringGetByteContainer" class="container-md">
+        <form action="/util/string/convert/ual/action" method="post" onsubmit="return DataCheck()">
             <div class="row g-3">
                 <div class="col-md-2">
-                    <label for="encoding" class="form-label">인코딩 설정Test</label>
-                    <select id="encoding" name="encoding" class="form-select">
-                        <option value="UTF-8" th:selected="${encoding}=='UTF-8'">UTF-8</option>
-                        <option value="EUC-KR" th:selected="${encoding}=='EUC-KR'">EUC-KR</option>
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <label for="emptyYn" class="form-label">공백</label>
-                    <select id="emptyYn" name="emptyYn" class="form-select">
-                        <option value="No" th:selected="${emptyYn}=='No'">유지</option>
-                        <option value="Yes" th:selected="${emptyYn}=='Yes'">제거</option>
+                    <label for="upperOrLower" class="form-label">대소문자 설정</label>
+                    <select id="upperOrLower" name="upperOrLower" class="form-select">
+                        <option value="upper" th:selected="${upperOrLower}=='upper'">대문자</option>
+                        <option value="lower" th:selected="${upperOrLower}=='lower'">소문자</option>
                     </select>
                 </div>
             </div>
@@ -49,21 +42,21 @@
                           placeholder="내용을 입력해주세요." th:text="${stringContent}"></textarea>
                 <span id="contentCheckSpan"></span>
             </div>
-            <button type="submit" class="btn btn-primary">바이트 계산</button>
+            <button type="submit" class="btn btn-primary">문자 변환</button>
         </form>
 
         <br>
         <div class="p-2 bg-light border">
-            <span class="badge bg-secondary">바이트 정보 확인</span>
+            <span class="badge bg-secondary">변환 정보 확인</span>
             <br>
             <br>
             <div class="form-floating">
-                <textarea class="form-control" id="stringContentByteSpan" placeholder="Leave a comment here"
-                          th:if="${not #strings.isEmpty(stringContentByte)}" th:text="|${stringContentByte}Byte|"
+                <textarea class="form-control" id="convertStringContentSpan" placeholder="Leave a comment here"
+                          th:if="${not #strings.isEmpty(convertStringContent)}" th:text="${convertStringContent}"
                           style="height: 100px"></textarea>
-                <textarea class="form-control" id="stringContentByteSpan" placeholder="Leave a comment here"
-                          th:if="${#strings.isEmpty(stringContentByte)}"
-                          style="height: 100px">계산하고자 하는 글자를 우선 입력해 주세요.</textarea>
+                <textarea class="form-control" id="covertStringContentSpanNone" placeholder="Leave a comment here"
+                          th:if="${#strings.isEmpty(convertStringContent)}"
+                          style="height: 100px">문장을 우선 입력해 주세요.</textarea>
             </div>
             <br>
         </div>
