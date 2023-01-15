@@ -53,6 +53,7 @@
 
     <br>
     <hr>
+    <th:block th:if="${pageExist}">
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center"><!-- 페이징 가운데 정렬  -->
             <th:block th:if="${currentPage} <= 0"> <!-- 현재 페이지가 0 보다 작거나 같을 경우  -->
@@ -101,6 +102,7 @@
             </th:block>
         </ul>
     </nav>
+    </th:block>
 
     <th:block th:if="${not #strings.isEmpty(noticeWriteRole)}"> <!-- 관리자만 작성 가능  -->
         <a href="/notice/write">공지사항작성</a>
