@@ -106,7 +106,7 @@ public class StringUtilServiceImpl implements StringUtilService{
 	public void convertUpperAndLowerMain(HttpServletRequest request, String stringContent, String upperOrLower) {
 		String convertStringContent = ""; //변환된 문자열이 들어갈 변수
 		Optional<String> caseInfo = Optional.ofNullable(upperOrLower);
-
+		//test
 		if(caseInfo.get().equals("upper")){
 			convertStringContent = stringContent.toUpperCase();
 		} else if (caseInfo.get().equals("lower")) {
