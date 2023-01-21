@@ -4,16 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import static org.unbescape.html.HtmlEscape.escapeHtml4;
-
 public class XSSUtils {
-    private XSSUtils()
-    {
-
-    }
+    private XSSUtils() {}
 
     public static String stripXSS(String value) {
-        return value == null ? value : escapeHtml4(value);
+        return value == null ? value : value.replaceAll("<","&lt;").replaceAll(">","&gt;");
+    }
+
+    public static String unStripXSS(String value) {
+        return value == null ? value : value.replaceAll("&lt;","<").replaceAll("&gt;",">");
     }
 
     public static Map<String,String> stripXSSToMap(Map<String,String> requestMap){

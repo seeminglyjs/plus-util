@@ -13,7 +13,7 @@
 /* 공지사항 폼 전달전 확인 사항  */
 function noticeDataCheck (){
 	//제목 정규식 확인
-	var title = /^[ㄱ-ㅎㅏ-ㅣ가-힣A-Za-z0-9`~!@#$%^&*|\\\'\";:\/?]{2,50}$/ /* 제목 정규식 체크 2 ~ 50 자 */
+	var title = /^[ㄱ-ㅎㅏ-ㅣ가-힣A-Za-z0-9`~!\{|\}\<|\>.\,\)\(\[|\]@#$%^&*|\\\'\";:\/?\s]{2,50}$/ /* 제목 정규식 체크 2 ~ 50 자 */
 		if(!title.test($("#noticeTitle").val())){
 			$("#titleCheckSpan").text("제목은 2 ~ 50 글자를 맞추어야 합니다.").addClass("red")
 			$("#noticeTitle").focus()
@@ -24,7 +24,7 @@ function noticeDataCheck (){
 		}
 	
 	//내용 정규식 확인
-	var content = /^[ㄱ-ㅎㅏ-ㅣ가-힣A-Za-z0-9`~!@#$%^&*|\\\'\";:\/?]{2,500}$$/ 
+	var content =/^[ㄱ-ㅎㅏ-ㅣ가-힣A-Za-z0-9`~!\{|\}\<|\>.\,\)\(\[|\]@#$%^&*|\\\'\";:\/?\s]{2,500}$$/
 		if(!content.test($("#noticeContent").val())){ /* 내용 정규식 체크 2 ~ 500 자  */
 			$("#contentCheckSpan").text("내용은 2 ~ 500 글자를 맞추어야 합니다.").addClass("red")
 			$("#noticeContent").focus()

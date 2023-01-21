@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.source.plusutil.utils.html.HtmlUtil;
 import com.source.plusutil.utils.protect.XSSUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -152,6 +153,8 @@ public class NoticeServiceImpl implements NoticeService {
                 if (noticeDetailInfo.isPresent()) {//조회번호에 따른 공지사항 정보가 존재하면
                     log.info("NoticeDetailInfo -> " + noticeDetailInfo.get().toString());
                     NoticeDto noticeDetail = noticeDetailInfo.get();
+                    noticeDetail.setTitle(HtmlUtil.escapeDataPlusSpan(noticeDetail.getTitle()));
+                    noticeDetail.setContent(HtmlUtil.escapeDataPlusSpan(noticeDetail.getContent()));
                     DateDto dateDto = getDateInfo(noticeDetail);
                     request.setAttribute("noticeDetail", noticeDetail); //객체 저장
                     request.setAttribute("dateDto", dateDto); //날짜 객체 저장

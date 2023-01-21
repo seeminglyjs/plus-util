@@ -55,7 +55,7 @@ function deleteConfirm(){
 		<span style="font-size: 11px; font-weight: 600;" class="text-success border border-success rounded-1 p-1 align-text-top" th:case="updateNote">업데이트</span>
 		<span style="font-size: 11px; font-weight: 600;" class="text-secondary border border-secondary rounded-1 p-1 align-text-top" th:case="etc">기타</span>
 	</span>
-		<strong style="font-size: 23px" th:text="${noticeDetail.title}" class=""></strong>
+		<strong style="font-size: 23px" th:utext="${noticeDetail.title}" class=""></strong>
 	</p>
 	 
 	<strong th:text="${noticeDetail.writer}"></strong>
@@ -82,7 +82,9 @@ function deleteConfirm(){
 	<hr>
 	<br>
 	<div>
-		<p th:text="${noticeDetail.content}">
+		<p>
+			<th:block th:utext="${noticeDetail.content}">
+			</th:block>
 		</p>
 	</div>
 </div>
