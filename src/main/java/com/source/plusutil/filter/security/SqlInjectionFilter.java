@@ -18,6 +18,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.source.plusutil.utils.http.HttpParamCheckUtil;
 import org.springframework.core.annotation.Order;
 
 import lombok.extern.slf4j.Slf4j;
@@ -39,14 +40,14 @@ public class SqlInjectionFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		log.info("===== SqlInjectionCheck init =====");
+		log.debug("===== SqlInjectionCheck init =====");
 	}
 
 	//필터 시작
 	@Override
 	public void doFilter(ServletRequest serRequest, ServletResponse serResponse, FilterChain chain)
 			throws IOException, ServletException {
-		log.info("===== SqlInjectionCheck Filter start =====");
+		log.debug("===== SqlInjectionCheck Filter start =====");
 
 		HttpServletRequest request = (HttpServletRequest)serRequest;
 		HttpServletResponse response = (HttpServletResponse)serResponse;
@@ -68,17 +69,7 @@ public class SqlInjectionFilter implements Filter {
 				);	
 
 		//파라미터 정보를 가져온다.
-		Map<String, String> map = new HashMap<String, String>();
-		Enumeration<String> enumber = request.getParameterNames();
-
-		//파라미터 정보 to map
-		while (enumber.hasMoreElements()) {
-			String key = enumber.nextElement().toString();
-			log.info("ParameterNames -> " + key);
-			String value = request.getParameter(key);
-			log.info("ParameterNames value -> " + value);
-			map.put(key, value);  
-		}
+		Map<String, String> map = HttpParamCheckUtil.httpRequestParamToMap(request);
 
 		if(map == null || map.isEmpty()) {
 			log.info("===== SqlInjectionCheck getParameterNames is empty =====");

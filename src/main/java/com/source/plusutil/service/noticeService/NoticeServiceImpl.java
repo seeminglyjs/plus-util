@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.source.plusutil.utils.protect.XSSUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -103,8 +104,8 @@ public class NoticeServiceImpl implements NoticeService {
                 String userEmail = ((UserDetails) principal).getUsername();
 
                 NoticeWriteDto noticeWriteDto = new NoticeWriteDto(
-                        noticeTitle
-                        , noticeContent
+                        XSSUtils.stripXSS(noticeTitle)
+                        , XSSUtils.stripXSS(noticeContent)
                         , category
                         , userEmail
                         , DateUtil.getDateString());
