@@ -7,83 +7,86 @@
 <div id="nav-load" th:insert="html/nav.html :: navFragment"></div>
 
 <div class="container-md">
-<!-----------------------------------------------------------------------------------------  -->
-<script type="text/javascript">
-/* 공지사항 폼 전달전 확인 사항  */
-function DataCheck (){	
-	//글자 입력칸 정규식 확인
-	var content = /^[ㄱ-ㅎㅏ-ㅣ가-힣A-Za-z0-9`~!\{|\}\<|\>.\,\)\(\[|\]@#$%^&*|\\\'\";:\/?\s]{2,10000}$$/ 
-		if(!content.test($("#stringContent").val())){ /* 내용 정규식 체크 2 ~ 500 자  */
-			$("#contentCheckSpan").text("글자는 2 ~ 10000 의 제한이 있습니다.").addClass("red")
-			$("#noticeContent").focus()
-			$("#stringLengthSpan").text("조건에 맞게 입력해주세요.")
-			return false;
-		}else{
-			$("#contentCheckSpan").text("")
-			$("#contentCheckSpan").removeClass("red")		
-			return true;	
-		}	
-}
+    <!-----------------------------------------------------------------------------------------  -->
+    <script th:inline="javascript">
+		/*<![CDATA[*/
+        function DataCheck() {
+            const regex =  "^" + [[${regexAllPermit}]] + "{2,10000}$$";
+            const content =new RegExp(`${regex}`);
+            console.log(content)
+            if (!content.test($("#stringContent").val())) {
+                $("#contentCheckSpan").text("글자는 2 ~ 10000 의 제한이 있습니다.").addClass("red")
+                $("#noticeContent").focus()
+                $("#stringLengthSpan").text("조건에 맞게 입력해주세요.")
+                return false;
+            } else {
+                $("#contentCheckSpan").text("").removeClass("red")
+                return true;
+            }
+        }
 
-$(document).ready(function(){
-	// id 인풋창 정규식 체크
-	$("#stringContent").on("propertychange change keyup paste input blur", function(){
-		if(DataCheck()){
-			//중복검사ajax
-			$.ajax({
-				url : '/util/string/get/length/action'
-				,type : 'post'
-				,data : {stringContent : $("#stringContent").val() }
-				,dataType : 'json'
-				,success : function(data) {										
-					if (data.stringLength >= 1) {
-						$("#stringLengthSpan").text(data.stringLength + " 자")
-					}else {
-						$("#stringLengthSpan").text("글자를 우선 입력해주세요.")
-					}
-				}
-				, error : function(error) {
-					console.log(error)
-				}
-			}); //ajax 끝		
-		}
-	})
-})
-</script>
+        $(document).ready(function () {
+            $("#stringContent").on("propertychange change keyup paste input blur", function () {
+                if (DataCheck()) {
+                    $.ajax({
+                        url: '/util/string/get/length/action'
+                        , type: 'post'
+                        , data: {stringContent: $("#stringContent").val()}
+                        , dataType: 'json'
+                        , success: function (data) {
+                            if (data.stringLength >= 1) {
+                                $("#stringLengthSpan").text(data.stringLength + " 자")
+                            } else {
+                                $("#stringLengthSpan").text("글자를 우선 입력해주세요.")
+                            }
+                        }
+                        , error: function (error) {
+                            console.log(error)
+                        }
+                    });
+                }
+            })
+        })
+        /*]]>*/
+    </script>
 
-	<!-- test2 -->
-	<div class="container-md" id="stringGetByteContainer">
-		<form action="" method="post" onsubmit="return DataCheck()">
-  			<div class="mb-3">
-  			<label for="stringContent" class="form-label">내용 입력</label>
-			  <textarea class="form-control" id="stringContent" name ="stringContent" rows="20" placeholder="내용을 입력해주세요."></textarea>
-			  <span id="contentCheckSpan"></span>
-			</div>
-		</form>
-		
-		<br>
-		<div class="p-2 bg-light border">
-		  	<span class="badge bg-secondary">글자 수 확인</span> 
-		  	<br>
-		  	<br>
-		  	<div class="form-floating">
-			  <textarea class="form-control" id="stringLengthSpan" placeholder="Leave a comment here" style="height: 100px">글자를 우선 입력해주세요.</textarea> 
-			<label for="floatingSelect">글자 수 정보</label>
-			</div>
-			<br>
-	  	</div>
-	</div>
-	
-	<br>
-	<br>
-	<div class="position-relative">
-	<div class="position-absolute bottom-0 end-50">
-		<a href="/util/string/main"><button type="button" class="btn btn-primary">목록</button></a>
-	</div>
-	
+    <!-- test2 -->
+    <div class="container-md" id="stringGetByteContainer">
+        <form action="" method="post" onsubmit="return DataCheck()">
+            <div class="mb-3">
+                <label for="stringContent" class="form-label">내용 입력</label>
+                <textarea class="form-control" id="stringContent" name="stringContent" rows="20"
+                          placeholder="내용을 입력해주세요."></textarea>
+                <span id="contentCheckSpan"></span>
+            </div>
+        </form>
+
+        <br>
+        <div class="p-2 bg-light border">
+            <span class="badge bg-secondary">글자 수 확인</span>
+            <br>
+            <br>
+            <div class="form-floating">
+                <textarea class="form-control" id="stringLengthSpan" placeholder="Leave a comment here"
+                          style="height: 100px">글자를 우선 입력해주세요.</textarea>
+                <label>글자 수 정보</label>
+            </div>
+            <br>
+        </div>
+    </div>
+
+    <br>
+    <br>
+    <div class="position-relative">
+        <div class="position-absolute bottom-0 end-50">
+            <a href="/util/string/main">
+                <button type="button" class="btn btn-primary">목록</button>
+            </a>
+        </div>
+
+    </div>
+    <!-----------------------------------------------------------------------------------------  -->
 </div>
-<!-----------------------------------------------------------------------------------------  -->
-</div>
-<div id="footer-load" class="container-md" th:insert="html/footer.html :: footerFragment"></div>.
+<div id="footer-load" class="container-md" th:insert="html/footer.html :: footerFragment"></div>
 </body>
 </html>

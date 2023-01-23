@@ -2,6 +2,7 @@ package com.source.plusutil.controller.noticeController;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.source.plusutil.enums.regex.RegexExpressionEnum;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,6 +42,7 @@ public class NoticeController {
 	@GetMapping("/write")
 	public String noticeWrite(HttpServletRequest request, Authentication authentication, Integer currentPage) {
 		if(authenticationService.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
+			request.setAttribute("regexAllPermit", RegexExpressionEnum.ALL_PERMIT.getRegex());
 			return "/notice/noticeWrite";
 		}else {
 			noticeService.getNoticeList(request, authentication, currentPage); //리스트 조회
@@ -127,6 +129,7 @@ public class NoticeController {
 			, String noticeContent
 			) {
 		if(authenticationService.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
+			request.setAttribute("regexAllPermit", RegexExpressionEnum.ALL_PERMIT.getRegex());
 			request.setAttribute("noticeNo", noticeNo);
 			request.setAttribute("noticeTitle", noticeTitle);
 			request.setAttribute("noticeContent", noticeContent);

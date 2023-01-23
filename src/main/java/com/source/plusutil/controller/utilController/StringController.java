@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.source.plusutil.enums.regex.RegexExpressionEnum;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,45 +30,53 @@ public class StringController {
 
 	@GetMapping("/string/get/byte/main")
 	public String stringGetByteMain(HttpServletRequest request, Authentication authentication) {
+		request.setAttribute("regexAllPermit", RegexExpressionEnum.ALL_PERMIT.getRegex());
 		return "/util/string/getByteMain.html";
 	}
 
 	@PostMapping("/string/get/byte/action")
 	public String stringGetByteAction(HttpServletRequest request, Authentication authentication, String stringContent, String encoding, String emptyYn) {
 		stringUtilServiceImpl.getStringByte(request, stringContent, encoding, emptyYn);
+		request.setAttribute("regexAllPermit", RegexExpressionEnum.ALL_PERMIT.getRegex());
 		return "/util/string/getByteMain.html";
 	}
 
 	@GetMapping("/string/get/initial/main")
-	public String stringGetInitialMain(Authentication authentication) {
+	public String stringGetInitialMain(HttpServletRequest request, Authentication authentication) {
+		request.setAttribute("regexAllPermit", RegexExpressionEnum.ALL_PERMIT.getRegex());
 		return "/util/string/getStringInitial.html";
 	}
 
 	@PostMapping("/string/get/initial/action")
 	public String stringGetInitialAction(HttpServletRequest request, Authentication authentication, String stringContent) {
 		stringUtilServiceImpl.getInitialString(request, stringContent);
+		request.setAttribute("regexAllPermit", RegexExpressionEnum.ALL_PERMIT.getRegex());
 		return "/util/string/getStringInitial.html";
 	}
 
 	@GetMapping("/string/get/length/main")
-	public String stringGetLengthMain(HttpServletRequest request, Authentication authentication, String stringContent) {
+	public String stringGetLengthMain(HttpServletRequest request) {
+		request.setAttribute("regexAllPermit", RegexExpressionEnum.ALL_PERMIT.getRegex());
 		return "/util/string/getLengthMain.html";
 	}
 	
 	@PostMapping("/string/get/length/action")
 	@ResponseBody
-	public Map<String,String> stringGetLengthAction(HttpServletRequest request, Authentication authentication, String stringContent) {
+	public Map<String,String> stringGetLengthAction(HttpServletRequest request, String stringContent) {
+		request.setAttribute("regexAllPermit", RegexExpressionEnum.ALL_PERMIT.getRegex());
 		return stringUtilServiceImpl.getLengthString(request, stringContent);
 	}
 
 	@GetMapping("/string/convert/ual/main")
-	public String stringConvertUpperAndLowerMain(HttpServletRequest request, Authentication authentication, String stringContent, String upperOrLower) {
+	public String stringConvertUpperAndLowerMain(HttpServletRequest request) {
+		request.setAttribute("regexAllPermit", RegexExpressionEnum.ALL_PERMIT.getRegex());
 		return "/util/string/convertUpperAndLower.html";
 	}
 
 	@PostMapping("/string/convert/ual/action")
-	public String stringConvertUpperAndLowerAction(HttpServletRequest request, Authentication authentication, String stringContent, String upperOrLower) {
+	public String stringConvertUpperAndLowerAction(HttpServletRequest request, String stringContent, String upperOrLower) {
 		stringUtilServiceImpl.convertUpperAndLowerMain(request, stringContent, upperOrLower);
+		request.setAttribute("regexAllPermit", RegexExpressionEnum.ALL_PERMIT.getRegex());
 		return "/util/string/convertUpperAndLower.html";
 	}
 }

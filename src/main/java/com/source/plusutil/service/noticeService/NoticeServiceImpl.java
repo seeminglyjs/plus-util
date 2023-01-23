@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.source.plusutil.enums.regex.RegexExpressionEnum;
 import com.source.plusutil.utils.html.HtmlUtil;
 import com.source.plusutil.utils.protect.XSSUtils;
 import org.springframework.data.domain.Page;
@@ -68,7 +69,7 @@ public class NoticeServiceImpl implements NoticeService {
 		boolean pageExist = false;
 		long totalNoticeCount = 0L;
         if (totalNoticePage > 0) { //공지사항이 적어도 1개는 있을경우
-            pageRequest = PageRequest.of(currentPage, listSize, Sort.by("noticeNo")); //현재 페이지와 리스트 크기 공지사항 번호기준 오름차순 정렬
+            pageRequest = PageRequest.of(currentPage, listSize, Sort.by(Sort.Direction.DESC, "noticeNo")); //현재 페이지와 리스트 크기 공지사항 번호기준 내림차순 정렬
 			noticePageList = noticeRepository.findAll(pageRequest); //공지사항 리스트 정보를 가져온다.
 			pageExist = true;
 			for (NoticeDto nd : noticePageList) {//정보 출력

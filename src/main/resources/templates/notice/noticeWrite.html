@@ -9,11 +9,11 @@
 <div class="container-md">
 <!-----------------------------------------------------------------------------------------  -->
 
-<script type="text/javascript">
-/* 공지사항 폼 전달전 확인 사항  */
+<script th:inline="javascript">
+/*<![CDATA[*/
 function noticeDataCheck (){
-	//제목 정규식 확인
-	var title =/^[ㄱ-ㅎㅏ-ㅣ가-힣A-Za-z0-9`~!\{|\}\<|\>.\,\)\(\[|\]@#$%^&*|\\\'\";:\/?\s]{2,50}$/ /* 제목 정규식 체크 2 ~ 50 자 */
+	const regexTitle = "^" +[[${regexAllPermit}]] + "{2,50}$$";
+	const title = "^" + regexTitle + "{2,50}$"
 		if(!title.test($("#noticeTitle").val())){
 			$("#titleCheckSpan").text("제목은 2 ~ 50 글자를 맞추어야 합니다.").addClass("red")
 			$("#noticeTitle").focus()
@@ -22,9 +22,9 @@ function noticeDataCheck (){
 			$("#titleCheckSpan").text("")
 			$("#titleCheckSpan").removeClass("red")
 		}
-	
-	//내용 정규식 확인
-	var content = /^[ㄱ-ㅎㅏ-ㅣ가-힣A-Za-z0-9`~!\{|\}\<|\>.\,\)\(\[|\]@#$%^&*|\\\'\";:\/?\s]{2,10000}$$/
+
+	const regexContent = "^" +[[${regexAllPermit}]] + "{2,500}$$";
+	const content =new RegExp(`${regexContent}`);
 		if(!content.test($("#noticeContent").val())){ /* 내용 정규식 체크 2 ~ 500 자  */
 			$("#contentCheckSpan").text("내용은 2 ~ 500 글자를 맞추어야 합니다.").addClass("red")
 			$("#noticeContent").focus()
@@ -35,7 +35,7 @@ function noticeDataCheck (){
 		}
 	
 }
-
+/*]]>*/
 
 </script>
 
