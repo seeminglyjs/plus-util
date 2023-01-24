@@ -7,8 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -24,8 +22,8 @@ public class AuthenticationFilter implements Filter {
 
     private final AuthenticationServiceImpl authenticationService;
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-        Filter.super.init(filterConfig);
+    public void init(FilterConfig filterConfig) {
+        log.info("===== AuthenticationFilter init =====");
     }
 
     @Override
@@ -34,7 +32,7 @@ public class AuthenticationFilter implements Filter {
         try {
             authentication = SecurityContextHolder.getContext().getAuthentication();
         } catch (NullPointerException e) {
-            log.info("principal is empty =====");
+            log.info("authentication is empty =====");
         }
 
         HttpServletRequest request = (HttpServletRequest) serRequest;
