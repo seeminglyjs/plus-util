@@ -2,11 +2,13 @@ package com.source.plusutil.filter.login;
 
 import com.source.plusutil.enums.UserRolePlusEnum;
 import com.source.plusutil.service.authService.AuthenticationServiceImpl;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -18,6 +20,7 @@ import java.io.IOException;
 @Order(98)
 @Slf4j
 @RequiredArgsConstructor
+@Component
 public class AuthenticationFilter implements Filter {
 
     private final AuthenticationServiceImpl authenticationService;
