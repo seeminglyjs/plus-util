@@ -24,15 +24,15 @@ public class AuthenticationServiceImpl implements AuthService{ //서비스 요�
 			return false;
 		}
 
-		if(!authListOp.isPresent()) {
+		if(authListOp.isEmpty()) {
 			return false;
 		}else {
 			List<GrantedAuthority> authList = authListOp.get();
 			log.info("권한 : ");
 			boolean authCheck = false;
-			for(int i = 0; i< authList.size(); i++) {
-				log.info(authList.get(i).getAuthority() + " ");
-				if(authList.get(i).getAuthority().equals(role)) {
+			for (GrantedAuthority grantedAuthority : authList) {
+				log.info(grantedAuthority.getAuthority() + " ");
+				if (grantedAuthority.getAuthority().equals(role)) {
 					authCheck = true;
 				}
 			}
