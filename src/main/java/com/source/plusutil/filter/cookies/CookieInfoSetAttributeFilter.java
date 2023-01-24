@@ -32,7 +32,7 @@ public class CookieInfoSetAttributeFilter implements Filter{
 	public void doFilter(ServletRequest serRequest, ServletResponse serResponse, FilterChain chain)
 			throws IOException, ServletException {
 
-		log.info("===== CookieCheck start =====");
+		log.debug("===== CookieCheck start =====");
 		HttpServletRequest request = (HttpServletRequest)serRequest;
 		HttpServletResponse response = (HttpServletResponse)serResponse;
 
@@ -45,17 +45,17 @@ public class CookieInfoSetAttributeFilter implements Filter{
 			for(Cookie cookie : cookies) { //쿠키값을 확인하며 로그인 정보 체크
 				if(cookie.getName().equals("loginOk")) {
 					cookieflag = true;
-					log.info("loging ok cookie info -> " + cookie.getValue());
+					log.debug("loging ok cookie info -> " + cookie.getValue());
 					break;
 				}
 			}
 		}
 
 		if(cookieflag) {//로그인 여부 확인
-			log.info("cookieflag true =====");
+			log.debug("cookieflag true =====");
 			request.setAttribute("loginCookieInfo", "ok");
 		}else {
-			log.info("cookieflag false =====");
+			log.debug("cookieflag false =====");
 			request.setAttribute("loginCookieInfo", null);
 		}	
 

@@ -23,7 +23,7 @@
           </a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             보안
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -34,7 +34,7 @@
           </ul>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             유틸
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -45,7 +45,7 @@
           </ul>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             알고리즘
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -65,13 +65,14 @@
         <button class="btn btn-outline-primary  me-2" type="submit">                
         	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
   			<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+            </svg>
 		</button>
            
-        <th:block th:if="${not #strings.isEmpty(loginCookieInfo)}">       		
+        <th:block th:if="${not #strings.isEmpty(AuthenticationCheck)}">
 			<a href="/logout"><button class="btn btn-outline-success  me-2" type="button">Logout</button></a>
 		</th:block>
         
-        <th:block th:if="${#strings.isEmpty(loginCookieInfo)}">
+        <th:block th:if="${#strings.isEmpty(AuthenticationCheck)}">
 			<a href="/login"><button class="btn btn-outline-success  me-2" type="button">Login</button></a>
 	    	<a href="/join"><button class="btn btn-outline-success  me-2" type="button">Join</button></a>
 		</th:block>

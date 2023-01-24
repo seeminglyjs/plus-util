@@ -80,7 +80,7 @@ public class SecurityConfig {
 			.csrf()//csrf 보안 설정을 비활성화
 			.disable();//해당 기능을 사용하기 위해서는 프론트단에서 csrf토큰값 보내줘야함
 			// Cross site Request forgery로 사이즈간 위조 요청인데, 즉 정상적인 사용자가 의도치 않은 위조요청을 보내는 것을 의미한다.
-		
+
 		http.sessionManagement()
 			.maximumSessions(1) // 최대 접속수를 1개로 제한한다. 다른 사용자가 로그인하면 이전 사용자 로그인 풀림
 	        .expiredUrl("/login"); // 세션이 제한 되었을 경우 리다이렉트 할 URL
