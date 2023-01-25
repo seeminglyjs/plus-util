@@ -10,7 +10,7 @@ import java.util.Optional;
 @Slf4j
 public class AuthObjectUtil {
 
-    public boolean authenticationConfirm(Authentication authentication, String role) {
+    public static boolean authenticationConfirm(Authentication authentication, String role) {
         Optional<List<GrantedAuthority>> authListOp;
         try {
             authListOp = Optional.ofNullable((List<GrantedAuthority>) authentication.getAuthorities());

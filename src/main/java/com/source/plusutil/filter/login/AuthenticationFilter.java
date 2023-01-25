@@ -35,10 +35,9 @@ public class AuthenticationFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) serRequest;
         HttpServletResponse response = (HttpServletResponse) serResponse;
         if (authentication instanceof Authentication) {//현재 객체가 UserDetails 정보를 가지고 있는지 확인
-            AuthObjectUtil authObjectUtil = new AuthObjectUtil();
-            if(authObjectUtil.authenticationConfirm((Authentication) authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) {
+            if(AuthObjectUtil.authenticationConfirm((Authentication) authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) {
                 request.setAttribute("AuthenticationCheck", "ok");
-            }else if(authObjectUtil.authenticationConfirm((Authentication) authentication, UserRolePlusEnum.ROLE_USER.toString())){
+            }else if(AuthObjectUtil.authenticationConfirm((Authentication) authentication, UserRolePlusEnum.ROLE_USER.toString())){
                 request.setAttribute("AuthenticationCheck", "ok");
             }else {
                 request.setAttribute("AuthenticationCheck", null);

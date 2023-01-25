@@ -1,14 +1,17 @@
 package com.source.plusutil.service.noticeService;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Optional;
-
-import javax.servlet.http.HttpServletRequest;
-
-import com.source.plusutil.enums.regex.RegexExpressionEnum;
+import com.source.plusutil.dto.etc.DateDto;
+import com.source.plusutil.dto.notice.NoticeDto;
+import com.source.plusutil.dto.notice.NoticeWriteDto;
+import com.source.plusutil.enums.UserRolePlusEnum;
+import com.source.plusutil.repository.noticeRepository.NoticeRepository;
+import com.source.plusutil.utils.auth.AuthObjectUtil;
+import com.source.plusutil.utils.etc.DateUtil;
+import com.source.plusutil.utils.etc.PagingUtil;
 import com.source.plusutil.utils.html.HtmlUtil;
 import com.source.plusutil.utils.protect.XSSUtils;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -17,25 +20,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import com.source.plusutil.dto.etc.DateDto;
-import com.source.plusutil.dto.notice.NoticeDto;
-import com.source.plusutil.dto.notice.NoticeWriteDto;
-import com.source.plusutil.enums.UserRolePlusEnum;
-import com.source.plusutil.repository.noticeRepository.NoticeRepository;
-import com.source.plusutil.service.authService.AuthenticationServiceImpl;
-import com.source.plusutil.utils.etc.DateUtil;
-import com.source.plusutil.utils.etc.PagingUtil;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class NoticeServiceImpl implements NoticeService {
-
-    private final AuthenticationServiceImpl authenticationService;
-
     private final NoticeRepository noticeRepository;
 
     /**
@@ -55,10 +46,10 @@ public class NoticeServiceImpl implements NoticeService {
             currentPage = 0;
         } // 0보다 작은 페이지 넘버는 존재할 수 없음
 
-        if (authenticationService.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
+        if (AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
             request.setAttribute("noticeWriteRole", "ok"); //관리자일 경우 게시글 쓰기 권한 있음
         }
-        Integer listSize = 10;
+        int listSize = 10;
 
         Integer totalNoticePage = getNoticeTotalPage(currentPage, listSize); //전체 페이지 정보를 가져온다.
         if (currentPage > totalNoticePage - 1) {//요청된 페이지가 전체 페이지 보다 클경우
@@ -101,13 +92,13 @@ public class NoticeServiceImpl implements NoticeService {
         @Override
         public void writeNotice (String noticeTitle, String noticeContent, String category, HttpServletRequest
         request, Authentication authentication){
-            if (authenticationService.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
+            if (AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
                 Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
                 String userEmail = ((UserDetails) principal).getUsername();
 
                 NoticeWriteDto noticeWriteDto = new NoticeWriteDto(
                         XSSUtils.stripXSS(noticeTitle)
-                        , XSSUtils.stripXSS(noticeContent)
+                        , XSSUtils.stripXSS(HtmlUtil.containLineSeparatorDataPlusBr(noticeContent))
                         , category
                         , userEmail
                         , DateUtil.getDateString());
@@ -144,7 +135,7 @@ public class NoticeServiceImpl implements NoticeService {
         @Override
         public void getNoticeDetailInfo (HttpServletRequest request, Authentication authentication, Integer noticeNo){
             log.info("getNoticeDetailInfo noticeNo -> [" + noticeNo + "]");
-            if (authenticationService.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
+            if (AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
                 request.setAttribute("updateRoleCheck", true); //조회한 유저가 관리자면 게시글 수정 권한이 있음
             } else {
                 request.setAttribute("updateRoleCheck", false);
@@ -197,7 +188,7 @@ public class NoticeServiceImpl implements NoticeService {
         @Override
         public void deleteNoticeInfo (HttpServletRequest request, Authentication authentication, Integer noticeNo){
             log.info("deleteNoticeInfo noticeNo -> [" + noticeNo + "]");
-            if (!authenticationService.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
+            if (!AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
                 return; //권한 없으면 리턴
             } else {
                 if (noticeNo == null) {
@@ -216,7 +207,7 @@ public class NoticeServiceImpl implements NoticeService {
         public void updateNoticeInfo (HttpServletRequest request, Authentication authentication, Integer
         noticeNo, String noticeTitle, String noticeContent){
             log.info("updateNoticeInfo noticeNo -> [" + noticeNo + "]" + "noticeTitle ->[" + noticeTitle + "]" + "noticeContent -> [" + noticeContent + "]");
-            if (!authenticationService.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
+            if (!AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
                 return; //권한 없으면 리턴
             } else {
                 if (noticeNo == null || noticeTitle == null || noticeContent == null) {

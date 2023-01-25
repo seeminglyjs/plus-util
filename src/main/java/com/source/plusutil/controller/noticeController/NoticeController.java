@@ -1,19 +1,17 @@
 package com.source.plusutil.controller.noticeController;
 
-import javax.servlet.http.HttpServletRequest;
-
+import com.source.plusutil.enums.UserRolePlusEnum;
 import com.source.plusutil.enums.regex.RegexExpressionEnum;
+import com.source.plusutil.service.noticeService.NoticeServiceImpl;
+import com.source.plusutil.utils.auth.AuthObjectUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.source.plusutil.enums.UserRolePlusEnum;
-import com.source.plusutil.service.authService.AuthenticationServiceImpl;
-import com.source.plusutil.service.noticeService.NoticeServiceImpl;
-
-import lombok.RequiredArgsConstructor;
+import javax.servlet.http.HttpServletRequest;
 
 
 @Controller
@@ -22,9 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class NoticeController {
 
 	private final NoticeServiceImpl noticeService;
-	
-	private final AuthenticationServiceImpl authenticationService;
-	
+
 	@GetMapping("/main")
 	public String noticeMain(HttpServletRequest request, Authentication authentication, Integer currentPage) {
 		noticeService.getNoticeList(request, authentication, currentPage);
@@ -41,7 +37,7 @@ public class NoticeController {
 	 */
 	@GetMapping("/write")
 	public String noticeWrite(HttpServletRequest request, Authentication authentication, Integer currentPage) {
-		if(authenticationService.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
+		if(AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
 			request.setAttribute("regexAllPermit", RegexExpressionEnum.ALL_PERMIT.getRegex());
 			return "/notice/noticeWrite";
 		}else {
@@ -68,7 +64,7 @@ public class NoticeController {
 			,HttpServletRequest request
 			,Authentication authentication
 			, Integer currentPage) {
-		if(authenticationService.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
+		if(AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
 			noticeService.writeNotice(noticeTitle, noticeContent, category, request, authentication);
 			noticeService.getNoticeList(request, authentication, currentPage); //리스트 조회
 			return "/notice/noticeMain";
@@ -110,7 +106,7 @@ public class NoticeController {
 			, Integer noticeNo
 			, Integer currentPage
 			) {
-		if(authenticationService.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
+		if(AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
 			noticeService.deleteNoticeInfo(request, authentication, noticeNo);
 			noticeService.getNoticeList(request, authentication, currentPage); //리스트 조회
 			return "/notice/noticeMain";
@@ -128,7 +124,7 @@ public class NoticeController {
 			, String noticeTitle
 			, String noticeContent
 			) {
-		if(authenticationService.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
+		if(AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
 			request.setAttribute("regexAllPermit", RegexExpressionEnum.ALL_PERMIT.getRegex());
 			request.setAttribute("noticeNo", noticeNo);
 			request.setAttribute("noticeTitle", noticeTitle);
@@ -149,7 +145,7 @@ public class NoticeController {
 			, String noticeTitle
 			, String noticeContent
 			) {
-		if(authenticationService.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
+		if(AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
 			noticeService.updateNoticeInfo(request, authentication, noticeNo, noticeTitle, noticeContent);
 			noticeService.getNoticeDetailInfo(request, authentication, noticeNo);
 			return "/notice/noticeDetail";

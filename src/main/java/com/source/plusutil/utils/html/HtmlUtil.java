@@ -8,4 +8,12 @@ public class HtmlUtil {
              .replaceAll("&gt;","<span>></span>");
      return  result;
     }
+
+    public static String containLineSeparatorDataPlusBr(String data){
+        String result = "";
+        result = data.replaceAll("\r\n;","<br>")
+                .replaceAll("\n","<br>")
+                .replaceAll("\r","<br>");
+        return  result;
+    }
 }
