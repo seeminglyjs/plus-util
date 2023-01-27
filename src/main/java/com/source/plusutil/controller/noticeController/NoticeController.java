@@ -4,6 +4,7 @@ import com.source.plusutil.enums.UserRolePlusEnum;
 import com.source.plusutil.enums.regex.RegexExpressionEnum;
 import com.source.plusutil.service.noticeService.NoticeServiceImpl;
 import com.source.plusutil.utils.auth.AuthObjectUtil;
+import com.source.plusutil.utils.html.HtmlUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -127,8 +128,8 @@ public class NoticeController {
 		if(AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
 			request.setAttribute("regexAllPermit", RegexExpressionEnum.ALL_PERMIT.getRegex());
 			request.setAttribute("noticeNo", noticeNo);
-			request.setAttribute("noticeTitle", noticeTitle);
-			request.setAttribute("noticeContent", noticeContent);
+			request.setAttribute("noticeTitle", HtmlUtil.escapeDataMinusSpan(noticeTitle));
+			request.setAttribute("noticeContent", HtmlUtil.escapeDataMinusSpan(noticeContent));
 			return "/notice/noticeUpdate";
 		}else {
 			noticeService.getNoticeDetailInfo(request, authentication, noticeNo);

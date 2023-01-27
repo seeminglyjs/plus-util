@@ -215,11 +215,13 @@ public class NoticeServiceImpl implements NoticeService {
                     return;
                 }
                 Optional<NoticeDto> noticeDetailInfo = noticeRepository.findById(noticeNo); //변경할 공지사항 정보를 우선적으로 가져온다.
-                NoticeDto noticeDto = noticeDetailInfo.get();
-                noticeDto.setTitle(noticeTitle); //제목 재설정
-                noticeDto.setContent(noticeContent); // 내용 재설정
-                noticeDto.setUpDateDate(DateUtil.getDateString()); //변경날짜 재설정
-                noticeRepository.save(noticeDto); //변경정보 저장
+                if(noticeDetailInfo.isPresent()){
+                    NoticeDto noticeDto = noticeDetailInfo.get();
+                    noticeDto.setTitle(XSSUtils.stripXSS(noticeTitle)); //제목 재설정
+                    noticeDto.setContent(XSSUtils.stripXSS(HtmlUtil.containLineSeparatorDataPlusBr(noticeContent))); // 내용 재설정
+                    noticeDto.setUpDateDate(DateUtil.getDateString()); //변경날짜 재설정
+                    noticeRepository.save(noticeDto); //변경정보 저장
+                }
             }
         }
     }
