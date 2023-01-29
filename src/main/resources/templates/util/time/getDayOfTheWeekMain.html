@@ -11,7 +11,7 @@
 
 	<!-- test2 -->
 	<div class="container-md" id="rsaContentEncryptFormContainer">
-		<form action="/util/time/get/day/ofthe/week" method="post">
+		<form action="/util/time/get/day/of/the/week/action" method="post">
 		  <div class="mb-3">
 		    <label for="year" class="form-label">Year</label>
 		    <input type="number" placeholder="Only Number ex) 2022 " class="form-control" id="year" name="year" aria-describedby="yearHelp">
@@ -39,9 +39,9 @@
 		  	<br>
 		  	<br>
 		  	<div class="form-floating">
-			  <textarea class="form-control" id="dayOfTheWeekSpan" placeholder="Leave a comment here" th:if="${not #strings.isEmpty(dayOfTheWeek)}" th:text="${dayOfTheWeek}" style="height: 100px"></textarea> 
-			  <textarea class="form-control" id="dayOfTheWeekSpan" placeholder="Leave a comment here" th:if="${#strings.isEmpty(dayOfTheWeek)}" style="height: 100px">요일 정보를 먼저 입력해 주세요.</textarea> 
-			<label for="floatingSelect">요일 정보</label>
+				<label for="dayOfTheWeekSpan"></label><textarea class="form-control" id="dayOfTheWeekSpan" placeholder="Leave a comment here" th:if="${not #strings.isEmpty(dayOfTheWeek)}" th:text="${dayOfTheWeek}" style="height: 100px"></textarea>
+				<label for="dayOfTheWeekSpanNone"></label><textarea class="form-control" id="dayOfTheWeekSpanNone" placeholder="Leave a comment here" th:if="${#strings.isEmpty(dayOfTheWeek)}" style="height: 100px">요일 정보를 먼저 입력해 주세요.</textarea>
+			<label>요일 정보</label>
 			</div>
 			<br>
 	  	</div>

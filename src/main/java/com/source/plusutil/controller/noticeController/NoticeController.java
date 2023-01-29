@@ -124,12 +124,14 @@ public class NoticeController {
 			, Integer noticeNo
 			, String noticeTitle
 			, String noticeContent
+			, String category
 			) {
 		if(AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
 			request.setAttribute("regexAllPermit", RegexExpressionEnum.ALL_PERMIT.getRegex());
 			request.setAttribute("noticeNo", noticeNo);
 			request.setAttribute("noticeTitle", HtmlUtil.escapeDataMinusSpan(noticeTitle));
 			request.setAttribute("noticeContent", HtmlUtil.escapeDataMinusSpan(noticeContent));
+			request.setAttribute("category", category);
 			return "/notice/noticeUpdate";
 		}else {
 			noticeService.getNoticeDetailInfo(request, authentication, noticeNo);
@@ -145,9 +147,10 @@ public class NoticeController {
 			, Integer noticeNo
 			, String noticeTitle
 			, String noticeContent
+			, String category
 			) {
 		if(AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
-			noticeService.updateNoticeInfo(request, authentication, noticeNo, noticeTitle, noticeContent);
+			noticeService.updateNoticeInfo(request, authentication, noticeNo, noticeTitle, noticeContent, category);
 			noticeService.getNoticeDetailInfo(request, authentication, noticeNo);
 			return "/notice/noticeDetail";
 		}else {

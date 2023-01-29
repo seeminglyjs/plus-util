@@ -13,7 +13,7 @@
 /*<![CDATA[*/
 function noticeDataCheck (){
 	const regexTitle = "^" +[[${regexAllPermit}]] + "{2,50}$$";
-	const title = "^" + regexTitle + "{2,50}$"
+	const title = new RegExp(`${regexTitle}`);
 		if(!title.test($("#noticeTitle").val())){
 			$("#titleCheckSpan").text("제목은 2 ~ 50 글자를 맞추어야 합니다.").addClass("red")
 			$("#noticeTitle").focus()

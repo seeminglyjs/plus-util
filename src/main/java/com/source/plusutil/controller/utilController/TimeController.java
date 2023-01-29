@@ -2,11 +2,12 @@ package com.source.plusutil.controller.utilController;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.source.plusutil.enums.regex.RegexExpressionEnum;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.source.plusutil.service.utilService.timeUtil.TimeUtilService;
+import com.source.plusutil.service.utilService.timeUtil.TimeUtilServiceImpl;
 
 import lombok.RequiredArgsConstructor;
 
@@ -15,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TimeController {
 	
-	private final TimeUtilService timeUtilService;
+	private final TimeUtilServiceImpl timeUtilService;
 	
 	/**
 	 * 시간 관련 유틸 메인 맵핑
@@ -29,8 +30,9 @@ public class TimeController {
 	}
 	
 
-	@RequestMapping("/time/get/day/ofthe/week/main")
-	public String requestGetDayOfTheWeek() {
+	@RequestMapping("/time/get/day/of/the/week/main")
+	public String requestGetDayOfTheWeek(HttpServletRequest request) {
+		request.setAttribute("regexDateDefaultPermit", RegexExpressionEnum.DATE_DEFAULT_PERMIT.getRegex());
 		return "/util/time/getDayOfTheWeekMain";
 	}	
 	/**
@@ -42,7 +44,7 @@ public class TimeController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping("/time/get/day/ofthe/week")
+	@RequestMapping("/time/get/day/of/the/week/action")
 	public String requestGetDayOfTheWeekCall(@RequestParam String year, @RequestParam String month, String day, HttpServletRequest request) {
 		timeUtilService.getDayOfTheWeek(year, month, day, request);
 		return "/util/time/getDayOfTheWeekMain";
@@ -50,7 +52,8 @@ public class TimeController {
 	
 	
 	@RequestMapping("/time/calculate/day/main")
-	public String requestCalculateDay() {
+	public String requestCalculateDay(HttpServletRequest request) {
+		request.setAttribute("regexDateDefaultPermit", RegexExpressionEnum.DATE_DEFAULT_PERMIT.getRegex());
 		return "/util/time/calculateDayMain";
 	}
 	/**
@@ -61,7 +64,7 @@ public class TimeController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping("/time/calculate/day")
+	@RequestMapping("/time/calculate/day/action")
 	public String requestCalculateDayCall(@RequestParam String startDateStr, @RequestParam String EndDateStr, HttpServletRequest request) {
 		timeUtilService.calculateDate(startDateStr, EndDateStr, request);
 		return "/util/time/calculateDayMain";

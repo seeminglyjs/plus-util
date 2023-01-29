@@ -100,7 +100,7 @@ public class SecurityConfig {
 	public WebSecurityCustomizer webSecurityCustomizer() {
 		return (web) -> web
 				.ignoring()
-				.antMatchers("/images/**", "/js/**", "/html/**");
+				.antMatchers("/images/**", "/js/**", "/html/**", "/bootstrap-icons-1.10.3/**");
 	}
 
 	@Bean // 로그 아웃이 성공했을 때 동작하는 핸들러

@@ -13,7 +13,7 @@
 /*<![CDATA[*/
 function noticeDataCheck (){
 	const regexTitle = "^" +[[${regexAllPermit}]] + "{2,50}$$";
-	const title = "^" + regexTitle + "{2,50}$"
+	const title = new RegExp(`${regexTitle}`)
 		if(!title.test($("#noticeTitle").val())){
 			$("#titleCheckSpan").text("제목은 2 ~ 50 글자를 맞추어야 합니다.").addClass("red")
 			$("#noticeTitle").focus()
@@ -38,11 +38,21 @@ function noticeDataCheck (){
 
 	
 	<form action="/notice/update/action" method="post" onsubmit="return noticeDataCheck()">
+		<!--/*@thymesVar id="noticeNo" type="Integer"*/-->
 		<input type="hidden" name="noticeNo" th:value="${noticeNo}">
 		<div class="mb-3">
 		  <label for="noticeTitle" class="form-label">제목</label>
+		  <!--/*@thymesVar id="noticeTitle" type="java.lang.String"*/-->
 		  <input type="text" class="form-control" id="noticeTitle" name ="noticeTitle" th:value="${noticeTitle}">
 		  <span id="titleCheckSpan"></span>
+		</div>
+		<div class="mb-3" style="width: 10%">
+			<select name="category" class="form-select form-select-sm" aria-label="Default select example">
+				<!--/*@thymesVar id="category" type="java.lang.String"*/-->
+				<option th:selected="${category} == 'notice'" value="notice">공지사항</option>
+				<option th:selected="${category} == 'updateNote'" value="updateNote">업데이트</option>
+				<option th:selected="${category} == 'etc'" value="etc">ETC</option>
+			</select>
 		</div>
 		<div class="mb-3">
 		  <label for="noticeContent" class="form-label">내용</label>

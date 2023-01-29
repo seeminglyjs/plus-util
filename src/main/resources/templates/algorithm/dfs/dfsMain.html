@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<div id="header-load" th:replace="html/head.html :: headFragment"></div>
+<div id="nav-load" th:insert="html/nav.html :: navFragment"></div>
+
+<div class="container-md">
+<!-----------------------------------------------------------------------------------------  -->
+
+
+	<div class="container-md" id="bfsContainer">
+		<form action="/algorithm/dfs/search/short/distance" method="post">
+		  <div class="mb-3">
+		    <label for="dfsrow" class="form-label">Row</label>
+		    <input type="number" placeholder="ex) 3, 4, 5, . . ." class="form-control" id="dfsrow" name="dfsrow" aria-describedby="dfsrowHelp" th:value="${dfsrow}">
+		    <div id="dfsrowHelp" class="form-text">행을 입력해 주세요. [15 까지 입력가능]</div>
+		  </div>
+		  
+		  <div class="mb-3">
+		    <label for="dfscol" class="form-label">Col</label>
+		    <input type="number" placeholder="ex) 3, 4, 5, . . ." class="form-control" id="dfscol" name="dfscol" aria-describedby="dfscolHelp" th:value="${dfscol}">
+		    <div id="dfscolHelp" class="form-text">열을 입력해 주세요. [15 까지 입력가능]</div>
+		  </div>
+		  
+  		  <div class="mb-3">
+		    <label for="dfsStartRow" class="form-label">StartRow</label>
+		    <input type="number" placeholder="ex) 3, 4, 5, . . ." class="form-control" id="dfsStartRow" name="dfsStartRow" aria-describedby="dfsStartRowHelp" th:value="${dfsStartRow}">
+		    <div id="dfsStartRowHelp" class="form-text">시작행을 입력해 주세요. [14 까지 입력가능]</div>
+		  </div>
+
+  		  <div class="mb-3">
+		    <label for="dfsStartCol" class="form-label">StartCol</label>
+		    <input type="number" placeholder="ex) 3, 4, 5, . . ." class="form-control" id="dfsStartCol" name="dfsStartCol" aria-describedby="dfsStartColHelp" th:value="${dfsStartCol}">
+		    <div id="dfsStartColHelp" class="form-text">시작열을 입력해 주세요. [14 까지 입력가능]</div>
+		  </div>
+		  
+   		  <div class="mb-3">
+		    <label for="dfsEndRow" class="form-label">EndRow</label>
+		    <input type="number" placeholder="ex) 3, 4, 5, . . ." class="form-control" id="dfsEndRow" name="dfsEndRow" aria-describedby="dfsEndRowHelp" th:value="${dfsEndRow}">
+		    <div id="dfsEndRowHelp" class="form-text">도착행을 입력해 주세요. [15 까지 입력가능]</div>
+		  </div>
+
+   		  <div class="mb-3">
+		    <label for="dfsEndCol" class="form-label">EndCol</label>
+		    <input type="number" placeholder="ex) 3, 4, 5, . . ." class="form-control" id="dfsEndCol" name="dfsEndCol" aria-describedby="dfsEndColHelp" th:value="${dfsEndCol}">
+		    <div id="dfsEndColHelp" class="form-text">도착열을 입력해 주세요. [15 까지 입력가능]</div>
+		  </div>
+			
+		  
+		  <button type="submit" class="btn btn-primary">DFS 탐색 시작</button>
+		</form>
+		
+		<br>
+		<div class="p-2 bg-light border">
+		  	<span class="badge bg-secondary">탐색 정보</span> 
+		  	<br>
+		  	<br>
+		  	<div class="form-floating">
+				<label for="dfsSearchResultSpan"></label><textarea class="form-control" id="dfsSearchResultSpan" placeholder="Leave a comment here" th:if="${not #strings.isEmpty(dfsSearchResult)}" th:text="${dfsSearchResult}" style="height: 100px"></textarea>
+				<label for="dfsSearchResultSpanNone"></label><textarea class="form-control" id="dfsSearchResultSpanNone" placeholder="Leave a comment here" th:if="${#strings.isEmpty(dfsSearchResult)}" style="height: 100px">탐색에 필요한 데이터를 입력해 주세요.</textarea>
+			<label>탐색 정보</label>
+			</div>
+			<br>
+	  	</div>
+	</div>
+	
+
+
+<!-----------------------------------------------------------------------------------------  -->
+</div>
+<div id="footer-load" class="container-md" th:insert="html/footer.html :: footerFragment"></div>.
+</body>
+</html>

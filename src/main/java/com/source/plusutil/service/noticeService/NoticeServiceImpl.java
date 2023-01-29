@@ -205,7 +205,7 @@ public class NoticeServiceImpl implements NoticeService {
          */
         @Override
         public void updateNoticeInfo (HttpServletRequest request, Authentication authentication, Integer
-        noticeNo, String noticeTitle, String noticeContent){
+        noticeNo, String noticeTitle, String noticeContent, String category){
             log.info("updateNoticeInfo noticeNo -> [" + noticeNo + "]" + "noticeTitle ->[" + noticeTitle + "]" + "noticeContent -> [" + noticeContent + "]");
             if (!AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
                 return; //권한 없으면 리턴
@@ -219,6 +219,7 @@ public class NoticeServiceImpl implements NoticeService {
                     NoticeDto noticeDto = noticeDetailInfo.get();
                     noticeDto.setTitle(XSSUtils.stripXSS(noticeTitle)); //제목 재설정
                     noticeDto.setContent(XSSUtils.stripXSS(HtmlUtil.containLineSeparatorDataPlusBr(noticeContent))); // 내용 재설정
+                    noticeDto.setCategory(category);
                     noticeDto.setUpDateDate(DateUtil.getDateString()); //변경날짜 재설정
                     noticeRepository.save(noticeDto); //변경정보 저장
                 }
