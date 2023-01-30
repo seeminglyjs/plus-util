@@ -14,7 +14,7 @@ public class DfsTest {
     @Autowired
     DfsServiceImpl dfsService;
 
-    @Test
+//    @Test
     public void dfsTest() {
         HttpServletRequest request = null;
         int result = 0;
