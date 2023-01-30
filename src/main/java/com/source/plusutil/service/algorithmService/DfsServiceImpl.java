@@ -27,6 +27,12 @@ public class DfsServiceImpl implements DfsService {
         }
         DfsUtil dfsUtil = new DfsUtil();
         result = dfsUtil.dfsDefaultResult(dfsRow, dfsCol, dfsStartRow, dfsStartCol, dfsEndRow, dfsEndCol);
+        request.setAttribute("dfsSearchResult", result);
+        request.setAttribute("dfsRow", dfsRow);
+        request.setAttribute("dfsCol", dfsCol);
+        request.setAttribute("dfsStartRow", dfsStartRow);
+        request.setAttribute("dfsStartCol", dfsStartCol);
+        request.setAttribute("dfsEndRow", dfsEndRow);
+        request.setAttribute("dfsEndCol", dfsEndCol);
     }
-
 }

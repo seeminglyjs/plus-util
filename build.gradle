@@ -42,6 +42,9 @@ dependencies {
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.7.4'
 	// https://mvnrepository.com/artifact/nz.net.ultraq.thymeleaf/thymeleaf-layout-dialect
 	implementation group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '3.1.0'
+	// https://mvnrepository.com/artifact/javainetlocator/inetaddresslocator
+	implementation group: 'javainetlocator', name: 'inetaddresslocator', version: '2.18'
+
 
 	// https://mvnrepository.com/artifact/commons-io/commons-io
 	implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
