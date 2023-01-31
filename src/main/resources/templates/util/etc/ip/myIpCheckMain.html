@@ -7,17 +7,28 @@
 <div id="nav-load" th:insert="html/nav.html :: navFragment"></div>
 
 <div class="container-md">
-<!-----------------------------------------------------------------------------------------  -->
+    <!-----------------------------------------------------------------------------------------  -->
+    <div class="container-md d-flex justify-content-center">
 
+		<div class="card text-center w-50">
+            <div class="card-header">
 
-	<h3 th:text="|아이피: ${ip}|"></h3>
-	<h3 th:text="|국가: ${country}|"></h3>
-	<h1> ip 체크 페이지 입니다.</h1>
-	
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">IP 정보 확인</h5>
+                <p class="card-text" th:text="|아이피: ${ip}|"></p>
+                <p class="card-text" th:text="|국가: ${country}|"></p>
+                <a href="/util/etc/main" class="btn btn-primary">ETC 목록</a>
+            </div>
+            <div class="card-header">
 
+            </div>
+        </div>
 
-<!-----------------------------------------------------------------------------------------  -->
+    </div>
+    <!-----------------------------------------------------------------------------------------  -->
 </div>
-<div id="footer-load" class="container-md" th:insert="html/footer.html :: footerFragment"></div>.
+<div id="footer-load" class="container-md" th:insert="html/footer.html :: footerFragment"></div>
+.
 </body>
 </html>
