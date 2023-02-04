@@ -12,15 +12,12 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 @WebFilter(urlPatterns="/*")
 @Order(2)
 @Slf4j
-public class XssFilter implements Filter {
+public class XssFilter_02 implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -58,5 +55,6 @@ public class XssFilter implements Filter {
             wrappedRequest.resetInputStream(XSSUtils.stripXSSToMap(map).toString().getBytes());
         }
         chain.doFilter(wrappedRequest, response);
+
     }
 }

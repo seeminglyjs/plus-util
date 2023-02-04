@@ -4,6 +4,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import org.thymeleaf.exceptions.*;
 
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +18,7 @@ public class RestErrorController {
 	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
 	public String httpRequestMethodNotSupportedExceptionAdvice(HttpRequestMethodNotSupportedException e) { 
 		log.info("HttpRequestMethodNotSupportedException" , e);
-		String result = "/error/errorMain";
+		String result = "/error/main";
 		return result;
 	}
 	
@@ -26,7 +27,7 @@ public class RestErrorController {
 	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
 	public String methodArgumentTypeMismatchExceptionAdvice(MethodArgumentTypeMismatchException e) { 
 		log.info("methodArgumentTypeMismatchExceptionAdvice" , e);
-		String result = "/error/errorMain";
+		String result = "/error/main";
 		return result;
 	}
 	
@@ -34,7 +35,14 @@ public class RestErrorController {
 	@ExceptionHandler(TemplateInputException.class)
 	public String TemplateInputExceptionAdvice(TemplateInputException e) { 
 		log.info("TemplateInputException" , e);
-		String result = "/error/errorMain";
+		String result = "/error/main";
+		return result;
+	}
+
+	@ExceptionHandler(NoHandlerFoundException.class)
+	public String noHandlerFoundExceptionAdvice(NoHandlerFoundException e) {
+		log.info("NoHandlerFoundException" , e);
+		String result = "/error/main";
 		return result;
 	}
 

@@ -16,7 +16,7 @@ public class HttpParamCheckUtil {
         Enumeration<String> enumber = request.getParameterNames();
 
         while (enumber.hasMoreElements()) {
-            String key = enumber.nextElement().toString();
+            String key = enumber.nextElement();
             String value = request.getParameter(key);
             map.put(key, value);
         }
@@ -37,10 +37,24 @@ public class HttpParamCheckUtil {
         Locale locale = InetAddressLocator.getLocale(ip);
         if(locale == null){
             map.put("country", "알수없음");
+            map.put("code", "알수없음");
         }else{
             map.put("country", locale.getDisplayCountry());
+            map.put("code", locale.getCountry());
         }
         return map;
+    }
+
+    public static Map<String, String> localeCheck(HttpServletRequest request) {
+        Map<String, String> myIpMap = new HashMap<>();
+        try {
+            myIpMap = HttpParamCheckUtil.getHttpRequestIpInfo(request);
+        } catch (InetAddressLocatorException e) {
+            myIpMap.put("ip", "확인되지 않음");
+            myIpMap.put("country", "확인되지 않음");
+            myIpMap.put("code", "확인되지 않음");
+        }
+        return myIpMap;
     }
 
 }

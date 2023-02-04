@@ -60,7 +60,8 @@ public class SecurityConfig {
 				,"/encrypt/**"
 				,"/util/**"
 				,"/notice/**"
-				,"/algorithm/**").permitAll() //누구나 접근가능한 페이지 적용
+				,"/algorithm/**"
+				,"/error/main").permitAll() //누구나 접근가능한 페이지 적용
 		.antMatchers("/setting/**", "/admin/**").hasRole("ADMIN") //관리자(Admin)만 접근 허용
 		.antMatchers("/user/**", "/logout/**").hasAnyRole("USER","ADMIN") //유저(USER) / 관리자(Admin)만 접근 허용
 		.anyRequest().authenticated() //나머지 경로에 대해서는 인가된 사용자만 접근할 수 있다.

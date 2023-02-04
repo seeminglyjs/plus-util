@@ -17,8 +17,7 @@ import com.source.plusutil.service.TestService;
 public class MainController {
 
 	private final TestService testService;
-	
-	
+
 	@RequestMapping("/home")
 	public String mainPage() {
 		return "/home/homeMain";

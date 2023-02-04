@@ -4,18 +4,19 @@
 
 <body>
 <div id="header-load" th:replace="html/head.html :: headFragment"></div>
-<div id="nav-load" th:insert="html/nav.html :: navFragment"></div>
-
 <div class="container-md">
 <!-------------------------------------------------------  -->
-	<div class="container-md">
-		서비스 오류입니다.
-	</div>
-	<div class="container-md" id="homeMainContainer">
-		<a class="btn btn-primary" href="/home" role="button">메인화면으로 이동</a>
+	<div class="px-4 py-5 my-5 text-center">
+		<img id="errorImg" class="d-block mx-auto mb-4" src="/bootstrap-icons-1.10.3/emoji-dizzy-fill.svg" alt="" width="200" height="180">
+		<h1 class="display-5 fw-bold">Error!!</h1>
+		<div class="col-lg-6 mx-auto">
+			<p class="lead mb-4"><strong>예상치 못한 오류가 발생했습니다.</strong></p>
+			<div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+				<a class="btn btn-primary" href="/home" role="button">메인화면으로 이동</a>
+			</div>
+		</div>
 	</div>
 <!-------------------------------------------------------  -->
 </div>
-<div id="footer-load" class="container-md" th:insert="html/footer.html :: footerFragment"></div>.
 </body>
 </html>
