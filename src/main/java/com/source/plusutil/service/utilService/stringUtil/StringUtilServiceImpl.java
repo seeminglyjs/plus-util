@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
@@ -116,5 +117,19 @@ public class StringUtilServiceImpl implements StringUtilService{
 		request.setAttribute("convertStringContent", convertStringContent);
 		request.setAttribute("stringContent", stringContent);
 		request.setAttribute("upperOrLower", upperOrLower);
+	}
+
+	@Override
+	public void checkSimilarity(HttpServletRequest request, String firstContent, String secondContent) {
+		int maxLen = Math.max(firstContent.length(), secondContent.length());
+		LevenshteinDistance ld = new LevenshteinDistance();
+		double result = 0;
+		double temp = ld.apply(firstContent, secondContent);
+		result = (maxLen - temp) / maxLen;
+		String similarity = "유사성 : " + result * 100 + "% /";
+		similarity += "유사거리 : " + temp;
+		request.setAttribute("firstContent", firstContent);
+		request.setAttribute("secondContent", secondContent);
+		request.setAttribute("similarity", similarity);
 	}
 }

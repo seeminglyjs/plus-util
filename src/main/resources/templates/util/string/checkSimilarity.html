@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<div id="header-load" th:replace="html/head.html :: headFragment"></div>
+<div id="nav-load" th:insert="html/nav.html :: navFragment"></div>
+
+<div class="container-md">
+    <!-----------------------------------------------------------------------------------------  -->
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function DataCheck() {
+            const regex = "^" + [[${regexAllPermit}]] + "{2,5000}$$";
+            const content = new RegExp(`${regex}`);
+            if (!content.test($("#firstContent").val())) { /* 내용 정규식 체크 2 ~ 500 자  */
+                $("#firstContentSpan").text("글자는 2 ~ 5000 의 제한이 있습니다.").addClass("red")
+                $("#firstContent").focus()
+                return false;
+            } else {
+                $("#firstContentSpan").text("").removeClass("red")
+            }
+            if (!content.test($("#secondContent").val())) { /* 내용 정규식 체크 2 ~ 500 자  */
+                $("#secondContentSpan").text("글자는 2 ~ 5000 의 제한이 있습니다.").addClass("red")
+                $("#secondContent").focus()
+                return false;
+            } else {
+                $("#secondContentSpan").text("").removeClass("red")
+            }
+        }
+
+        /*]]>*/
+    </script>
+
+    <!-- test2 -->
+    <div class="container-md" id="stringGetByteContainer">
+        <form action="/util/string/check/similarity/action" method="post" onsubmit="return DataCheck()">
+            <div class="mb-3">
+                <label for="firstContent">첫번째 내용</label>
+                <textarea class="form-control" id="firstContent" name="firstContent" rows="15" placeholder="내용을 입력해주세요."
+                          th:text="${firstContent}"></textarea>
+                <span id="firstContentSpan"></span>
+            </div>
+
+            <div class="mb-3">
+                <label for="secondContent">두번째 내용</label>
+                <textarea class="form-control" id="secondContent" name="secondContent" rows="15"
+                          placeholder="내용을 입력해주세요." th:text="${secondContent}"></textarea>
+                <span id="secondContentSpan"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">유사도 확인</button>
+        </form>
+
+        <br>
+        <div class="p-2 bg-light border">
+            <span class="badge bg-secondary">유사성</span>
+            <br>
+            <br>
+            <div class="form-floating">
+                <label for="similaritySpan"></label>
+                <textarea class="form-control" id="similaritySpan" placeholder="Leave a comment here"
+                          th:if="${not #strings.isEmpty(similarity)}" th:text="${similarity}"
+                          style="height: 100px;"></textarea>
+                <label for="similaritySpanEmptySpan"></label>
+                <textarea class="form-control" id="similaritySpanEmptySpan"
+                          placeholder="Leave a comment here"
+                          th:if="${#strings.isEmpty(similarity)}"
+                          style="height: 100px;">확인하고자 하는 내용을 먼저 입력해 주세요.</textarea>
+            </div>
+            <br>
+        </div>
+    </div>
+
+    <br>
+    <br>
+    <div class="position-relative">
+        <div class="position-absolute bottom-0 end-50">
+            <a href="/util/string/main">
+                <button type="button" class="btn btn-primary">목록</button>
+            </a>
+        </div>
+
+    </div>
+
+    <!-----------------------------------------------------------------------------------------  -->
+</div>
+<div id="footer-load" class="container-md" th:insert="html/footer.html :: footerFragment"></div>
+.
+</body>
+</html>

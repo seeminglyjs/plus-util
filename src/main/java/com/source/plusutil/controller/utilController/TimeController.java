@@ -35,18 +35,16 @@ public class TimeController {
 		request.setAttribute("regexDateDefaultPermit", RegexExpressionEnum.DATE_DEFAULT_PERMIT.getRegex());
 		return "/util/time/getDayOfTheWeekMain";
 	}	
-	/**
+	/*
 	 * 주어진 년 / 월 / 일 기준으로 요일을 구한다.
-	 * 
-	 * @param year
-	 * @param month
-	 * @param day
+	 *
 	 * @param request
 	 * @return
 	 */
 	@RequestMapping("/time/get/day/of/the/week/action")
-	public String requestGetDayOfTheWeekCall(@RequestParam String year, @RequestParam String month, String day, HttpServletRequest request) {
-		timeUtilService.getDayOfTheWeek(year, month, day, request);
+	public String requestGetDayOfTheWeekCall(String dayInfo, HttpServletRequest request) {
+		request.setAttribute("regexDateDefaultPermit", RegexExpressionEnum.DATE_DEFAULT_PERMIT.getRegex());
+		timeUtilService.getDayOfTheWeek(dayInfo, request);
 		return "/util/time/getDayOfTheWeekMain";
 	}
 	
@@ -66,6 +64,7 @@ public class TimeController {
 	 */
 	@RequestMapping("/time/calculate/day/action")
 	public String requestCalculateDayCall(@RequestParam String startDateStr, @RequestParam String EndDateStr, HttpServletRequest request) {
+		request.setAttribute("regexDateDefaultPermit", RegexExpressionEnum.DATE_DEFAULT_PERMIT.getRegex());
 		timeUtilService.calculateDate(startDateStr, EndDateStr, request);
 		return "/util/time/calculateDayMain";
 	}

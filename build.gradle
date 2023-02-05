@@ -29,11 +29,11 @@ dependencies {
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
 	implementation 'javax.servlet:jstl:1.2'
-	
+
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa
-	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.7.4'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.7.8'
 	// https://mvnrepository.com/artifact/org.postgresql/postgresql
-	implementation group: 'org.postgresql', name: 'postgresql', version: '42.5.0'
+	implementation group: 'org.postgresql', name: 'postgresql', version: '42.5.3'
 	// https://mvnrepository.com/artifact/org.springframework/spring-jdbc
 	implementation group: 'org.springframework', name: 'spring-jdbc', version: '5.3.23'
 	// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
@@ -44,6 +44,8 @@ dependencies {
 	implementation group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '3.1.0'
 	// https://mvnrepository.com/artifact/javainetlocator/inetaddresslocator
 	implementation group: 'javainetlocator', name: 'inetaddresslocator', version: '2.18'
+	// https://mvnrepository.com/artifact/org.apache.commons/commons-text
+	implementation group: 'org.apache.commons', name: 'commons-text', version: '1.10.0'
 
 
 	// https://mvnrepository.com/artifact/commons-io/commons-io

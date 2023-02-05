@@ -21,25 +21,24 @@ public class TimeUtilServiceImpl implements TimeUtilService{
 
 	/**
 	 * 주어진 날짜를 기준으로 그날의 요일을 구한다.
-	 * 
-	 * @param year
-	 * @param month
-	 * @param day
+	 *
+	 * @param dayInfo
 	 * @param request
 	 */
-	public void getDayOfTheWeek(String year, String month, String day, HttpServletRequest request) {
-		Optional<String> yearOp = Optional.ofNullable(year);
-		Optional<String> monthOp = Optional.ofNullable(month);
-		Optional<String> dayOp = Optional.ofNullable(day);
+	public void getDayOfTheWeek(String dayInfo, HttpServletRequest request) {
+		Optional<String> dayInfoOp = Optional.ofNullable(dayInfo);
 		
 		try {
-			if(yearOp.isPresent() && monthOp.isPresent() && dayOp.isPresent()) {//모든 파라미터 정보가 존재한다.
+			if(dayInfoOp.isPresent()) {//모든 파라미터 정보가 존재한다.
+				String year = dayInfo.substring(0,4);
+				String month = dayInfo.substring(4,6);
+				String day = dayInfo.substring(6,8);
 				log.info("[getDayOfTheWeek request param is present] =====");
 				String answer = "";
 				LocalDate date = LocalDate.of(
-						Integer.parseInt(yearOp.get())
-						, Integer.parseInt(monthOp.get())
-						, Integer.parseInt(dayOp.get())); 
+						Integer.parseInt(year)
+						, Integer.parseInt(month)
+						, Integer.parseInt(day));
 				//연 월 일 순으로 적어준다.
 				DayOfWeek dayOfWeek = date.getDayOfWeek();
 				if(dayOfWeek.getValue() == 1) {
@@ -62,13 +61,10 @@ public class TimeUtilServiceImpl implements TimeUtilService{
 		}catch (NumberFormatException e) {
 			request.setAttribute("dayOfTheWeek", "적절하지 않은 값이 입력되었습니다.");
 			log.info("exception", e);
-			return;
 		}catch (Exception e) {
 			request.setAttribute("dayOfTheWeek", "예상치 못한 오류가 발생했습니다.");
 			log.info("exception", e);
-			return;
 		}
-		
 	}
 	
 	/**

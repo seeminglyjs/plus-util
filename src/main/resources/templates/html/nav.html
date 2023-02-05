@@ -8,7 +8,64 @@
 </head>
 <body>
 
+<!-- ======= Header ======= -->
 <div th:fragment="navFragment">
+<header id="header" class="fixed-top ">
+  <div class="container d-flex align-items-center">
+
+    <h1 class="logo me-auto"><a class="navbar-brand" href="/home">Plus-Util</a></h1>
+    <!-- Uncomment below if you prefer to use an image logo -->
+    <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+    <nav id="navbar" class="navbar">
+      <ul>
+        <li><a class="nav-link scrollto active" href="/notice/main">공지사항</a></li>
+        <!--<li><a class="nav-link scrollto" href="#about">About</a></li>-->
+
+        <li class="dropdown"><a href="#"><span>암호화</span> <i class="bi bi-chevron-down"></i></a>
+          <ul>
+            <li><a class="dropdown-item" href="/encrypt/main/">암호화</a></li>
+            <li><a class="dropdown-item disabled" href="#">시큐리티코딩</a></li>
+          </ul>
+        </li>
+        <li class="dropdown"><a href="#"><span>유틸</span> <i class="bi bi-chevron-down"></i></a>
+          <ul>
+            <li><a class="dropdown-item" href="/util/time/main">시간</a></li>
+            <li><a class="dropdown-item" href="/util/string/main">문자</a></li>
+            <li><a class="dropdown-item" href="/util/etc/main">기타</a></li>
+            <li><a class="dropdown-item disabled" href="#">SQL</a></li>
+          </ul>
+        </li>
+        <li class="dropdown"><a href="#"><span>알고리즘</span> <i class="bi bi-chevron-down"></i></a>
+          <ul>
+            <li><a class="dropdown-item" href="/algorithm/graph/main">그래프이론</a></li>
+            <li><a class="dropdown-item" href="#">완전탐색</a></li>
+          </ul>
+        </li>
+
+        <th:block th:if="${not #strings.isEmpty(AuthenticationCheck)}">
+          <li><a class="getstarted scrollto" href="/logout">Logout</a></li>
+        </th:block>
+
+        <th:block th:if="${#strings.isEmpty(AuthenticationCheck)}">
+          <li><a class="getstarted scrollto" href="/login">Login</a></li>
+          <li><a class="getstarted scrollto" href="/join">Join</a></li>
+        </th:block>
+
+      </ul>
+      <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav><!-- .navbar -->
+
+  </div>
+</header><!-- End Header -->
+  <!-- ======= Cliens Section ======= -->
+<div>
+<div style="min-height: 90px; background-color: #37517e;"></div>
+</div>
+</div>
+
+
+<!--<div th:fragment="navFragment">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-md">
     <a class="navbar-brand" href="/home">Plus-Util</a>
@@ -40,10 +97,10 @@
             <li><a class="dropdown-item" href="/util/string/main">문자</a></li>
             <li><a class="dropdown-item" href="/util/etc/main">기타</a></li>
             <li><a class="dropdown-item disabled" href="#">SQL</a></li>
-<!--
+&lt;!&ndash;
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">[추가 예정]</a></li>
--->
+&ndash;&gt;
           </ul>
         </li>
         <li class="nav-item dropdown">
@@ -83,7 +140,7 @@
 </nav>
 <br>
 <br>
-</div>
+</div>-->
 
 
 </body>

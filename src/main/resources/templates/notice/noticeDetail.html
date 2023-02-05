@@ -7,101 +7,110 @@
 <div id="nav-load" th:insert="html/nav.html :: navFragment"></div>
 
 <div class="container-md">
-<!-----------------------------------------------------------------------------------------  -->
+    <!-----------------------------------------------------------------------------------------  -->
+    <script type="text/javascript">
 
-<script type="text/javascript">
+        function deleteConfirm() {
+            if (confirm("해당 공지 사항을 삭제 하시겠습까?")) {
+                return true;
+            } else {
+                return false;
+            }
+        }
 
-function deleteConfirm(){
-	if(confirm("해당 공지 사항을 삭제 하시겠습까?")){
-		return true;
-	}else{
-		return false;
-	}
-}
-
-</script>
-
-
-<!-- Modal -->
-<div class="modal fade" id="noticeDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">공지사항 삭제</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        해당 공지 사항을 삭제 하시겠습니까?
-        <br>
-        삭제된 공지 사항은 복구 할 수 없습니다.
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
-        <form action="/notice/delete" method="POST" >
-        	<input type="hidden" name="noticeNo" th:value="${noticeDetail.noticeNo}">
-        	<button type="submit" class="btn btn-primary">예</button>
-        </form>
-      </div>
+    </script>
+    <!-- Modal -->
+    <div class="modal fade" id="noticeDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false"
+         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">공지사항 삭제</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    해당 공지 사항을 삭제 하시겠습니까?
+                    <br>
+                    삭제된 공지 사항은 복구 할 수 없습니다.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
+                    <form action="/notice/delete" method="POST">
+                        <input type="hidden" name="noticeNo" th:value="${noticeDetail.noticeNo}">
+                        <button type="submit" class="btn btn-primary">예</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
-
-<div class="container-md border rounded" style="height: 700px">
-	<br>
-	
-	<p style="height: 30px;">
+    <section id="about" class="about">
+        <div class="container" data-aos="fade-up">
+            <div class="container-md border rounded" style="height: 700px;">
+                <br>
+                <p style="height: 30px;">
 	<span th:switch="${noticeDetail.category}">
-		<span style="font-size: 11px; font-weight: 600;" class="text-primary border border-primary rounded-1 p-1 align-text-top" th:case="notice">공지사항</span>
-		<span style="font-size: 11px; font-weight: 600;" class="text-success border border-success rounded-1 p-1 align-text-top" th:case="updateNote">업데이트</span>
-		<span style="font-size: 11px; font-weight: 600;" class="text-secondary border border-secondary rounded-1 p-1 align-text-top" th:case="etc">기타</span>
+		<span style="font-size: 11px; font-weight: 600;"
+              class="text-primary border border-primary rounded-1 p-1 align-text-top" th:case="notice">공지사항</span>
+		<span style="font-size: 11px; font-weight: 600;"
+              class="text-success border border-success rounded-1 p-1 align-text-top" th:case="updateNote">업데이트</span>
+		<span style="font-size: 11px; font-weight: 600;"
+              class="text-secondary border border-secondary rounded-1 p-1 align-text-top" th:case="etc">기타</span>
 	</span>
-		<strong style="font-size: 23px" th:utext="${noticeDetail.title}" class=""></strong>
-	</p>
-	 
-	<strong th:text="${noticeDetail.writer}"></strong>
-	<br>
-	<div class="position-relative">
-	<div style="font-size: 11px">
-		<span th:text="|${dateDto.day} ${dateDto.time}|"></span>
-	</div>
-		<div class="position-absolute top-0 end-0">
-			<th:block th:if="${updateRoleCheck}"> 
-				<nav aria-label="breadcrumb">
-				  <ol class="breadcrumb">
-				    <li class="breadcrumb-item">
-				    	<a class="link-primary" th:href="@{/notice/update/main(noticeNo=${noticeDetail.noticeNo}, noticeTitle=${noticeDetail.title}, noticeContent=${noticeDetail.content}, category=${noticeDetail.category})}">수정</a>
-				    </li>
-				    <li class="breadcrumb-item">
-						<a class="link-danger" href="#" data-bs-toggle="modal" data-bs-target="#noticeDeleteModal">삭제</a>
-					</li>
-				  </ol>
-				</nav>
-		 	</th:block>
-		</div>
-	</div>	
-	<hr>
-	<br>
-	<div>
-		<p>
-			<th:block th:utext="${noticeDetail.content}">
-			</th:block>
-		</p>
-	</div>
-</div>
+                    <strong style="font-size: 23px" th:utext="${noticeDetail.title}" class=""></strong>
+                </p>
 
-<br>
-<br>
-<div class="position-relative">
-	<div class="position-absolute bottom-0 end-0">
-		<a href="javascript:window.history.back();"><button type="button" class="btn btn-secondary btn-sm">뒤로</button></a>
-		<a th:href="@{/notice/main(currentPage=0)}"><button type="button" class="btn btn-secondary btn-sm">목록</button></a>
-	</div>
-</div>
+                <strong th:text="${noticeDetail.writer}"></strong>
+                <br>
+                <div class="position-relative">
+                    <div style="font-size: 11px">
+                        <span th:text="|${dateDto.day} ${dateDto.time}|"></span>
+                    </div>
+                    <div class="position-absolute top-0 end-0">
+                        <th:block th:if="${updateRoleCheck}">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <a class="link-primary"
+                                           th:href="@{/notice/update/main(noticeNo=${noticeDetail.noticeNo}, noticeTitle=${noticeDetail.title}, noticeContent=${noticeDetail.content}, category=${noticeDetail.category})}">수정</a>
+                                    </li>
+                                    <li class="breadcrumb-item">
+                                        <a class="link-danger" href="#" data-bs-toggle="modal"
+                                           data-bs-target="#noticeDeleteModal">삭제</a>
+                                    </li>
+                                </ol>
+                            </nav>
+                        </th:block>
+                    </div>
+                </div>
+                <hr>
+                <br>
+                <div>
+                    <p>
+                        <th:block th:utext="${noticeDetail.content}">
+                        </th:block>
+                    </p>
+                </div>
+            </div>
 
-<hr>
+            <br>
+            <br>
+            <div class="position-relative">
+                <div class="position-absolute bottom-0 end-0">
+                    <a href="javascript:window.history.back();">
+                        <button type="button" class="btn btn-secondary btn-sm">뒤로</button>
+                    </a>
+                    <a th:href="@{/notice/main(currentPage=0)}">
+                        <button type="button" class="btn btn-secondary btn-sm">목록</button>
+                    </a>
+                </div>
+            </div>
 
-<!-----------------------------------------------------------------------------------------  -->
+            <hr>
+        </div>
+    </section><!-- End About Us Section -->
+    <!-----------------------------------------------------------------------------------------  -->
 </div>
-<div id="footer-load" class="container-md" th:insert="html/footer.html :: footerFragment"></div>.
+<div id="footer-load" class="container-md" th:insert="html/footer.html :: footerFragment"></div>
+.
 </body>
 </html>

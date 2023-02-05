@@ -7,65 +7,69 @@
 <div id="nav-load" th:insert="html/nav.html :: navFragment"></div>
 
 <div class="container-md">
-<!-----------------------------------------------------------------------------------------  -->
+    <!-----------------------------------------------------------------------------------------  -->
+    <section id="about" class="about">
+        <div class="container" data-aos="fade-up">
+            <script th:inline="javascript">
+                /*<![CDATA[*/
+                function noticeDataCheck() {
+                    const regexTitle = "^" + [[${regexAllPermit}]] + "{2,50}$$";
+                    const title = new RegExp(`${regexTitle}`);
+                    if (!title.test($("#noticeTitle").val())) {
+                        $("#titleCheckSpan").text("제목은 2 ~ 50 글자를 맞추어야 합니다.").addClass("red")
+                        $("#noticeTitle").focus()
+                        return false;
+                    } else {
+                        $("#titleCheckSpan").text("")
+                        $("#titleCheckSpan").removeClass("red")
+                    }
 
-<script th:inline="javascript">
-/*<![CDATA[*/
-function noticeDataCheck (){
-	const regexTitle = "^" +[[${regexAllPermit}]] + "{2,50}$$";
-	const title = new RegExp(`${regexTitle}`);
-		if(!title.test($("#noticeTitle").val())){
-			$("#titleCheckSpan").text("제목은 2 ~ 50 글자를 맞추어야 합니다.").addClass("red")
-			$("#noticeTitle").focus()
-			return false;
-		}else{
-			$("#titleCheckSpan").text("")
-			$("#titleCheckSpan").removeClass("red")
-		}
+                    const regexContent = "^" + [[${regexAllPermit}]] + "{2,500}$$";
+                    const content = new RegExp(`${regexContent}`);
+                    if (!content.test($("#noticeContent").val())) { /* 내용 정규식 체크 2 ~ 500 자  */
+                        $("#contentCheckSpan").text("내용은 2 ~ 500 글자를 맞추어야 합니다.").addClass("red")
+                        $("#noticeContent").focus()
+                        return false;
+                    } else {
+                        $("#contentCheckSpan").text("")
+                        $("#contentCheckSpan").removeClass("red")
+                    }
 
-	const regexContent = "^" +[[${regexAllPermit}]] + "{2,500}$$";
-	const content =new RegExp(`${regexContent}`);
-		if(!content.test($("#noticeContent").val())){ /* 내용 정규식 체크 2 ~ 500 자  */
-			$("#contentCheckSpan").text("내용은 2 ~ 500 글자를 맞추어야 합니다.").addClass("red")
-			$("#noticeContent").focus()
-			return false;
-		}else{
-			$("#contentCheckSpan").text("")
-			$("#contentCheckSpan").removeClass("red")
-		}
-	
-}
-/*]]>*/
+                }
 
-</script>
+                /*]]>*/
 
-	
-	<form action="/notice/write/action" method="post" onsubmit="return noticeDataCheck()">
-		<div class="mb-3">
-		  <label for="noticeTitle" class="form-label">제목</label>
-		  <input type="text" class="form-control" id="noticeTitle" name ="noticeTitle" placeholder="공지사항 제목을 입력해 주세요.">
-		  <span id="titleCheckSpan"></span>
-		</div>
-		<div class="mb-3" style="width: 10%">
-		<select name="category" class="form-select form-select-sm" aria-label="Default select example">
-		  <option selected value="notice">공지사항</option>
-		  <option value="updateNote">업데이트</option>
-		  <option value="etc">ETC</option>
-		</select>
-		</div>
-		<div class="mb-3">
-		  <label for="noticeContent" class="form-label">내용</label>
-		  <textarea class="form-control" id="noticeContent"  name ="noticeContent" rows="20"></textarea>
-		  <span id="contentCheckSpan"></span>
-		</div>
-		  <br>
-		  <button type="submit" class="btn btn-primary">글쓰기</button>
-	</form>
+            </script>
 
 
-<!-----------------------------------------------------------------------------------------  -->
+            <form action="/notice/write/action" method="post" onsubmit="return noticeDataCheck()">
+                <div class="mb-3">
+                    <label for="noticeTitle" class="form-label">제목</label>
+                    <input type="text" class="form-control" id="noticeTitle" name="noticeTitle"
+                           placeholder="공지사항 제목을 입력해 주세요.">
+                    <span id="titleCheckSpan"></span>
+                </div>
+                <div class="mb-3" style="width: 10%">
+                    <select name="category" class="form-select form-select-sm" aria-label="Default select example">
+                        <option selected value="notice">공지사항</option>
+                        <option value="updateNote">업데이트</option>
+                        <option value="etc">ETC</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="noticeContent" class="form-label">내용</label>
+                    <textarea class="form-control" id="noticeContent" name="noticeContent" rows="20"></textarea>
+                    <span id="contentCheckSpan"></span>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary">글쓰기</button>
+            </form>
+
+        </div>
+    </section><!-- End About Us Section -->
+    <!-----------------------------------------------------------------------------------------  -->
 </div>
-<div id="footer-load" class="container-md" th:insert="html/footer.html :: footerFragment"></div>.
+<div id="footer-load" class="container-md" th:insert="html/footer.html :: footerFragment"></div>
 </body>
 <!--<script>-->
 <!--	let noticeContentArea =  document.getElementById('noticeContent');-->

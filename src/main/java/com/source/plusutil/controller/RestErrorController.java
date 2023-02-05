@@ -1,6 +1,8 @@
 package com.source.plusutil.controller;
 
+import com.source.plusutil.enums.returnUrl.ErrorReturnUrl;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -18,8 +20,7 @@ public class RestErrorController {
 	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
 	public String httpRequestMethodNotSupportedExceptionAdvice(HttpRequestMethodNotSupportedException e) { 
 		log.info("HttpRequestMethodNotSupportedException" , e);
-		String result = "/error/main";
-		return result;
+		return ErrorReturnUrl.ERROR_MAIN.getUrl();
 	}
 	
 	
@@ -27,25 +28,27 @@ public class RestErrorController {
 	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
 	public String methodArgumentTypeMismatchExceptionAdvice(MethodArgumentTypeMismatchException e) { 
 		log.info("methodArgumentTypeMismatchExceptionAdvice" , e);
-		String result = "/error/main";
-		return result;
+		return ErrorReturnUrl.ERROR_MAIN.getUrl();
 	}
 	
 	// 타임리프에 대한 요청 input 오류 발생시
 	@ExceptionHandler(TemplateInputException.class)
 	public String TemplateInputExceptionAdvice(TemplateInputException e) { 
 		log.info("TemplateInputException" , e);
-		String result = "/error/main";
-		return result;
+		return ErrorReturnUrl.ERROR_MAIN.getUrl();
 	}
 
 	@ExceptionHandler(NoHandlerFoundException.class)
 	public String noHandlerFoundExceptionAdvice(NoHandlerFoundException e) {
 		log.info("NoHandlerFoundException" , e);
-		String result = "/error/main";
-		return result;
+		return ErrorReturnUrl.ERROR_MAIN.getUrl();
 	}
 
+	@ExceptionHandler(MissingServletRequestParameterException.class)
+	public String missingServletRequestParameterExceptionAdvice(MissingServletRequestParameterException e) {
+		log.info("MissingServletRequestParameterException" , e);
+		return ErrorReturnUrl.ERROR_MAIN.getUrl();
+	}
 //    @ExceptionHandler(BindException.class)
 //    public ResponseEntity<Map<String, String>> handleValidationBindExceptions(BindException ex){
 //        Map<String, String> errors = new HashMap<>();

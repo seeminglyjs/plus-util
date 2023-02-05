@@ -6,56 +6,42 @@
 <div id="header-load" th:replace="html/head.html :: headFragment"></div>
 <div id="nav-load" th:insert="html/nav.html :: navFragment"></div>
 
-<div class="container-md">
+<div>
 <!-----------------------------------------------------------------------------------------  -->
+  <section id="services" class="services section-bg">
+    <div class="container" data-aos="fade-up">
+      <div class="section-title">
+        <h2>그래프 이론</h2>
+        <p>그래프 이론은 수학에서 객체 간에 짝을 이루는 관계를 모델링하기 위해 사용되는 수학 구조인 그래프에 대한 연구이다.</p>
+        <p>이 문맥에서 그래프는 꼭짓점(버텍스/vertex), 교점(노드/node), 점(포인트/point)으로 구성되며 이것들은 변(엣지/edge, 간선), 즉 선으로 연결된다.</p>
+        <p>그래프는 무향(무방향성)일 수 있는데 이는 각 변(선)으로 연결되는 두 개의 꼭짓점 간에 구별이 없다는 의미이며,
+          한편 변은 한 꼭짓점에서 다른 꼭짓점 간에 방향이 있을 수도 있다. 그래프는 이산수학의 주요 논제 가운데 하나이다.</p>
+        <p><strong><a href="https://ko.wikipedia.org/wiki/%EA%B7%B8%EB%9E%98%ED%94%84_%EC%9D%B4%EB%A1%A0">출처:위키백과</a></strong></p>
+      </div>
 
-<div class="accordion" id="accordionExample">
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="headingOne">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-        BFS 알고리즘
-      </button>
-    </h2>
-    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        <a href="/algorithm/bfs/search/short/distance/main"><button type="button" class="btn btn-secondary btn-sm"><strong>Breadth First Search</strong></button></a>  
-			너비 우선 탐색이라고 불리며, 루트 노드 부터 시작하여, 인접한 모든 노드를 탐색하는 알고리즘 입니다. 경로 탐색 문제에서 많이 활용되며,
-            모든 경우의 수를 탐색하기 때문에 효율성 측면에서는 좋지 않습니다.
+      <div class="row">
+        <div class="col-xl-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+          <div class="icon-box">
+            <div class="icon"><i class="bx bx-hash"></i></div>
+            <h4><a href="/algorithm/bfs/search/short/distance/main"><strong>Breadth First Search</strong></a></h4>
+            <p>너비 우선 탐색이라고 불리며, 루트 노드 부터 시작하여, 인접한 모든 노드를 탐색하는 알고리즘 입니다. 경로 탐색 문제에서 많이 활용되며,
+              모든 경우의 수를 탐색하기 때문에 효율성 측면에서는 좋지 않습니다.</p>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="200">
+          <div class="icon-box">
+            <div class="icon"><i class="bx bx-hash"></i></div>
+            <h4><a href="/algorithm/dfs/search/short/distance/main"><strong>Depth First Search</strong></a></h4>
+            <p>         깊이 우선 탐색이라고 불리며, 루트 노드 부터 시작하여, 깊은 노드를 탐색하는 알고리즘 입니다. 경로 탐색 문제에서 많이 활용되며,
+              모든 경우의 수를 탐색하기 때문에 효율성 측면에서는 좋지 않습니다.</p>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="headingTwo">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-        DFS 알고리즘
-      </button>
-    </h2>
-    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-         <a href="/algorithm/dfs/search/short/distance/main"><button type="button" class="btn btn-secondary btn-sm"><strong>Depth First Search</strong></button></a>
-         깊이 우선 탐색이라고 불리며, 루트 노드 부터 시작하여, 깊은 노드를 탐색하는 알고리즘 입니다. 경로 탐색 문제에서 많이 활용되며,
-        모든 경우의 수를 탐색하기 때문에 효율성 측면에서는 좋지 않습니다.
-      </div>
-    </div>
-  </div>
-<!--   <div class="accordion-item">
-    <h2 class="accordion-header" id="headingThree">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-        추가 예정 . . . .
-      </button>
-    </h2>
-    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        <strong></strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-      </div>
-    </div>
-  </div> -->
-</div>
-	
-
-
+  </section><!-- End Services Section -->
 <!-----------------------------------------------------------------------------------------  -->
 </div>
-<div id="footer-load" class="container-md" th:insert="html/footer.html :: footerFragment"></div>.
+<div id="footer-load" class="container-md" th:insert="html/footer.html :: footerFragment"></div>
 </body>
 </html>

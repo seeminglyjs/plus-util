@@ -61,7 +61,8 @@ public class SecurityConfig {
 				,"/util/**"
 				,"/notice/**"
 				,"/algorithm/**"
-				,"/error/main").permitAll() //누구나 접근가능한 페이지 적용
+				,"/error/main"
+				).permitAll() //누구나 접근가능한 페이지 적용
 		.antMatchers("/setting/**", "/admin/**").hasRole("ADMIN") //관리자(Admin)만 접근 허용
 		.antMatchers("/user/**", "/logout/**").hasAnyRole("USER","ADMIN") //유저(USER) / 관리자(Admin)만 접근 허용
 		.anyRequest().authenticated() //나머지 경로에 대해서는 인가된 사용자만 접근할 수 있다.
@@ -101,8 +102,9 @@ public class SecurityConfig {
 	public WebSecurityCustomizer webSecurityCustomizer() {
 		return (web) -> web
 				.ignoring()
-				.antMatchers("/images/**", "/js/**", "/html/**", "/bootstrap-icons-1.10.3/**");
+				.antMatchers("/images/**", "/js/**", "/html/**", "/assets/**", "/css/**", "/bootstrap-icons-1.10.3/**");
 	}
+
 
 	@Bean // 로그 아웃이 성공했을 때 동작하는 핸들러
 	public LogoutSuccessHandler logoutSuccessHandler() {

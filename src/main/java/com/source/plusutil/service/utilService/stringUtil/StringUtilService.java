@@ -6,12 +6,13 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface StringUtilService {
 
-	public void getStringByte(HttpServletRequest request, String stringContent, String encoding, String emptyYn);
+	void getStringByte(HttpServletRequest request, String stringContent, String encoding, String emptyYn);
 	
-	public void getInitialString(HttpServletRequest request, String stringContent);
+	void getInitialString(HttpServletRequest request, String stringContent);
 	
-	public Map<String,String> getLengthString(HttpServletRequest request, String stringContent);
+	Map<String,String> getLengthString(HttpServletRequest request, String stringContent);
 
-	public void convertUpperAndLowerMain(HttpServletRequest request, String stringContent, String upperOrLower);
+	void convertUpperAndLowerMain(HttpServletRequest request, String stringContent, String upperOrLower);
 
+    void checkSimilarity(HttpServletRequest request, String firstContent, String secondContent);
 }

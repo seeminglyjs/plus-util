@@ -7,25 +7,29 @@
 <div id="nav-load" th:insert="html/nav.html :: navFragment"></div>
 
 <div class="container-md">
-<!-----------------------------------------------------------------------------------------  -->
+    <!-----------------------------------------------------------------------------------------  -->
+
+    <section id="about" class="about">
+        <div class="container" data-aos="fade-up">
+
+            <div th:switch="${joinSuccess}">
+                <span th:case="true">회원가입에 성공했습니다.</span>
+                <span th:case="false">회원가입에 실패했습니다.</span>
+            </div>
 
 
-	<div th:switch="${joinSuccess}">
-		<span th:case="true">회원가입에 성공했습니다.</span>
-		<span th:case="false">회원가입에 실패했습니다.</span>
-	</div>
+            <div class="container-md" id="homeMainContainer">
+                <a class="btn btn-primary" href="/login" role="button">로그인</a>
+            </div>
+            <div class="container-md" id="homeMainContainer">
+                <a class="btn btn-primary" href="/join" role="button">회원가입</a>
+            </div>
 
-	
-	<div class="container-md" id="homeMainContainer">
-		<a class="btn btn-primary" href="/login" role="button">로그인</a>
-	</div>
-	<div class="container-md" id="homeMainContainer">
-		<a class="btn btn-primary" href="/join" role="button">회원가입</a>
-	</div>
-
-
-<!-----------------------------------------------------------------------------------------  -->
+        </div>
+    </section><!-- End About Us Section -->
+    <!-----------------------------------------------------------------------------------------  -->
 </div>
-<div id="footer-load" class="container-md" th:insert="html/footer.html :: footerFragment"></div>.
+<div id="footer-load" class="container-md" th:insert="html/footer.html :: footerFragment"></div>
+.
 </body>
 </html>
