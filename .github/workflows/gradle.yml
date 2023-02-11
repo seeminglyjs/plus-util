@@ -60,6 +60,9 @@ jobs:
       
     - name: copy war
       run: $targetDir/tomcat-webapps-deploy.sh   
+    
+    - name: unzip war
+      run: $targetDir/tomcat-war-unzip.sh   
             
     - name: start tomcat
       run: $targetDir/call-tomcat-start.sh
