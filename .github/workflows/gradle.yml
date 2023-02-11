@@ -45,9 +45,9 @@ jobs:
 #         build-root-directory: /home/seeminglyjs/project/$projectName 
 
     - uses: actions/checkout@v3
-    - run: touch ./src/main/resources/application.properties2
-    - run: echo "${{ secrets.APPLICATION_PROPERTIES }}" > ./src/main/resources/application.properties2
-    - run: cat ./src/main/resources/application.properties2
+    - run: touch ./src/main/resources/application.properties
+    - run: echo "${{ secrets.APPLICATION_PROPERTIES }}" > ./src/main/resources/application.properties
+    - run: cat ./src/main/resources/application.properties
       
     - name: shutdown tomcat
       run: $targetDir/call-tomcat-stop.sh
