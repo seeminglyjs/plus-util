@@ -56,7 +56,7 @@ jobs:
       run: chmod +x ./gradlew
 
     - name: Execute Gradle build
-      run: ./gradlew --debug build
+      run: ./gradlew build
       
     - name: copy war
       run: $targetDir/tomcat-webapps-deploy.sh   
