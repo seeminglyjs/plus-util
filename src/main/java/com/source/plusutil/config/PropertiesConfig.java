@@ -15,6 +15,7 @@ import org.springframework.context.annotation.PropertySources;
 })
 @Getter
 public class PropertiesConfig {
+	//
 
 	//aes256알고리즘
 	@Value("${AES_256_ALG}")
