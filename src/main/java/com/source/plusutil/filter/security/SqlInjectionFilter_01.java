@@ -16,12 +16,13 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.source.plusutil.enums.returnUrl.ErrorReturnUrl;
 import com.source.plusutil.utils.http.HttpParamCheckUtil;
 import org.springframework.core.annotation.Order;
 
 import lombok.extern.slf4j.Slf4j;
 
-@WebFilter(urlPatterns="/*")
+@WebFilter(urlPatterns= {"/plus/*"})
 @Order(1) //가장 처음동작 필터
 @Slf4j
 public class SqlInjectionFilter_01 implements Filter {
@@ -69,19 +70,18 @@ public class SqlInjectionFilter_01 implements Filter {
 		//파라미터 정보를 가져온다.
 		Map<String, String> map = HttpParamCheckUtil.httpRequestParamToMap(request);
 
-		if(map == null || map.isEmpty()) {
+		if(map.isEmpty()) {
 			log.info("===== SqlInjectionCheck getParameterNames is empty =====");
 		}else { //파라미터 정보 검증하기
 			for(String value : map.values()) {
-				log.info("value check -> " + value);
+				log.info("value check ->" + value);
 				value = value.toUpperCase();
 				String [] valueArr = value.split(" ");
-				for(int i = 0; i < valueArr.length; i++) {
-					String splitValue = valueArr[i];
-					log.info("splitValue ->" +  splitValue);
-					if(WORD_SET.contains(splitValue)) {
+				for (String splitValue : valueArr) {
+					log.info("splitValue ->" + splitValue);
+					if (WORD_SET.contains(splitValue)) {
 						log.info("[param] blockStringCheck info exception value-> " + splitValue);
-						response.sendRedirect("/error/main"); //문자열 집합에 걸릴 경우 에러페이지로 보낸다.
+						response.sendRedirect(ErrorReturnUrl.ERROR_MAIN.getUrl()); //문자열 집합에 걸릴 경우 에러페이지로 보낸다.
 						return;
 					}
 				}

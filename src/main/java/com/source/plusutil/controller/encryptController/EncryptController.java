@@ -15,7 +15,7 @@ import com.source.plusutil.dto.encrypt.RsaEncryptRequestDto;
 import com.source.plusutil.service.encryptService.EncryptService;
 
 @Controller
-@RequestMapping("/encrypt")
+@RequestMapping("/plus/encrypt")
 public class EncryptController {
 
 	@Autowired

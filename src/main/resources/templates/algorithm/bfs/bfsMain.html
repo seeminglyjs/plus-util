@@ -7,69 +7,70 @@
 <div id="nav-load" th:insert="html/nav.html :: navFragment"></div>
 
 <div class="container-md">
-<!-----------------------------------------------------------------------------------------  -->
+    <!-----------------------------------------------------------------------------------------  -->
+	<section id="contact" class="contact">
+		<div class="container" data-aos="fade-up">
 
-
-	<div class="container-md" id="bfsContainer">
-		<form action="/algorithm/bfs/search/short/distance" method="post">
-		  <div class="mb-3">
-		    <label for="bfsRow" class="form-label">Row</label>
-		    <input type="number" placeholder="ex) 3, 4, 5, . . ." class="form-control" id="bfsRow" name="bfsRow" aria-describedby="bfsRowHelp" th:value="${bfsRow}">
-		    <div id="bfsRowHelp" class="form-text">행을 입력해 주세요. [15 까지 입력가능]</div>
-		  </div>
-		  
-		  <div class="mb-3">
-		    <label for="bfsCol" class="form-label">Col</label>
-		    <input type="number" placeholder="ex) 3, 4, 5, . . ." class="form-control" id="bfsCol" name="bfsCol" aria-describedby="bfsColHelp" th:value="${bfsCol}">
-		    <div id="bfsColHelp" class="form-text">열을 입력해 주세요. [15 까지 입력가능]</div>
-		  </div>
-		  
-  		  <div class="mb-3">
-		    <label for="bfsStartRow" class="form-label">StartRow</label>
-		    <input type="number" placeholder="ex) 3, 4, 5, . . ." class="form-control" id="bfsStartRow" name="bfsStartRow" aria-describedby="bfsStartRowHelp" th:value="${bfsStartRow}">
-		    <div id="bfsStartRowHelp" class="form-text">시작행을 입력해 주세요. [14 까지 입력가능]</div>
-		  </div>
-
-  		  <div class="mb-3">
-		    <label for="bfsStartCol" class="form-label">StartCol</label>
-		    <input type="number" placeholder="ex) 3, 4, 5, . . ." class="form-control" id="bfsStartCol" name="bfsStartCol" aria-describedby="bfsStartColHelp" th:value="${bfsStartCol}">
-		    <div id="bfsStartColHelp" class="form-text">시작열을 입력해 주세요. [14 까지 입력가능]</div>
-		  </div>
-		  
-   		  <div class="mb-3">
-		    <label for="bfsEndRow" class="form-label">EndRow</label>
-		    <input type="number" placeholder="ex) 3, 4, 5, . . ." class="form-control" id="bfsEndRow" name="bfsEndRow" aria-describedby="bfsEndRowHelp" th:value="${bfsEndRow}">
-		    <div id="bfsEndRowHelp" class="form-text">도착행을 입력해 주세요. [15 까지 입력가능]</div>
-		  </div>
-
-   		  <div class="mb-3">
-		    <label for="bfsEndCol" class="form-label">EndCol</label>
-		    <input type="number" placeholder="ex) 3, 4, 5, . . ." class="form-control" id="bfsEndCol" name="bfsEndCol" aria-describedby="bfsEndColHelp" th:value="${bfsEndCol}">
-		    <div id="bfsEndColHelp" class="form-text">도착열을 입력해 주세요. [15 까지 입력가능]</div>
-		  </div>
-			
-		  
-		  <button type="submit" class="btn btn-primary">BFS 탐색 시작</button>
-		</form>
-		
-		<br>
-		<div class="p-2 bg-light border">
-		  	<span class="badge bg-secondary">탐색 정보</span> 
-		  	<br>
-		  	<br>
-		  	<div class="form-floating">
-				<label for="bfsSearchResultSpan"></label><textarea class="form-control" id="bfsSearchResultSpan" placeholder="Leave a comment here" th:if="${not #strings.isEmpty(bfsSearchResult)}" th:text="${bfsSearchResult}" style="height: 100px"></textarea>
-				<label for="bfsSearchResultSpanNone"></label><textarea class="form-control" id="bfsSearchResultSpanNone" placeholder="Leave a comment here" th:if="${#strings.isEmpty(bfsSearchResult)}" style="height: 100px">탐색에 필요한 데이터를 입력해 주세요.</textarea>
-			<label>탐색 정보</label>
+			<div class="section-title">
+				<h2>BFS 탐색</h2>
+				<p>전체 탐색 배열에 사이즈와 탐색하고자 하는 시작 위치 도착하고자 하는 위치를 입력한 후 확인 버튼을 누르면 최단 거리를 확인할 수 있습니다.</p>
 			</div>
-			<br>
-	  	</div>
-	</div>
-	
 
+			<div class="col-lg-12 mt-5 mt-lg-0 d-flex align-items-stretch">
+				<form action="/plus/algorithm/bfs/search/short/distance" method="post" role="form" class="php-email-form">
 
-<!-----------------------------------------------------------------------------------------  -->
+					<div class="text-center"><h4>최단거리 <i class="bx bi-graph-up"></i></h4></div>
+					<div id="shortDistance" class="border rounded text-center my-2 p-4">
+						<h6 th:if="${not #strings.isEmpty(bfsSearchResult)}"
+							th:text="|탐색결과 : ${bfsSearchResult}|"><b>탐색에 필요한 데이터를 우선 입력해 주세요.</b></h6>
+					</div>
+					<div id="shortDistanceHelp" class="form-text text-center">아래 데이터를 입력하면 최단거리를 확인할 수 있습니다.</div>
+					<br>
+					<div class="row">
+						<div class="form-group col-md-6">
+							<label for="bfsRow">Row</label>
+							<input type="number" placeholder="ex) 3, 4, 5, . . ." name="bfsRow" class="form-control" id="bfsRow" th:value="${bfsRow}" required>
+							<div id="bfsRowHelp" class="form-text">행을 입력해 주세요. [15 까지 입력가능]</div>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="bfsCol">Col</label>
+							<input type="number" placeholder="ex) 3, 4, 5, . . ." name="bfsCol" class="form-control" id="bfsCol" th:value="${bfsCol}" required>
+							<div id="bfsColHelp" class="form-text">열을 입력해 주세요. [15 까지 입력가능]</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col-md-6">
+							<label for="bfsStartRow">StartRow</label>
+							<input type="number" placeholder="ex) 3, 4, 5, . . ." name="bfsStartRow" class="form-control" id="bfsStartRow" th:value="${bfsStartRow}" required>
+							<div id="bfsStartRowHelp" class="form-text">시작행을 입력해 주세요. [14 까지 입력가능]</div>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="bfsStartCol">StartCol</label>
+							<input type="number" placeholder="ex) 3, 4, 5, . . ." name="bfsStartCol" class="form-control" id="bfsStartCol" th:value="${bfsStartCol}" required>
+							<div id="bfsStartColHelp" class="form-text">시작열을 입력해 주세요. [14 까지 입력가능]</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col-md-6">
+							<label for="bfsEndRow">EndRow</label>
+							<input type="number" placeholder="ex) 3, 4, 5, . . ." name="bfsEndRow" class="form-control" id="bfsEndRow" th:value="${bfsEndRow}" required>
+							<div id="bfsEndRowHelp" class="form-text">도착행을 입력해 주세요. [15 까지 입력가능]</div>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="bfsEndCol">EndCol</label>
+							<input type="number" placeholder="ex) 3, 4, 5, . . ." name="bfsEndCol" class="form-control" id="bfsEndCol" th:value="${bfsEndCol}" required>
+							<div id="bfsEndColHelp" class="form-text">도착열을 입력해 주세요. [15 까지 입력가능]</div>
+						</div>
+					</div>
+					<div class="text-center"><button type="submit">확인</button></div>
+				</form>
+			</div>
+
+		</div>
+
+</section><!-- End Contact Section -->
+    <!-----------------------------------------------------------------------------------------  -->
 </div>
-<div id="footer-load" class="container-md" th:insert="html/footer.html :: footerFragment"></div>.
+<div id="footer-load" th:insert="html/footer.html :: footerFragment"></div>
 </body>
 </html>

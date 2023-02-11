@@ -11,7 +11,7 @@ import com.source.plusutil.service.algorithmService.BfsServiceImpl;
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping("/algorithm")
+@RequestMapping("/plus/algorithm")
 @RequiredArgsConstructor
 public class BfsController {
 

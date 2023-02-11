@@ -16,10 +16,12 @@ import com.source.plusutil.dto.userDto.UserJoinDto;
 import com.source.plusutil.service.userService.JoinService;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
 @Slf4j
+@RequestMapping("/plus")
 public class JoinController {
 
 	@Autowired

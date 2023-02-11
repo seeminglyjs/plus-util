@@ -19,7 +19,7 @@ import javax.servlet.ServletResponse;
 
 import lombok.extern.slf4j.Slf4j;
 
-@WebFilter(urlPatterns="/*")
+@WebFilter(urlPatterns= {"/plus/*"})
 @Order(99) //가장 마지막 동작 필터
 @Slf4j
 public class CookieInfoSetAttributeFilter implements Filter{

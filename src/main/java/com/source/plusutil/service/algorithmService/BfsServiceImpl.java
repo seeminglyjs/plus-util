@@ -100,8 +100,8 @@ public class BfsServiceImpl implements BfsService {
 		request.setAttribute("bfsRow", bfsRow);
 		request.setAttribute("bfsStartRow", bfsStartRow);
 		request.setAttribute("bfsStartCol", bfsStartCol);
-		request.setAttribute("bfsEndRow", bfsEndRow);
-		request.setAttribute("bfsEndCol", bfsEndCol);
+		request.setAttribute("bfsEndRow", bfsEndRow-1);
+		request.setAttribute("bfsEndCol", bfsEndCol-1);
 
 	}
 	

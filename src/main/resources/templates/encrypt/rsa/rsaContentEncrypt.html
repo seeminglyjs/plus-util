@@ -32,13 +32,13 @@
 	<div class="container">
 	<ul class="nav justify-content-center">
 	  <li class="nav-item">
-	    <a class="nav-link active" aria-current="page" href="/encrypt/main"><button type="button" class="btn btn-outline-primary btn-sm">암호화 메인</button></a>
+	    <a class="nav-link active" aria-current="page" href="/plus/encrypt/main"><button type="button" class="btn btn-outline-primary btn-sm">암호화 메인</button></a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" href="/encrypt/rsa/key/make/main"><button type="button" class="btn btn-outline-secondary btn-sm">RSA 키 생성</button></a>
+	    <a class="nav-link" href="/plus/encrypt/rsa/key/make/main"><button type="button" class="btn btn-outline-secondary btn-sm">RSA 키 생성</button></a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" href="/encrypt/rsa/content/decrypt/main"><button type="button" class="btn btn-outline-secondary btn-sm">RSA 복호화</button></a>
+	    <a class="nav-link" href="/plus/encrypt/rsa/content/decrypt/main"><button type="button" class="btn btn-outline-secondary btn-sm">RSA 복호화</button></a>
 	  </li>
 	</ul>
 	</div>	
@@ -46,7 +46,7 @@
 	
 	
 	<div class="container-md" id="rsaContentEncryptFormContainer">
-		<form action="/encrypt/rsa/content/encrypt" method="post">
+		<form action="/plus/encrypt/rsa/content/encrypt" method="post">
 		  <div class="mb-3">
 		    <label for="rsaPublicKey" class="form-label">공개키 정보</label>
 		    <input type="text" class="form-control" id="rsaPublicKey" name="rsaPublicKey" aria-describedby="rsaPublicKeyHelp">
@@ -79,6 +79,6 @@
 
 <!-----------------------------------------------------------------------------------------  -->
 </div>
-<div id="footer-load" class="container-md" th:insert="html/footer.html :: footerFragment"></div>.
+<div id="footer-load" th:insert="html/footer.html :: footerFragment"></div>
 </body>
 </html>

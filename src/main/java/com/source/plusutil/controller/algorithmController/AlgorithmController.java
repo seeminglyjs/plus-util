@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/algorithm")
+@RequestMapping("/plus/algorithm")
 public class AlgorithmController {
 
 	@GetMapping("/graph/main")

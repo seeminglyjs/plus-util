@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
-@WebFilter(urlPatterns="/*")
+@WebFilter(urlPatterns= {"/plus/*"})
 @Order(3) //번째 동작필터
 @Slf4j
 public class LocaleCheckFilter_03 implements Filter {

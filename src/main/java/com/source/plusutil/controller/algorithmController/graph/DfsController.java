@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("/algorithm")
+@RequestMapping("/plus/algorithm")
 @RequiredArgsConstructor
 public class DfsController {
 

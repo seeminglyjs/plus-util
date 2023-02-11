@@ -9,7 +9,7 @@
 <div class="container-md">
     <!-----------------------------------------------------------------------------------------  -->
     <section id="about" class="about">
-        <div class="container" data-aos="fade-up">
+        <div class="container">
             <script th:inline="javascript">
                 /*<![CDATA[*/
                 function noticeDataCheck() {
@@ -39,7 +39,7 @@
             </script>
 
 
-            <form action="/notice/update/action" method="post" onsubmit="return noticeDataCheck()">
+            <form action="/plus/notice/update/action" method="post" onsubmit="return noticeDataCheck()">
                 <!--/*@thymesVar id="noticeNo" type="Integer"*/-->
                 <input type="hidden" name="noticeNo" th:value="${noticeNo}">
                 <div class="mb-3">
@@ -71,7 +71,6 @@
     </section><!-- End About Us Section -->
     <!-----------------------------------------------------------------------------------------  -->
 </div>
-<div id="footer-load" class="container-md" th:insert="html/footer.html :: footerFragment"></div>
-.
+<div id="footer-load" th:insert="html/footer.html :: footerFragment"></div>
 </body>
 </html>

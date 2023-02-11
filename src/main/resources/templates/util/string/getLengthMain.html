@@ -29,7 +29,7 @@
             $("#stringContent").on("propertychange change keyup paste input blur", function () {
                 if (DataCheck()) {
                     $.ajax({
-                        url: '/util/string/get/length/action'
+                        url: '/plus/util/string/get/length/action'
                         , type: 'post'
                         , data: {stringContent: $("#stringContent").val()}
                         , dataType: 'json'
@@ -79,7 +79,7 @@
     <br>
     <div class="position-relative">
         <div class="position-absolute bottom-0 end-50">
-            <a href="/util/string/main">
+            <a href="/plus/util/string/main">
                 <button type="button" class="btn btn-primary">목록</button>
             </a>
         </div>
@@ -87,6 +87,6 @@
     </div>
     <!-----------------------------------------------------------------------------------------  -->
 </div>
-<div id="footer-load" class="container-md" th:insert="html/footer.html :: footerFragment"></div>
+<div id="footer-load" th:insert="html/footer.html :: footerFragment"></div>
 </body>
 </html>

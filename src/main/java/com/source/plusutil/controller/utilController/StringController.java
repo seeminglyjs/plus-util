@@ -18,7 +18,7 @@ import com.source.plusutil.service.utilService.stringUtil.StringUtilServiceImpl;
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping("/util")
+@RequestMapping("/plus/util")
 @RequiredArgsConstructor
 public class StringController {
 

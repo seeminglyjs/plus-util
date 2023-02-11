@@ -32,17 +32,17 @@
 	<div class="container">
 	<ul class="nav justify-content-center">
 	  <li class="nav-item">
-	    <a class="nav-link active" aria-current="page" href="/encrypt/main"><button type="button" class="btn btn-outline-primary btn-sm">암호화 메인</button></a>
+	    <a class="nav-link active" aria-current="page" href="/plus/encrypt/main"><button type="button" class="btn btn-outline-primary btn-sm">암호화 메인</button></a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" href="/encrypt/aes256/decrypt/main"><button type="button" class="btn btn-outline-secondary btn-sm">AES 복호화</button></a>
+	    <a class="nav-link" href="/plus/encrypt/aes256/decrypt/main"><button type="button" class="btn btn-outline-secondary btn-sm">AES 복호화</button></a>
 	  </li>
 	</ul>
 	</div>	
 
 
 	<div class="container-md" id="aes256FormContainer">
-		<form action="/encrypt/aes256/encrypt">
+		<form action="/plus/encrypt/aes256/encrypt">
 		  <div class="mb-3">
 		    <label for="aes256Key" class="form-label">Aes256-Key</label>
 		    <input type="text" class="form-control" id="aes256Key" name="aes256Key" aria-describedby="aes256KeyHelp">
@@ -84,6 +84,6 @@
 
 <!-----------------------------------------------------------------------------------------  -->
 </div>
-<div id="footer-load" class="container-md" th:insert="html/footer.html :: footerFragment"></div>.
+<div id="footer-load" th:insert="html/footer.html :: footerFragment"></div>
 </body>
 </html>

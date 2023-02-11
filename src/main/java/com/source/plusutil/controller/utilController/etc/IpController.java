@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("/util/etc")
+@RequestMapping("/plus/util/etc")
 @RequiredArgsConstructor
 public class IpController {
 

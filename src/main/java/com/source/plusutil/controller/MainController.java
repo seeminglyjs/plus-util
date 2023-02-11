@@ -15,6 +15,7 @@ import com.source.plusutil.service.TestService;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/plus")
 public class MainController {
 
 	private final TestService testService;

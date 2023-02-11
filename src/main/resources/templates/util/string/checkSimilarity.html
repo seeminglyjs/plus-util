@@ -35,7 +35,7 @@
 
     <!-- test2 -->
     <div class="container-md" id="stringGetByteContainer">
-        <form action="/util/string/check/similarity/action" method="post" onsubmit="return DataCheck()">
+        <form action="/plus/util/string/check/similarity/action" method="post" onsubmit="return DataCheck()">
             <div class="mb-3">
                 <label for="firstContent">첫번째 내용</label>
                 <textarea class="form-control" id="firstContent" name="firstContent" rows="15" placeholder="내용을 입력해주세요."
@@ -76,7 +76,7 @@
     <br>
     <div class="position-relative">
         <div class="position-absolute bottom-0 end-50">
-            <a href="/util/string/main">
+            <a href="/plus/util/string/main">
                 <button type="button" class="btn btn-primary">목록</button>
             </a>
         </div>
@@ -85,7 +85,6 @@
 
     <!-----------------------------------------------------------------------------------------  -->
 </div>
-<div id="footer-load" class="container-md" th:insert="html/footer.html :: footerFragment"></div>
-.
+<div id="footer-load" th:insert="html/footer.html :: footerFragment"></div>
 </body>
 </html>

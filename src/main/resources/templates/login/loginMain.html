@@ -9,9 +9,9 @@
 <div class="container-md">
     <!-----------------------------------------------------------------------------------------  -->
     <section id="about" class="about">
-        <div class="container" data-aos="fade-up">
+        <div class="container">
             <div class="container-md" id="loginFormContainer">
-                <form id="frm" name="frm" action="/login/action" method="post">
+                <form id="frm" name="frm" action="/plus/login/action" method="post">
                     <div class="mb-3">
                         <label for="userEmail" class="form-label">아이디</label>
                         <input type="email" class="form-control" id="userEmail" name="userEmail"
@@ -24,7 +24,7 @@
                     </div>
                     <div class="mb-3 form-check">
                         <input type="checkbox" class="form-check-input" id="remember-me" name="remember-me">
-                        <label class="form-check-label" for="exampleCheck1">로그인 유지</label>
+                        <label class="form-check-label" for="remember-me">로그인 유지</label>
                     </div>
                     <button type="submit" class="btn btn-primary">로그인</button>
                 </form>
@@ -33,6 +33,6 @@
     </section><!-- End About Us Section -->
     <!-----------------------------------------------------------------------------------------  -->
 </div>
-<div id="footer-load" class="container-md" th:insert="html/footer.html :: footerFragment"></div>
+<div id="footer-load" th:insert="html/footer.html :: footerFragment"></div>
 </body>
 </html>

@@ -8,24 +8,15 @@
 
 <div class="container-md">
     <!-----------------------------------------------------------------------------------------  -->
-    <div class="container-md d-flex justify-content-center">
+    <section id="about" class="about">
+        <div class="container">
 
-		<div class="card text-center w-50">
-            <div class="card-header">
 
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">IP 정보 확인</h5>
-                <p class="card-text" th:text="|아이피: ${ip}|"></p>
-                <p class="card-text" th:text="|국가: ${country}|"></p>
-                <a href="/plus/util/etc/main" class="btn btn-primary">목록</a>
-            </div>
-            <div class="card-header">
+            <h1> 템플릿 페이지 입니다.</h1>
 
-            </div>
         </div>
+    </section><!-- End About Us Section -->
 
-    </div>
     <!-----------------------------------------------------------------------------------------  -->
 </div>
 <div id="footer-load" th:insert="html/footer.html :: footerFragment"></div>

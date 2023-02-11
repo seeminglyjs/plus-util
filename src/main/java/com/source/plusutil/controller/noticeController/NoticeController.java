@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 
 
 @Controller
-@RequestMapping("/notice")
+@RequestMapping("/plus/notice")
 @RequiredArgsConstructor
 public class NoticeController {
 

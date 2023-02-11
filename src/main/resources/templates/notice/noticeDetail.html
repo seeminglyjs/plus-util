@@ -35,7 +35,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
-                    <form action="/notice/delete" method="POST">
+                    <form action="/plus/notice/delete" method="POST">
                         <input type="hidden" name="noticeNo" th:value="${noticeDetail.noticeNo}">
                         <button type="submit" class="btn btn-primary">예</button>
                     </form>
@@ -44,7 +44,7 @@
         </div>
     </div>
     <section id="about" class="about">
-        <div class="container" data-aos="fade-up">
+        <div class="container">
             <div class="container-md border rounded" style="height: 700px;">
                 <br>
                 <p style="height: 30px;">
@@ -71,7 +71,7 @@
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item">
                                         <a class="link-primary"
-                                           th:href="@{/notice/update/main(noticeNo=${noticeDetail.noticeNo}, noticeTitle=${noticeDetail.title}, noticeContent=${noticeDetail.content}, category=${noticeDetail.category})}">수정</a>
+                                           th:href="@{/plus/notice/update/main(noticeNo=${noticeDetail.noticeNo}, noticeTitle=${noticeDetail.title}, noticeContent=${noticeDetail.content}, category=${noticeDetail.category})}">수정</a>
                                     </li>
                                     <li class="breadcrumb-item">
                                         <a class="link-danger" href="#" data-bs-toggle="modal"
@@ -110,7 +110,6 @@
     </section><!-- End About Us Section -->
     <!-----------------------------------------------------------------------------------------  -->
 </div>
-<div id="footer-load" class="container-md" th:insert="html/footer.html :: footerFragment"></div>
-.
+<div id="footer-load" th:insert="html/footer.html :: footerFragment"></div>
 </body>
 </html>

@@ -12,7 +12,7 @@ import com.source.plusutil.service.utilService.timeUtil.TimeUtilServiceImpl;
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping("/util")
+@RequestMapping("/plus/util")
 @RequiredArgsConstructor
 public class TimeController {
 	
