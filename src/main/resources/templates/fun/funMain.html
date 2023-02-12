@@ -8,15 +8,27 @@
 
 <div class="container-md">
     <!-----------------------------------------------------------------------------------------  -->
-    <section id="about" class="about">
-        <div class="container">
+    <div id="navFooter-load" th:insert="html/navfooter.html :: navFooterFragment"></div>
+    <section id="services" class="services section-bg">
+        <div class="container" data-aos="fade-up">
+            <div class="section-title">
+                <h2>Fun</h2>
+                <p>다양한 기능구현 및 API연동 등을 통해 즐거움에 목적을 둔 서비스를 제공하고 있습니다.</p>
+            </div>
 
-
-            <h1> 템플릿 페이지 입니다.</h1>
-
+            <div class="row">
+                <div class="col-xl-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="icon-box">
+                        <div class="icon"><i class="bx bx-hash"></i></div>
+                        <h4><a href="/plus/fun/api/number/info/main"><strong>숫자의 의미</strong></a></h4>
+                        <p> 숫자에 대한 역사 및 재밌는 상식 정보를 확인할 수 있는 서비스입니다. 지원 형식은 단순 숫자 / 날짜 / 년도 등이 있습니다.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-    </section><!-- End About Us Section -->
+    </section>
 
+    <div id="padding-2x-lg-Fragment-load" th:insert="html/padding/padding-2x-lg.html :: padding-2x-lg-Fragment"></div>
     <!-----------------------------------------------------------------------------------------  -->
 </div>
 <div id="footer-load" th:insert="html/footer.html :: footerFragment"></div>

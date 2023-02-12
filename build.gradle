@@ -46,6 +46,8 @@ dependencies {
 	implementation group: 'javainetlocator', name: 'inetaddresslocator', version: '2.18'
 	// https://mvnrepository.com/artifact/org.apache.commons/commons-text
 	implementation group: 'org.apache.commons', name: 'commons-text', version: '1.10.0'
+	// https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
+	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
 
 
 	// https://mvnrepository.com/artifact/commons-io/commons-io

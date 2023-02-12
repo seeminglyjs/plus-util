@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<div id="header-load" th:replace="html/head.html :: headFragment"></div>
+<div id="nav-load" th:insert="html/nav.html :: navFragment"></div>
+
+<div>
+<!-----------------------------------------------------------------------------------------  -->
+  <div id="navFooter-load" th:insert="html/navfooter.html :: navFooterFragment"></div>
+  <section id="services" class="services section-bg">
+    <div class="container" data-aos="fade-up">
+      <div class="section-title">
+        <h2>알고리즘</h2>
+        <p>그래프 이론은 수학에서 객체 간에 짝을 이루는 관계를 모델링하기 위해 사용되는 수학 구조인 그래프에 대한 연구이다.</p>
+        <p><strong><a href="">출처:위키백과</a></strong></p>
+      </div>
+
+      <div class="row">
+        <div class="col-xl-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+          <div class="icon-box">
+            <div class="icon"><i class="bx bx-hash"></i></div>
+            <h4><a href="/plus/algorithm/bfs/search/short/distance/main"><strong>투 포인트 알고리즘</strong></a></h4>
+            <p>두개의 포인터(인덱스)를 기준으로 이동시키면 정해진 문제를 해결하는 방식으로 알고리즘이 동작한다.</p>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="200">
+          <div class="icon-box">
+            <div class="icon"><i class="bx bx-hash"></i></div>
+            <h4><a href="/plus/algorithm/dfs/search/short/distance/main"><strong>Depth First Search</strong></a></h4>
+            <p>         깊이 우선 탐색이라고 불리며, 루트 노드 부터 시작하여, 깊은 노드를 탐색하는 알고리즘 입니다. 경로 탐색 문제에서 많이 활용되며,
+              모든 경우의 수를 탐색하기 때문에 효율성 측면에서는 좋지 않습니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section><!-- End Services Section -->
+  <div th:insert="html/padding/padding-2x-lg.html :: padding-2x-lg-Fragment"></div>
+<!-----------------------------------------------------------------------------------------  -->
+</div>
+<div id="footer-load" th:insert="html/footer.html :: footerFragment"></div>
+</body>
+</html>

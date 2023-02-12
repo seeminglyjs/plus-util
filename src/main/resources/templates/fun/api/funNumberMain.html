@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<div id="header-load" th:replace="html/head.html :: headFragment"></div>
+<div id="nav-load" th:insert="html/nav.html :: navFragment"></div>
+
+<div class="container-md">
+    <!-----------------------------------------------------------------------------------------  -->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function DataCheck() {
+            let selectValue = $('#dataNumberSelect').find(":selected").val();
+            let inputValue = $('#dataNumberInput').val();
+            if(selectValue === 'dataMonthDay'){
+                const regex = "^" +[[${dateMonthSlashDayPermit}]] + "$";
+                const content =new RegExp(`${regex}`);
+                const text = '12/24, 03/15 와 같은 형식으로 입력해주세요.';
+                return regexCall(content, inputValue, text);
+            }else if(selectValue === 'dataNumber'){
+                const regex = "^" +[[${digit8UnderPermit}]] + "$";
+                const content =new RegExp(`${regex}`);
+                const text = '8자리 이하의 숫자형식으로 입력해주세요.';
+                return regexCall(content, inputValue, text);
+            }else if(selectValue === 'dataYear'){
+                const regex = "^" +[[${digit4Permit}]] + "$";
+                const content =new RegExp(`${regex}`);
+                const text = '1999, 2023 와 같은 형식으로 입력해주세요.';
+                return regexCall(content, inputValue, text);
+            }else{
+                return false;
+            }
+        }
+
+        function regexCall(content, inputValue, text){
+            if (!content.test(inputValue)) {
+                $('#dataNumberInputHelp').text(text).addClass("red")
+                $('#dataNumberInput').focus()
+                return false;
+            } else {
+                $('#dataNumberInputHelp').text("").removeClass("red")
+                return true;
+            }
+        }
+        /*]]>*/
+    </script>
+
+    <div id="navFooter-load" th:insert="html/navfooter.html :: navFooterFragment"></div>
+    <section id="contact" class="contact">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>Number의 의미</h2>
+                <p>입력한 숫자의 및 날짜에 따른 흥미로운 의미를 확인해 볼 수 있습니다.</p>
+                <p>(터무니 없는 숫자를 입력할 경우 안나올 수도...)</p>
+            </div>
+
+            <div class="col-lg-12 mt-5 mt-lg-0 d-flex align-items-stretch">
+                <form action="/plus/fun/api/number/info/action" method="post" class="php-email-form" onsubmit="return DataCheck();">
+                    <div class="text-center"><h4>Number의 의미</h4></div>
+                    <div id="shortDistance" class="border rounded text-center my-2 p-4">
+                        <h6 th:if="${not #strings.isEmpty(numberInfoResult)}"
+                            th:text="${numberInfoResult}"></h6>
+                    </div>
+                    <div id="shortDistanceHelp" class="form-text text-center">입력값에 따른 결과를 확인할 수 있습니다.</div>
+                    <br>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="dataNumberSelect">옵션</label>
+                            <select id="dataNumberSelect" name="dataNumberSelect" class="form-select">
+                                <option value="dataNumber" th:selected="${dataNumberSelect}=='dataNumber'">숫자</option>
+                                <option value="dataMonthDay" th:selected="${dataNumberSelect}=='dataMonthDay'">월/일</option>
+                                <option value="dataYear" th:selected="${dataNumberSelect}=='dataYear'">연도</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="dataNumberInput">숫자</label>
+                            <input type="text" placeholder="ex) 숫자 1,2,3 | 월/일 12/5, 1/13 | 연도 1999 2013 " name="dataNumberInput" class="form-control" id="dataNumberInput" th:value="${dataNumberInput}" required>
+                            <div id="dataNumberInputHelp" class="form-text">옵션에 따른 값을 입력해주세요.</div>
+                        </div>
+                    </div>
+                    <div class="text-center"><button type="submit">확인</button></div>
+                </form>
+            </div>
+
+        </div>
+
+    </section><!-- End Contact Section -->
+
+    <div id="padding-2x-lg-Fragment-load" th:insert="html/padding/padding-2x-lg.html :: padding-2x-lg-Fragment"></div>
+    <!-----------------------------------------------------------------------------------------  -->
+</div>
+<div id="footer-load" th:insert="html/footer.html :: footerFragment"></div>
+</body>
+</html>

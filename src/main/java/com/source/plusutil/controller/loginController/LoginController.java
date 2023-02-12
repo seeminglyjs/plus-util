@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.source.plusutil.enums.returnUrl.HomeReturnUrl;
+import com.source.plusutil.enums.returnUrl.LoginReturnUrl;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
@@ -26,32 +28,30 @@ public class LoginController {
     		Optional<WebAuthenticationDetails> authInfoOp = Optional.ofNullable((WebAuthenticationDetails) authentication.getDetails());
         	if(authInfoOp.isPresent()) {
         		WebAuthenticationDetails authInfo = authInfoOp.get();
-        		if(authInfo != null) {
-        			Optional<String> ipOp = Optional.ofNullable(authInfo.getRemoteAddress());
-        			Optional<String> sessionIdOp = Optional.ofNullable(authInfo.getSessionId());
-        			if(ipOp.isPresent() && sessionIdOp.isPresent()) {
-        				log.info("IP : " + authInfo.getRemoteAddress());
-        				log.info("Session ID : " + authInfo.getSessionId());
+				Optional<String> ipOp = Optional.ofNullable(authInfo.getRemoteAddress());
+				Optional<String> sessionIdOp = Optional.ofNullable(authInfo.getSessionId());
+				if(ipOp.isPresent() && sessionIdOp.isPresent()) {
+					log.info("IP : " + authInfo.getRemoteAddress());
+					log.info("Session ID : " + authInfo.getSessionId());
 
-        				// 권한 리스트
-        				@SuppressWarnings("unchecked")
-        				List<GrantedAuthority> authList = (List<GrantedAuthority>) authentication.getAuthorities();
-        				log.info("USER_ROLE_INFO : ");
-        				for(int i = 0; i< authList.size(); i++) {
-        					log.info(authList.get(i).getAuthority() + " ");
-        				}     				
-        				return "/home/homeMain";
-        			}else {
-        				log.info("[Login info empty] =====");
-        			}
-        		}	
-        	}else {
+					// 권한 리스트
+					@SuppressWarnings("unchecked")
+					List<GrantedAuthority> authList = (List<GrantedAuthority>) authentication.getAuthorities();
+					log.info("USER_ROLE_INFO : ");
+					for (GrantedAuthority grantedAuthority : authList) {
+						log.info(grantedAuthority.getAuthority() + " ");
+					}
+					return HomeReturnUrl.HOME_MAIN.getUrl();
+				}else {
+					log.info("[Login info empty] =====");
+				}
+			}else {
         		log.info("[Login info(authInfoOp) NullPointer] =====");
         	}
     	}catch (NullPointerException e) {
     		log.info("[Login info NullPointer] =====");
 		}
     		
-        return "/login/loginMain";
+        return LoginReturnUrl.LOGIN_MAIN.getUrl();
     }
 }

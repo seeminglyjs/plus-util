@@ -50,7 +50,7 @@ public class UserLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandl
 		loginCheckCookie.setPath("/"); //모든 url 적용
 		response.addCookie(loginCheckCookie);
 		
-		setDefaultTargetUrl("/home"); //로그인 성공시 홈페이지로 보낸다.	
+		setDefaultTargetUrl("/plus/home"); //로그인 성공시 홈페이지로 보낸다.
 		super.onAuthenticationSuccess(request, response, authentication);
 	}
 }

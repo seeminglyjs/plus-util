@@ -2,6 +2,7 @@ package com.source.plusutil.controller.algorithmController.graph;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.source.plusutil.enums.returnUrl.AlgorithmReturnUrl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,10 +21,9 @@ public class BfsController {
 	
 	@RequestMapping("/bfs/search/short/distance/main")
 	public String bfsDefaultMain() {
-		return "/algorithm/bfs/bfsMain";
+		return AlgorithmReturnUrl.BFS_MAIN.getUrl();
 	}
-	
-	
+
 	@RequestMapping("/bfs/search/short/distance")
 	public String bfsDefault(
 			@RequestParam(defaultValue = "0") int bfsRow
@@ -36,7 +36,7 @@ public class BfsController {
 		
 		bfsService.bfsDefault(bfsRow, bfsCol, bfsStartRow, bfsStartCol, bfsEndRow, bfsEndCol, request);
 		
-		return "/algorithm/bfs/bfsMain";
+		return AlgorithmReturnUrl.BFS_MAIN.getUrl();
 	}
 	
 }

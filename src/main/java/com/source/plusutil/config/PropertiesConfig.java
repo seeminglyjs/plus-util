@@ -12,6 +12,7 @@ import org.springframework.context.annotation.PropertySources;
 	,@PropertySource(name = "app", value = "classpath:config/encoding.properties", encoding = "UTF-8")
 	,@PropertySource(name = "app", value = "classpath:config/db.properties", encoding = "UTF-8")
 	,@PropertySource(name = "app", value = "classpath:config/user.properties", encoding = "UTF-8")
+	,@PropertySource(name = "app", value = "classpath:config/api.properties", encoding = "UTF-8")
 })
 @Getter
 public class PropertiesConfig {
@@ -32,5 +33,12 @@ public class PropertiesConfig {
 	//사용자 파라미터 데이터 체크 변수
 	@Value("${NO_DATA}")
 	private String noData;
+
+	@Value("${NAVER.PAPAGO.ID}")
+	private String naverPapagoId;
+
+	@Value("${NAVER.PAPAGO.SECRET}")
+	private String naverPapagoSecret;
+
 
 }

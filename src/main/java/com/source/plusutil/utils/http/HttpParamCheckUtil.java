@@ -1,5 +1,6 @@
 package com.source.plusutil.utils.http;
 
+import lombok.extern.slf4j.Slf4j;
 import net.sf.javainetlocator.InetAddressLocator;
 import net.sf.javainetlocator.InetAddressLocatorException;
 
@@ -9,6 +10,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+@Slf4j
 public class HttpParamCheckUtil {
 
     public static Map<String, String> httpRequestParamToMap(HttpServletRequest request){
@@ -56,5 +58,4 @@ public class HttpParamCheckUtil {
         }
         return myIpMap;
     }
-
 }

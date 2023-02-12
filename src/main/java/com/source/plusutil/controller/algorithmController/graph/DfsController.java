@@ -1,5 +1,6 @@
 package com.source.plusutil.controller.algorithmController.graph;
 
+import com.source.plusutil.enums.returnUrl.AlgorithmReturnUrl;
 import com.source.plusutil.service.algorithmService.DfsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -16,9 +17,8 @@ public class DfsController {
     private final DfsServiceImpl dfsService;
     @RequestMapping("/dfs/search/short/distance/main")
     public String dfsDefaultMain() {
-        return "/algorithm/dfs/dfsMain";
+        return AlgorithmReturnUrl.DFS_MAIN.getUrl();
     }
-
 
     @RequestMapping("/dfs/search/short/distance")
     public String bfsDefault(
@@ -32,6 +32,6 @@ public class DfsController {
 
         dfsService.dfsDefault(dfsRow, dfsCol, dfsStartRow, dfsStartCol, dfsEndRow, dfsEndCol, request);
 
-        return "/algorithm/dfs/dfsMain";
+        return AlgorithmReturnUrl.DFS_MAIN.getUrl();
     }
 }
