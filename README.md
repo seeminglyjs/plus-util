@@ -30,6 +30,13 @@
   1. BFS
   2. DFS
 
+> 베이직 알고리즘
+  1. 투 포인트 알고리즘 구현
+
+### FUN
+> API
+    1. 숫자의 비밀 + 파파고 번역 API 연결
+
 ---
 ### 사용기술
 1. skill : Java / JavaScript / SpringBoot / SpringSecurity / JPA
