@@ -8,7 +8,9 @@
 
 <div class="container-md">
     <!-----------------------------------------------------------------------------------------  -->
-    <section id="about" class="about">
+    <div th:insert="html/padding/padding-md.html :: padding-md-Fragment"></div>
+
+    <section class="about">
         <div class="container">
             <table class="table text-center">
                 <thead class="table-light">
@@ -53,6 +55,9 @@
                 </tbody>
             </table>
 
+            <th:block th:if="${not #strings.isEmpty(noticeWriteRole)}"> <!-- 관리자만 작성 가능  -->
+                <a href="/plus/notice/write">공지사항작성</a>
+            </th:block>
             <br>
             <hr>
             <th:block th:if="${pageExist}">
@@ -110,12 +115,11 @@
                 </nav>
             </th:block>
 
-            <th:block th:if="${not #strings.isEmpty(noticeWriteRole)}"> <!-- 관리자만 작성 가능  -->
-                <a href="/plus/notice/write">공지사항작성</a>
-            </th:block>
 
         </div>
     </section><!-- End About Us Section -->
+
+    <div th:insert="html/padding/padding-lg.html :: padding-lg-Fragment"></div>
     <!-----------------------------------------------------------------------------------------  -->
 </div>
 <div id="footer-load" th:insert="html/footer.html :: footerFragment"></div>

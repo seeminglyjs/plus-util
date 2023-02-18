@@ -101,7 +101,7 @@
                     <a href="javascript:window.history.back();">
                         <button type="button" class="btn btn-secondary btn-sm">뒤로</button>
                     </a>
-                    <a th:href="@{/notice/main(currentPage=0)}">
+                    <a th:href="@{/plus/notice/main(currentPage=0)}">
                         <button type="button" class="btn btn-secondary btn-sm">목록</button>
                     </a>
                 </div>
@@ -110,6 +110,7 @@
             <hr>
         </div>
     </section><!-- End About Us Section -->
+    <div th:insert="html/padding/padding-lg.html :: padding-lg-Fragment"></div>
     <!-----------------------------------------------------------------------------------------  -->
 </div>
 <div id="footer-load" th:insert="html/footer.html :: footerFragment"></div>

@@ -5,6 +5,7 @@ public enum AlgorithmReturnUrl {
     ,GRAPH_MAIN("/algorithm/graph/graphMain")
     ,BFS_MAIN("/algorithm/bfs/bfsMain")
     ,DFS_MAIN("/algorithm/dfs/dfsMain")
+    ,TWO_POINTER_MAIN("/algorithm/basic/twoPointerMain")
 
     ;
     String url;

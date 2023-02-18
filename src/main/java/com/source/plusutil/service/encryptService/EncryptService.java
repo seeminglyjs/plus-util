@@ -43,7 +43,7 @@ public class EncryptService {
 		return radomString;
 	}
 
-	/**
+	/*
 	 * 요청 정보를 기준으로 aes256 암호화 정보를 만들어서 리턴한다.
 	 * 
 	 * @param aes256EncryptRequestDto
@@ -57,12 +57,16 @@ public class EncryptService {
 				, aes256EncryptRequestDto.getAes256Iv()
 				, aes256EncryptRequestDto.getAes256Content());
 		log.info("encryptContent ->["+ encryptContent +"]");
-		
+
+		request.setAttribute("aes256Key", aes256EncryptRequestDto.getAes256Key());
+		request.setAttribute("aes256Iv", aes256EncryptRequestDto.getAes256Iv());
+		request.setAttribute("aes256Content", aes256EncryptRequestDto.getAes256Content());
 		//파라미터 전달
 		request.setAttribute("encryptContent", encryptContent);
+
 	}
 
-	/**
+	/*
 	 * 요청 정보를 기준으로 aes256로 암호화된 정보를 복호화 한다.
 	 * 
 	 * @param aes256Content
