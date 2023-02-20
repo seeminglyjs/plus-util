@@ -24,10 +24,10 @@ public class MainController {
 	public String mainPage() {
 		return "/home/homeMain";
 	}
-	
+
 	/**
 	 * DB 연결 확인하기
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping("/test/select/check")

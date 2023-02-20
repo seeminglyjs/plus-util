@@ -1,5 +1,6 @@
 # Plus-Util [유틸리티 제공 서비스]
 ---
+![githubmainPage](https://user-images.githubusercontent.com/67782250/220030144-f832a38a-2c32-4ae3-8377-000a14d9abba.png)
  > 업무 및 개발과 관련되서 필요한 유틸리티 정보들을 한 곳에 모아 서비스 함에 목적이 있습니다.
 ---
 ## 구현 카테고리 목록
@@ -32,14 +33,15 @@
 
 > 베이직 알고리즘
   1. 투 포인트 알고리즘 구현
+  2. 슬라이딩 윈도우 알고리즘 구현 
 
 ### FUN
 > API
-    1. 숫자의 비밀 + 파파고 번역 API 연결
+1. 숫자의 비밀 + 파파고 번역 API 연결
 
 ---
 ### 사용기술
-1. skill : Java / JavaScript / SpringBoot / SpringSecurity / JPA
+1. skill : Java / Kotlin /JavaScript / SpringBoot / SpringSecurity / JPA
 2. Sever : ec2(amazon linux)
 3. DB: postgresql
   

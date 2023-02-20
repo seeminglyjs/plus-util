@@ -7,39 +7,41 @@
 <div id="nav-load" th:insert="html/nav.html :: navFragment"></div>
 
 <div class="container-md">
-    <!-----------------------------------------------------------------------------------------  -->    <script th:inline="javascript">
-    /*<![CDATA[*/
-    function DataCheck() {
-        let inputValue1 = $('#twoPointerArr').val();
-        const regex1 = "^" +[[${digit100UnderPermit}]] + "$";
-        const content1 =new RegExp(`${regex1}`);
-        const text1 = '수열 값을 100자리 이하의 숫자형식으로 입력해주세요.';
-        if(regexCall(content1, inputValue1, text1)){
-            let inputValue2 = $('#twoPointerTarget').val();
-            if(inputValue2 > 20 || inputValue2 < 0){
-                const text2 = '목표값은 20이하의 자연수를 입력해야합니다.';
-                $('#shortDistanceHelp').text(text2).addClass("red")
+    <!-----------------------------------------------------------------------------------------  -->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function DataCheck() {
+            let inputValue1 = $('#twoPointerArr').val();
+            const regex1 = "^" + [[${digit100UnderPermit}]] + "$";
+            const content1 = new RegExp(`${regex1}`);
+            const text1 = '수열 값을 100자리 이하의 숫자형식으로 입력해주세요.';
+            if (regexCall(content1, inputValue1, text1)) {
+                let inputValue2 = $('#twoPointerTarget').val();
+                if (inputValue2 > 20 || inputValue2 < 0) {
+                    const text2 = '목표값은 20이하의 자연수를 입력해야합니다.';
+                    $('#shortDistanceHelp').text(text2).addClass("red")
+                    return false;
+                } else {
+                    $('#shortDistanceHelp').text("").removeClass("red")
+                    return true;
+                }
+            } else {
                 return false;
-            }else{
+            }
+        }
+
+        function regexCall(content, inputValue, text) {
+            if (!content.test(inputValue)) {
+                $('#shortDistanceHelp').text(text).addClass("red")
+                return false;
+            } else {
                 $('#shortDistanceHelp').text("").removeClass("red")
                 return true;
             }
-        }else{
-            return false;
         }
-    }
 
-    function regexCall(content, inputValue, text){
-        if (!content.test(inputValue)) {
-            $('#shortDistanceHelp').text(text).addClass("red")
-            return false;
-        } else {
-            $('#shortDistanceHelp').text("").removeClass("red")
-            return true;
-        }
-    }
-    /*]]>*/
-</script>
+        /*]]>*/
+    </script>
     <div id="navFooter-load" th:insert="html/navfooter.html :: navFooterFragment"></div>
     <section id="contact" class="contact">
         <div class="container" data-aos="fade-up">
@@ -48,7 +50,8 @@
                 <p>입력된 수열의 연속된 부분수열의 합이 목표값에 도달하는 개수를 확인할 수 있습니다.</p>
             </div>
             <div class="col-lg-12 mt-5 mt-lg-0 d-flex align-items-stretch">
-                <form action="/plus/algorithm/two/pointer/action" method="post" role="form" class="php-email-form" onsubmit="return DataCheck();">
+                <form action="/plus/algorithm/two/pointer/action" method="post" role="form" class="php-email-form"
+                      onsubmit="return DataCheck();">
 
                     <div class="text-center"><h4>부분수열의 개수</h4></div>
                     <div id="twoPointerResult" class="border rounded text-center my-2 p-4">
@@ -60,16 +63,20 @@
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label for="twoPointerArr">수열</label>
-                            <input type="number" placeholder="ex) 13921134123 . . ." name="twoPointerArr" class="form-control" id="twoPointerArr" th:value="${twoPointerArr}" required>
+                            <input type="number" placeholder="ex) 13921134123 . . ." name="twoPointerArr"
+                                   class="form-control" id="twoPointerArr" th:value="${twoPointerArr}" required>
                             <div id="twoPointerArrHelp" class="form-text">연속된 수열을 입력해주세요. [100자리 까지 가능]</div>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="twoPointerTarget">목표값</label>
-                            <input type="number" placeholder="ex) 3, 4, 5, . . . 20" name="twoPointerTarget" class="form-control" id="twoPointerTarget" th:value="${twoPointerTarget}" required>
+                            <input type="number" placeholder="ex) 3, 4, 5, . . . 20" name="twoPointerTarget"
+                                   class="form-control" id="twoPointerTarget" th:value="${twoPointerTarget}" required>
                             <div id="twoPointerTargetHelp" class="form-text">목표값을 설정해 주세요. [20 이하의 목표값을 설정]</div>
                         </div>
                     </div>
-                    <div class="text-center"><button type="submit">확인</button></div>
+                    <div class="text-center">
+                        <button type="submit">확인</button>
+                    </div>
                 </form>
             </div>
         </div>
