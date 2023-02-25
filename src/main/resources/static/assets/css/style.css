@@ -18,6 +18,10 @@
   border:  #2c3034;
 }
 
+.span-hidden {
+  display: none;
+}
+
 body {
   font-family: "Open Sans", sans-serif;
   color: #444444;
@@ -838,6 +842,7 @@ section {
 # Services
 --------------------------------------------------------------*/
 .services .icon-box {
+  width: 300px;
   box-shadow: 0px 0 25px 0 rgba(0, 0, 0, 0.1);
   padding: 50px 30px;
   transition: all ease-in-out 0.4s;

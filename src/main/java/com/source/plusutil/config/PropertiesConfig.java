@@ -14,7 +14,6 @@ import org.springframework.context.annotation.PropertySources;
 	,@PropertySource(name = "app", value = "classpath:config/user.properties", encoding = "UTF-8")
 	,@PropertySource(name = "app", value = "classpath:config/api.properties", encoding = "UTF-8")
 })
-@Getter
 public class PropertiesConfig {
 
 	//aes256알고리즘
@@ -40,5 +39,39 @@ public class PropertiesConfig {
 	@Value("${NAVER.PAPAGO.SECRET}")
 	private String naverPapagoSecret;
 
+	@Value("${GITHUB.SECRET.TOKEN}")
+	private String githubSecretToken;
 
+
+	public String getAes256Alg() {
+		return aes256Alg;
+	}
+
+	public String getDatasourceUrl() {
+		return datasourceUrl;
+	}
+
+	public String getDatasourceUsername() {
+		return datasourceUsername;
+	}
+
+	public String getDatasourcePassword() {
+		return datasourcePassword;
+	}
+
+	public String getNoData() {
+		return noData;
+	}
+
+	public String getNaverPapagoId() {
+		return naverPapagoId;
+	}
+
+	public String getNaverPapagoSecret() {
+		return naverPapagoSecret;
+	}
+
+	public String getGithubSecretToken() {
+		return githubSecretToken;
+	}
 }

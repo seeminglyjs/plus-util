@@ -1,5 +1,6 @@
 package com.source.plusutil.dto.userDto;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -27,6 +28,7 @@ public class UserInfoDto implements UserDetails{
 	
 	//UserDetails spring security 에서 사용자의 정보를 담는 인터페이스 객체
 	
+	@Serial
 	private static final long serialVersionUID = 1L;
 	
 	private static final String PREFIX_ROLE = "ROLE_";//접두사를 권한에 붙여주어야 동작한다.

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.source.plusutil.enums.returnUrl.HomeReturnUrl;
 import com.source.plusutil.enums.returnUrl.LoginReturnUrl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
@@ -14,16 +15,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @Slf4j
 @RequestMapping("/plus")
+@RequiredArgsConstructor
 public class LoginController {
 
     @GetMapping("/login")
     public String loginView(HttpServletRequest request, Authentication authentication) {
-    	
     	try {
     		Optional<WebAuthenticationDetails> authInfoOp = Optional.ofNullable((WebAuthenticationDetails) authentication.getDetails());
         	if(authInfoOp.isPresent()) {
@@ -51,7 +53,6 @@ public class LoginController {
     	}catch (NullPointerException e) {
     		log.info("[Login info NullPointer] =====");
 		}
-    		
         return LoginReturnUrl.LOGIN_MAIN.getUrl();
     }
 }
