@@ -72,53 +72,47 @@ function myFunction() {
 	    <a class="nav-link" href="/plus/encrypt/aes256/encrypt/main"><button type="button" class="btn btn-outline-secondary btn-sm">AES 암호화</button></a>
 	  </li>
 	</ul>
-	</div>	
-
-
-	<div class="container-md" id="aes256FormContainer">
-		<form action="/plus/encrypt/aes256/decrypt">
-		  <div class="mb-3">
-		    <label for="aes256Key" class="form-label">Aes256-Key</label>
-		    <input type="text" class="form-control" id="aes256Key" name="aes256Key" aria-describedby="aes256KeyHelp">
-		    <div id="aes256KeyHelp" class="form-text">Aes256에서의 Key는 32Byte입니다.</div>
-		  </div>
-		  
-		  <div class="mb-3">
-		    <label for="aes256Iv" class="form-label">Aes256-Iv</label>
-		    <input type="text" class="form-control" id="aes256Iv"  name="aes256Iv" aria-describedby="aes256IvHelp">
-		    <div id="aes256IvHelp" class="form-text">Aes256에서의 Iv는 16Byte입니다.</div>
-		  </div>
-		  
-		  <div class="mb-3">
-		    <label for="aes256Content" class="form-label">Content</label>
-		    <input type="text" class="form-control" id="aes256Content" name="aes256Content" aria-describedby="aes256ContentHelp">
-		    <div id="aes256ContentHelp" class="form-text">복호화를 원하는 내용을 입력하세요.</div>
-		  </div>
-		  
-		  <button type="submit" class="btn btn-primary">복호화</button>
-		</form>
-		
-		<br>
-	
-		<div class="d-grid gap-3">
-			<div class="p-2 bg-light border">
-				<span class="badge bg-secondary">After Decrypt</span> 
-			  	<br>
-			  	<br>
-			  	<div class="form-floating">
-				  <textarea class="form-control" id="decryptContentSpanNone" placeholder="Leave a comment here" th:if="${not #strings.isEmpty(decryptContent)}" th:text="${decryptContent}" style="height: 100px"></textarea> <!-- 암호화 한 값이 있을경우  -->
-				  <textarea class="form-control" id="decryptContentSpan" placeholder="Leave a comment here" th:if="${#strings.isEmpty(decryptContent)}" style="height: 100px">복호화를 먼저 진행해 주세요.</textarea> <!-- 암호화 한 값이 없을경우  -->
-				<label>RSA 복호화 데이터</label>
-				</div>
-				<br>
-				<button class="clipboardMinBtn btn btn-primary btn-sm" data-clipboard-action="copy" data-clipboard-target="#decryptContentSpan">copy</button><!--clipboard.min.js 호출버튼  -->
-	  		</div>
-  		</div>
 	</div>
-	
-	
 
+	<section class="contact">
+		<div class="container" data-aos="fade-up">
+			<div class="section-title">
+				<h2>AES 복호화</h2>
+				<p>AES Key 와 Iv 값 기준으로 암호화된 데이터를 복호화 합니다.</p>
+			</div>
+			<div class="col-lg-12 mt-5 mt-lg-0 d-flex align-items-stretch">
+				<form action="/plus/encrypt/aes256/decrypt" method="post" role="form" class="php-email-form" onsubmit="return DataCheck();">
 
+					<div class="text-center"><h4>복호화 내용</h4></div>
+					<div id="decryptContentDiv" class="border rounded text-center my-2 p-4 overflow-scroll">
+						<h6 id="decryptContentH6" th:if="${not #strings.isEmpty(decryptContent)}"
+							th:text="${decryptContent}"><b>필요한 데이터를 우선 입력해 주세요.</b></h6>
+					</div>
+					<div id="encryptContentDivHelp" class="form-text text-center">입력값에 따른 복호화된 데이터를 확인할 수 있습니다. <button class="clipboardMinBtn btn btn-secondary btn-sm" type="button" data-clipboard-action="copy" data-clipboard-target="#decryptContentH6">복사</button></div>
+					<br>
+					<div class="row">
+						<div class="form-group col-md-6">
+							<label for="aes256Key">Aes256-Key</label>
+							<input type="text" placeholder="ex) 32자리의 숫자" name="aes256Key" class="form-control" id="aes256Key" th:value="${aes256Key}" required>
+							<div id="aes256KeyHelp" class="form-text">Aes256에서의 Key는 32Byte입니다.</div>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="aes256Iv">Aes256-Iv</label>
+							<input type="text" placeholder="ex) 16자리의 숫자" name="aes256Iv" class="form-control" id="aes256Iv" th:value="${aes256Iv}" required>
+							<div id="aes256IvHelp" class="form-text">Aes256에서의 Iv는 16Byte입니다.</div>
+						</div>
+
+						<div class="form-group col-md-12">
+							<label for="aes256Content">데이터</label>
+							<input type="text" placeholder="ex) test" name="aes256Content" class="form-control" id="aes256Content" th:value="${aes256Content}" required>
+							<div id="aes256ContentHelp" class="form-text">복호화를 원하는 정보를 기입하는 영역입니다.</div>
+						</div>
+					</div>
+					<div class="text-center"><button type="submit">확인</button></div>
+				</form>
+			</div>
+		</div>
+	</section><!-- End Contact Section -->
 <!-----------------------------------------------------------------------------------------  -->
 </div>
 <div id="footer-load" th:insert="html/footer.html :: footerFragment"></div>

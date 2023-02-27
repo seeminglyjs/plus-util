@@ -47,6 +47,17 @@
 	</script>
 <!-- ------------------------- -->
 	<div id="navFooter-load" th:insert="html/navfooter.html :: navFooterFragment"></div>
+	<div class="container">
+		<ul class="nav justify-content-center">
+			<li class="nav-item">
+				<a class="nav-link active" aria-current="page" href="/plus/encrypt/main"><button type="button" class="btn btn-outline-primary btn-sm">암호화 메인</button></a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="/plus/encrypt/aes256/decrypt/main"><button type="button" class="btn btn-outline-secondary btn-sm">AES 복호화</button></a>
+			</li>
+		</ul>
+	</div>
+
 	<section class="contact">
 		<div class="container" data-aos="fade-up">
 			<div class="section-title">
@@ -57,11 +68,11 @@
 				<form action="/plus/encrypt/aes256/encrypt" method="post" role="form" class="php-email-form" onsubmit="return DataCheck();">
 
 					<div class="text-center"><h4>암호화 내용</h4></div>
-					<div id="encryptContentDiv" class="border rounded text-center my-2 p-4">
+					<div id="encryptContentDiv" class="border rounded text-center my-2 p-4 overflow-scroll">
 						<h6 id="encryptContentH6" th:if="${not #strings.isEmpty(encryptContent)}"
 							th:text="${encryptContent}"><b>필요한 데이터를 우선 입력해 주세요.</b></h6>
 					</div>
-					<div id="encryptContentDivHelp" class="form-text text-center">아래 데이터를 입력하면 개수를 확인할 수 있습니다. <button class="clipboardMinBtn btn btn-secondary btn-sm" type="button" data-clipboard-action="copy" data-clipboard-target="#encryptContentH6">복사</button></div>
+					<div id="encryptContentDivHelp" class="form-text text-center">입력값에 따른 암호화된 데이터를 확인할 수 있습니다. <button class="clipboardMinBtn btn btn-secondary btn-sm" type="button" data-clipboard-action="copy" data-clipboard-target="#encryptContentH6">복사</button></div>
 					<br>
 					<div class="row">
 						<div class="form-group col-md-6">
@@ -86,7 +97,6 @@
 			</div>
 		</div>
 	</section><!-- End Contact Section -->
-
 <!-----------------------------------------------------------------------------------------  -->
 </div>
 <div id="footer-load" th:insert="html/footer.html :: footerFragment"></div>

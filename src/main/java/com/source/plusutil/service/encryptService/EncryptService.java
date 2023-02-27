@@ -78,6 +78,9 @@ public class EncryptService {
 	public void makeAse256DecryptContent(String aes256Key, String aes256Iv, String aes256Content, HttpServletRequest request) {
 		String decryptContent = "";
 		decryptContent = aes256.aes256Decrypt(aes256Key, aes256Iv, aes256Content);
+		request.setAttribute("aes256Key",aes256Key);
+		request.setAttribute("aes256Iv",aes256Iv);
+		request.setAttribute("aes256Content",aes256Content);
 		log.info("encryptContent ->["+ decryptContent +"]");
 		
 		//파라미터 전달
@@ -110,6 +113,8 @@ public class EncryptService {
 		String encryptContent = "";
 		Optional<String> tempData = Optional.ofNullable(rsa.encode(rsaEncryptRequestDto.getContent(), rsaEncryptRequestDto.getRsaPublicKey()));
 		if(tempData.isPresent()) {
+			request.setAttribute("rsaPublicKey",rsaEncryptRequestDto.getRsaPublicKey());
+			request.setAttribute("rsaBeforeContent",rsaEncryptRequestDto.getContent());
 			encryptContent = tempData.get();
 			request.setAttribute("encryptContent", encryptContent);
 		}
@@ -119,6 +124,8 @@ public class EncryptService {
 		String decryptContent = "";
 		Optional<String> tempData = Optional.ofNullable(rsa.decode(rsaDecryptRequestDto.getContent(), rsaDecryptRequestDto.getRsaPrivateKey()));
 		if(tempData.isPresent()) {
+			request.setAttribute("rsaPrivateKey",rsaDecryptRequestDto.getRsaPrivateKey());
+			request.setAttribute("rsaAfterContent",rsaDecryptRequestDto.getContent());
 			decryptContent = tempData.get();
 			request.setAttribute("decryptContent", decryptContent);
 		}
