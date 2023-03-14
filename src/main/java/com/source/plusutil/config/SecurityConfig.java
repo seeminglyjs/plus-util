@@ -64,8 +64,7 @@ public class SecurityConfig {
                         , "/plus/error/main"
                         , "/plus/fun/**"
                         , "/plus/test/**"
-                        , "/api/hello/**"
-                        , "/main/**"
+                        , "/plus/api/hello/**"
                 ).permitAll() //누구나 접근가능한 페이지 적용
                 .antMatchers("/plus/setting/**", "/plus/admin/**").hasRole("ADMIN") //관리자(Admin)만 접근 허용
                 .antMatchers("/plus/user/**", "/plus/logout/**").hasAnyRole("USER", "ADMIN") //유저(USER) / 관리자(Admin)만 접근 허용
