@@ -8,6 +8,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.source.plusutil.enums.returnUrl.HomeReturnUrl;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -50,7 +51,7 @@ public class UserLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandl
 		loginCheckCookie.setPath("/"); //모든 url 적용
 		response.addCookie(loginCheckCookie);
 		
-		setDefaultTargetUrl("/plus/home"); //로그인 성공시 홈페이지로 보낸다.
+		setDefaultTargetUrl(HomeReturnUrl.NEXT_HOME_MAIN.getUrl()); //로그인 성공시 홈페이지로 보낸다.
 		super.onAuthenticationSuccess(request, response, authentication);
 	}
 }

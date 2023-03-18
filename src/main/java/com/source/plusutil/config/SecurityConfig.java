@@ -1,5 +1,7 @@
 package com.source.plusutil.config;
 
+import com.source.plusutil.enums.returnUrl.HomeReturnUrl;
+import com.source.plusutil.enums.returnUrl.LoginReturnUrl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -54,8 +56,9 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()//보호된 리소스 URI에 접근할 수 있는 권한을 설정
                 .antMatchers(HttpMethod.DELETE).hasRole("ADMIN")
-                .antMatchers("/plus/login/**").anonymous() //로그인 url 권한 전체 허용
-                .antMatchers("/plus/home"
+                .antMatchers(
+                        "/plus/login/**"
+                        ,"/plus/home"
                         , "/plus/join/**"
                         , "/plus/encrypt/**"
                         , "/plus/util/**"
@@ -64,14 +67,14 @@ public class SecurityConfig {
                         , "/plus/error/main"
                         , "/plus/fun/**"
                         , "/plus/test/**"
-                        , "/plus/api/hello/**"
+                        , "/plus/auth/**"
                 ).permitAll() //누구나 접근가능한 페이지 적용
                 .antMatchers("/plus/setting/**", "/plus/admin/**").hasRole("ADMIN") //관리자(Admin)만 접근 허용
                 .antMatchers("/plus/user/**", "/plus/logout/**").hasAnyRole("USER", "ADMIN") //유저(USER) / 관리자(Admin)만 접근 허용
                 .anyRequest().authenticated() //나머지 경로에 대해서는 인가된 사용자만 접근할 수 있다.
                 .and()
                 .formLogin() //html form 형식으로 요청을 받아적용하겠다.
-                .loginPage("/plus/login") //로그인페이지
+                .loginPage(LoginReturnUrl.NEXT_LOGIN_MAIN.getUrl()) //로그인페이지
                 .loginProcessingUrl("/plus/login/action") //스프링 시큐리티가 로그인 검증을 하는 url
                 .usernameParameter("userEmail") //로그인 파라미터중 username으로 적용할 파라미터의 이름
                 .passwordParameter("userPassword") //로그인 파라미터중 password으로 적용할 파라미터의 이름
@@ -90,7 +93,7 @@ public class SecurityConfig {
 
         http.sessionManagement()
                 .maximumSessions(1) // 최대 접속수를 1개로 제한한다. 다른 사용자가 로그인하면 이전 사용자 로그인 풀림
-                .expiredUrl("/plus/login"); // 세션이 제한 되었을 경우 리다이렉트 할 URL
+                .expiredUrl(LoginReturnUrl.NEXT_LOGIN_MAIN.getUrl()); // 세션이 제한 되었을 경우 리다이렉트 할 URL
 
         http.rememberMe()
                 .rememberMeParameter("remember-me")
@@ -112,7 +115,7 @@ public class SecurityConfig {
     @Bean // 로그 아웃이 성공했을 때 동작하는 핸들러
     public LogoutSuccessHandler logoutSuccessHandler() {
         UserLogoutSuccessHandler logoutSuccessHandler = new UserLogoutSuccessHandler();
-        logoutSuccessHandler.setDefaultTargetUrl("/plus/login");
+        logoutSuccessHandler.setDefaultTargetUrl(HomeReturnUrl.NEXT_HOME_MAIN.getUrl());
         return logoutSuccessHandler;
     }
 }

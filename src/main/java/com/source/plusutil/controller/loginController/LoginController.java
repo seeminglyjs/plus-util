@@ -5,27 +5,31 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.source.plusutil.enums.returnUrl.HomeReturnUrl;
-import com.source.plusutil.enums.returnUrl.LoginReturnUrl;
+import com.source.plusutil.dto.login.LoginCheckDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @Slf4j
 @RequestMapping("/plus")
 @RequiredArgsConstructor
 public class LoginController {
 
+
+	@Deprecated
     @GetMapping("/login")
-    public String loginView(HttpServletRequest request, Authentication authentication) {
+	@ResponseBody
+    public LoginCheckDto loginView(Authentication authentication) {
+		LoginCheckDto loginChecklDto = new LoginCheckDto();
     	try {
     		Optional<WebAuthenticationDetails> authInfoOp = Optional.ofNullable((WebAuthenticationDetails) authentication.getDetails());
         	if(authInfoOp.isPresent()) {
@@ -43,7 +47,10 @@ public class LoginController {
 					for (GrantedAuthority grantedAuthority : authList) {
 						log.info(grantedAuthority.getAuthority() + " ");
 					}
-					return HomeReturnUrl.HOME_MAIN.getUrl();
+//					return HomeReturnUrl.HOME_MAIN.getUrl();
+					loginChecklDto.setLoginCheck(true);
+					log.info(loginChecklDto.toString());
+					return loginChecklDto;
 				}else {
 					log.info("[Login info empty] =====");
 				}
@@ -53,6 +60,13 @@ public class LoginController {
     	}catch (NullPointerException e) {
     		log.info("[Login info NullPointer] =====");
 		}
-        return LoginReturnUrl.LOGIN_MAIN.getUrl();
+		log.info(loginChecklDto.toString());
+		return loginChecklDto;
     }
+
+	@GetMapping("/auth")
+	@ResponseBody
+	public Authentication  loginView() {
+		return SecurityContextHolder.getContext().getAuthentication();
+	}
 }

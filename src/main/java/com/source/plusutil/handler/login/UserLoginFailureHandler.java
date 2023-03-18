@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.source.plusutil.enums.returnUrl.LoginReturnUrl;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
@@ -24,7 +25,7 @@ public class UserLoginFailureHandler extends SimpleUrlAuthenticationFailureHandl
 		public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 				AuthenticationException exception) throws IOException, ServletException {
 		 log.info("[UserLogin Failure] =====");
-		 setDefaultFailureUrl("/login"); //로그인 실패시 홈페이지로 보낸다.	
+		 setDefaultFailureUrl(LoginReturnUrl.NEXT_LOGIN_MAIN.getUrl()); //로그인 실패시 홈페이지로 보낸다.
 			super.onAuthenticationFailure(request, response, exception);
 		}
 

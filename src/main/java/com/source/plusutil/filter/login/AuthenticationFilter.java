@@ -40,6 +40,7 @@ public class AuthenticationFilter implements Filter {
             }else if(AuthObjectUtil.authenticationConfirm((Authentication) authentication, UserRolePlusEnum.ROLE_USER.toString())){
                 request.setAttribute("AuthenticationCheck", "ok");
             }else {
+                SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
                 request.setAttribute("AuthenticationCheck", null);
             }
         } else {
