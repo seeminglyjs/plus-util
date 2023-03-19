@@ -11,6 +11,7 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
+import com.source.plusutil.dto.join.JoinResultDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,24 +29,22 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class JoinService {
+	private final PropertiesConfig config;
 
-	@Autowired
-	PropertiesConfig config;
-
-	@Autowired
-	PasswordEncoder passwordEncoder;
+	private final PasswordEncoder passwordEncoder;
 
 	//생성자 객체 주입
 	private final UserInfoRepository userInfoRepository;	
 
-	/**
+	/*
 	 * 회원가입 유저 정보 저장 메소드
 	 * 
 	 * @param userEmail
 	 * @param userPassword
 	 * @param request
 	 */
-	public void joinAction(UserJoinDto userJoinDto, HttpServletRequest request) {
+	public JoinResultDto joinAction(UserJoinDto userJoinDto, HttpServletRequest request) {
+		JoinResultDto joinResultDto = new JoinResultDto();
 		boolean joinSuccess = false; //회원가입 성공여부 체크 변수
 		log.info("joinAction UserJoinDto ->["+userJoinDto.toString()+"]");
 		if(joinDataCheck(userJoinDto.getUserEmail()) && joinDataCheck(userJoinDto.getUserPassword())) {//정해진 데이터가 모두 정상인 경우
@@ -59,13 +58,16 @@ public class JoinService {
 					log.info("[joinDataVaildCheck false] =====");
 					log.info("[Exception info]", e);
 				}
+			}else{
+				joinResultDto.setMessage("이미 존재하는 아이디입니다.");
 			}
 		}
+		joinResultDto.setCheck(joinSuccess);
 		//회원가입 성공여부 객체 저장
-		request.setAttribute("joinSuccess", joinSuccess);
+		return joinResultDto;
 	}
 
-	/**
+	/*
 	 * 회원가입 유저정보의 중복 여부를 체크하는 메소드
 	 * 
 	 * @param userEmail
@@ -84,29 +86,24 @@ public class JoinService {
 		}		 
 	}
 
-	/**
+	/*
 	 * 회원가입 정보가 유효한지 여부를 체크하는 메소드
 	 * 
 	 * @param data
 	 * @return
 	 */
 	public boolean joinDataCheck(String data) {
-		boolean check = true;
 		//요청데이터가 null이거난 없을 경우 false
-		if(data == null || data.equals(config.getNoData())) {
-			check = false;
-		}
-		return check;
+		return data != null && !data.equals(config.getNoData());
 	}
 	
-	/**
+	/*
 	 * 회원가입 실패시에 동작할 메소드
 	 * 
 	 * @param request
 	 */
-	public void joinFail(HttpServletRequest request) {
+	public JoinResultDto joinFail(HttpServletRequest request) {
 		log.info("joinFail Method start =====");
-		boolean joinSuccess = false;
-		request.setAttribute("joinSuccess", joinSuccess);
+		return new JoinResultDto();
 	}
 }
