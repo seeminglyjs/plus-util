@@ -2,6 +2,7 @@ package com.source.plusutil.service.noticeService;
 
 import com.source.plusutil.dto.etc.DateDto;
 import com.source.plusutil.dto.notice.NoticeDto;
+import com.source.plusutil.dto.notice.NoticeListDto;
 import com.source.plusutil.dto.notice.NoticeWriteDto;
 import com.source.plusutil.enums.UserRolePlusEnum;
 import com.source.plusutil.repository.noticeRepository.NoticeRepository;
@@ -29,7 +30,7 @@ import java.util.Optional;
 public class NoticeServiceImpl implements NoticeService {
     private final NoticeRepository noticeRepository;
 
-    /**
+    /*
      * 공지사항 리스트를 가져오는 메소드
      *
      * @param request
@@ -37,7 +38,7 @@ public class NoticeServiceImpl implements NoticeService {
      * @param currentPage
      */
     @Override
-    public void getNoticeList(HttpServletRequest request, Authentication authentication, Integer currentPage) {
+    public NoticeListDto getNoticeList(Authentication authentication, Integer currentPage) {
         if (currentPage == null) {//만약 페이지 null이면 0으로 초기화
             currentPage = 0;
         }
@@ -46,9 +47,11 @@ public class NoticeServiceImpl implements NoticeService {
             currentPage = 0;
         } // 0보다 작은 페이지 넘버는 존재할 수 없음
 
+        String noticeWriteRole = "";
+
         if (AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
-            request.setAttribute("noticeWriteRole", "ok"); //관리자일 경우 게시글 쓰기 권한 있음
-        }
+            noticeWriteRole= "ok"; //관리자일 경우 게시글 쓰기 권한 있음
+        }else noticeWriteRole= "none";
         int listSize = 10;
 
         Integer totalNoticePage = getNoticeTotalPage(currentPage, listSize); //전체 페이지 정보를 가져온다.
@@ -73,15 +76,18 @@ public class NoticeServiceImpl implements NoticeService {
 
             log.info("noticePaging -> " + noticePaging.toString());
 
-			request.setAttribute("pageExist", pageExist);
-            request.setAttribute("startPage", noticePaging.getStartPage());
-            request.setAttribute("endPage", noticePaging.getEndPage());
-            request.setAttribute("totalPage", noticePaging.getTotalPage());
-            request.setAttribute("noticePageList", noticePageList);
-            request.setAttribute("currentPage", currentPage);
+            NoticeListDto noticeListDto = new NoticeListDto(
+                    pageExist,
+                    noticePaging.getStartPage(),
+                    noticePaging.getEndPage(),
+                    noticePaging.getTotalPage(),
+                    noticePageList,
+                    currentPage,
+                    noticeWriteRole);
+            return  noticeListDto;
         }
 
-        /**
+        /*
          * 공지사항 작성하는 메소드
          *
          * @param noticeTitle

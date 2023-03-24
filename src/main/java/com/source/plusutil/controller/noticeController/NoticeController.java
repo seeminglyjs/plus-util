@@ -1,5 +1,6 @@
 package com.source.plusutil.controller.noticeController;
 
+import com.source.plusutil.dto.notice.NoticeListDto;
 import com.source.plusutil.enums.UserRolePlusEnum;
 import com.source.plusutil.enums.regex.RegexExpressionEnum;
 import com.source.plusutil.service.noticeService.NoticeServiceImpl;
@@ -8,24 +9,22 @@ import com.source.plusutil.utils.html.HtmlUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
 
-@Controller
+@RestController
 @RequestMapping("/plus/notice")
 @RequiredArgsConstructor
 public class NoticeController {
 
 	private final NoticeServiceImpl noticeService;
 
-	@GetMapping("/main")
-	public String noticeMain(HttpServletRequest request, Authentication authentication, Integer currentPage) {
-		noticeService.getNoticeList(request, authentication, currentPage);
-		return "/notice/noticeMain";
+	@GetMapping("/list")
+	@ResponseBody
+	public NoticeListDto noticeMain(Authentication authentication, Integer currentPage) {
+		return noticeService.getNoticeList(authentication, currentPage);
 	}
 	
 	/**
@@ -42,7 +41,7 @@ public class NoticeController {
 			request.setAttribute("regexAllPermit", RegexExpressionEnum.ALL_PERMIT.getRegex());
 			return "/notice/noticeWrite";
 		}else {
-			noticeService.getNoticeList(request, authentication, currentPage); //리스트 조회
+			noticeService.getNoticeList(authentication, currentPage);
 			return "/notice/noticeMain";
 		}
 	}
@@ -67,10 +66,10 @@ public class NoticeController {
 			, Integer currentPage) {
 		if(AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
 			noticeService.writeNotice(noticeTitle, noticeContent, category, request, authentication);
-			noticeService.getNoticeList(request, authentication, currentPage); //리스트 조회
+			noticeService.getNoticeList(authentication, currentPage);
 			return "/notice/noticeMain";
 		}else {
-			noticeService.getNoticeList(request, authentication, currentPage); //리스트 조회
+			noticeService.getNoticeList(authentication, currentPage);
 			return "/notice/noticeMain";
 		}
 	}
@@ -109,10 +108,10 @@ public class NoticeController {
 			) {
 		if(AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
 			noticeService.deleteNoticeInfo(request, authentication, noticeNo);
-			noticeService.getNoticeList(request, authentication, currentPage); //리스트 조회
+			noticeService.getNoticeList(authentication, currentPage);
 			return "/notice/noticeMain";
 		}else {
-			noticeService.getNoticeList(request, authentication, currentPage); //리스트 조회
+			noticeService.getNoticeList(authentication, currentPage);
 			return "/notice/noticeMain";
 		}
 	}
