@@ -1,161 +1,133 @@
-package com.source.plusutil.controller.noticeController;
+package com.source.plusutil.controller.noticeController
 
-import com.source.plusutil.dto.notice.NoticeListDto;
-import com.source.plusutil.enums.UserRolePlusEnum;
-import com.source.plusutil.enums.regex.RegexExpressionEnum;
-import com.source.plusutil.service.noticeService.NoticeServiceImpl;
-import com.source.plusutil.utils.auth.AuthObjectUtil;
-import com.source.plusutil.utils.html.HtmlUtil;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.source.plusutil.dto.notice.NoticeDetailDto
+import com.source.plusutil.dto.notice.NoticeListDto
+import com.source.plusutil.enums.UserRolePlusEnum
+import com.source.plusutil.enums.regex.RegexExpressionEnum
+import com.source.plusutil.service.noticeService.NoticeServiceImpl
+import com.source.plusutil.utils.auth.AuthObjectUtil
+import com.source.plusutil.utils.html.HtmlUtil
+import lombok.RequiredArgsConstructor
+import org.springframework.security.core.Authentication
+import org.springframework.web.bind.annotation.*
+import javax.servlet.http.HttpServletRequest
 
 @RestController
 @RequestMapping("/plus/notice")
 @RequiredArgsConstructor
-public class NoticeController {
+class NoticeController(private val noticeService: NoticeServiceImpl) {
 
-	private final NoticeServiceImpl noticeService;
+    @GetMapping("/list")
+    @ResponseBody
+    fun noticeMain(authentication: Authentication?, currentPage: Int?): NoticeListDto? {
+        return noticeService.getNoticeList(authentication, currentPage)
+    }
 
-	@GetMapping("/list")
-	@ResponseBody
-	public NoticeListDto noticeMain(Authentication authentication, Integer currentPage) {
-		return noticeService.getNoticeList(authentication, currentPage);
-	}
-	
-	/**
-	 * 공지사항 작성 페이지 호출
-	 * 
-	 * @param request
-	 * @param authentication
-	 * @param currentPage
-	 * @return
-	 */
-	@GetMapping("/write")
-	public String noticeWrite(HttpServletRequest request, Authentication authentication, Integer currentPage) {
-		if(AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
-			request.setAttribute("regexAllPermit", RegexExpressionEnum.ALL_PERMIT.getRegex());
-			return "/notice/noticeWrite";
-		}else {
-			noticeService.getNoticeList(authentication, currentPage);
-			return "/notice/noticeMain";
-		}
-	}
-	
-	/**
-	 * 공지사항 작성 호출
-	 * 
-	 * @param noticeTitle
-	 * @param noticeContent
-	 * @param request
-	 * @param authentication
-	 * @param currentPage
-	 * @return
-	 */
-	@PostMapping("/write/action")
-	public String noticeWriteAction(
-			String noticeTitle
-			, String noticeContent
-			, String category
-			,HttpServletRequest request
-			,Authentication authentication
-			, Integer currentPage) {
-		if(AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
-			noticeService.writeNotice(noticeTitle, noticeContent, category, request, authentication);
-			noticeService.getNoticeList(authentication, currentPage);
-			return "/notice/noticeMain";
-		}else {
-			noticeService.getNoticeList(authentication, currentPage);
-			return "/notice/noticeMain";
-		}
-	}
-	
-	/**
-	 * 공지사항 상세페이지 이동 호출
-	 * 
-	 * @param request
-	 * @param noticeNo
-	 * @return
-	 */
-	@GetMapping("/detail")
-	public String noticeDetail(
-			HttpServletRequest request
-			,Authentication authentication
-			, Integer noticeNo
-			) {
-		noticeService.getNoticeDetailInfo(request, authentication, noticeNo);
-		return "/notice/noticeDetail";
-	}
-	
-	/**
-	 * 요청받은 게시글 정보를 삭제한다.
-	 * 
-	 * @param request
-	 * @param authentication
-	 * @param noticeNo
-	 * @return
-	 */
-	@PostMapping("/delete")
-	public String deleteNotice(	
-			HttpServletRequest request
-			,Authentication authentication
-			, Integer noticeNo
-			, Integer currentPage
-			) {
-		if(AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
-			noticeService.deleteNoticeInfo(request, authentication, noticeNo);
-			noticeService.getNoticeList(authentication, currentPage);
-			return "/notice/noticeMain";
-		}else {
-			noticeService.getNoticeList(authentication, currentPage);
-			return "/notice/noticeMain";
-		}
-	}
-	
-	@GetMapping("/update/main")
-	public String updateNotice(
-			HttpServletRequest request
-			,Authentication authentication
-			, Integer noticeNo
-			, String noticeTitle
-			, String noticeContent
-			, String category
-			) {
-		if(AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
-			request.setAttribute("regexAllPermit", RegexExpressionEnum.ALL_PERMIT.getRegex());
-			request.setAttribute("noticeNo", noticeNo);
-			request.setAttribute("noticeTitle", HtmlUtil.escapeDataMinusSpan(noticeTitle));
-			request.setAttribute("noticeContent", HtmlUtil.escapeDataMinusSpan(noticeContent));
-			request.setAttribute("category", category);
-			return "/notice/noticeUpdate";
-		}else {
-			noticeService.getNoticeDetailInfo(request, authentication, noticeNo);
-			return "/notice/noticeDetail";
-		}
+    /**
+     * 공지사항 작성 페이지 호출
+     *
+     * @param request
+     * @param authentication
+     * @param currentPage
+     * @return
+     */
+    @GetMapping("/write")
+    fun noticeWrite(request: HttpServletRequest, authentication: Authentication?, currentPage: Int?): String {
+        return if (AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
+            request.setAttribute("regexAllPermit", RegexExpressionEnum.ALL_PERMIT.regex)
+            "/notice/noticeWrite"
+        } else {
+            noticeService.getNoticeList(authentication, currentPage)
+            "/notice/noticeMain"
+        }
+    }
 
-	}
-	
-	@PostMapping("/update/action")
-	public String updateNoticeAction(
-			HttpServletRequest request
-			,Authentication authentication
-			, Integer noticeNo
-			, String noticeTitle
-			, String noticeContent
-			, String category
-			) {
-		if(AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
-			noticeService.updateNoticeInfo(request, authentication, noticeNo, noticeTitle, noticeContent, category);
-			noticeService.getNoticeDetailInfo(request, authentication, noticeNo);
-			return "/notice/noticeDetail";
-		}else {
-			noticeService.getNoticeDetailInfo(request, authentication, noticeNo);
-			return "/notice/noticeDetail";
-		}
-	}
-	
+    /**
+     * 공지사항 작성 호출
+     *
+     * @param noticeTitle
+     * @param noticeContent
+     * @param request
+     * @param authentication
+     * @param currentPage
+     * @return
+     */
+    @PostMapping("/write/action")
+    fun noticeWriteAction(
+            noticeTitle: String?, noticeContent: String?, category: String?, request: HttpServletRequest?, authentication: Authentication?, currentPage: Int?): String {
+        return if (AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
+            noticeService.writeNotice(noticeTitle, noticeContent, category, request, authentication)
+            noticeService.getNoticeList(authentication, currentPage)
+            "/notice/noticeMain"
+        } else {
+            noticeService.getNoticeList(authentication, currentPage)
+            "/notice/noticeMain"
+        }
+    }
+
+    /**
+     * 공지사항 상세페이지 이동 호출
+     *
+     * @param request
+     * @param noticeNo
+     * @return
+     */
+    @GetMapping("/detail")
+    @ResponseBody
+    fun noticeDetail(authentication: Authentication?, noticeNo: Int?): NoticeDetailDto? {
+        return noticeService.getNoticeDetailInfo(authentication,noticeNo);
+    }
+
+    /**
+     * 요청받은 게시글 정보를 삭제한다.
+     *
+     * @param request
+     * @param authentication
+     * @param noticeNo
+     * @return
+     */
+    @PostMapping("/delete")
+    fun deleteNotice(
+            request: HttpServletRequest?, authentication: Authentication?, noticeNo: Int?, currentPage: Int?
+    ): String {
+        return if (AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
+            noticeService.deleteNoticeInfo(request, authentication, noticeNo)
+            noticeService.getNoticeList(authentication, currentPage)
+            "/notice/noticeMain"
+        } else {
+            noticeService.getNoticeList(authentication, currentPage)
+            "/notice/noticeMain"
+        }
+    }
+
+    @GetMapping("/update/main")
+    fun updateNotice(
+            request: HttpServletRequest, authentication: Authentication?, noticeNo: Int?, noticeTitle: String?, noticeContent: String?, category: String?
+    ): String {
+        return if (AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
+            request.setAttribute("regexAllPermit", RegexExpressionEnum.ALL_PERMIT.regex)
+            request.setAttribute("noticeNo", noticeNo)
+            request.setAttribute("noticeTitle", HtmlUtil.escapeDataMinusSpan(noticeTitle))
+            request.setAttribute("noticeContent", HtmlUtil.escapeDataMinusSpan(noticeContent))
+            request.setAttribute("category", category)
+            "/notice/noticeUpdate"
+        } else {
+            noticeService.getNoticeDetailInfo(authentication, noticeNo)
+            "/notice/noticeDetail"
+        }
+    }
+
+    @PostMapping("/update/action")
+    fun updateNoticeAction(
+            request: HttpServletRequest?, authentication: Authentication?, noticeNo: Int?, noticeTitle: String?, noticeContent: String?, category: String?
+    ): String {
+        return if (AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
+            noticeService.updateNoticeInfo(request, authentication, noticeNo, noticeTitle, noticeContent, category)
+            noticeService.getNoticeDetailInfo(authentication, noticeNo)
+            "/notice/noticeDetail"
+        } else {
+            noticeService.getNoticeDetailInfo(authentication, noticeNo)
+            "/notice/noticeDetail"
+        }
+    }
 }

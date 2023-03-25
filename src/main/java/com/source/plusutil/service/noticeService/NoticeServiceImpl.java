@@ -1,6 +1,7 @@
 package com.source.plusutil.service.noticeService;
 
 import com.source.plusutil.dto.etc.DateDto;
+import com.source.plusutil.dto.notice.NoticeDetailDto;
 import com.source.plusutil.dto.notice.NoticeDto;
 import com.source.plusutil.dto.notice.NoticeListDto;
 import com.source.plusutil.dto.notice.NoticeWriteDto;
@@ -52,7 +53,7 @@ public class NoticeServiceImpl implements NoticeService {
         if (AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
             noticeWriteRole= "ok"; //관리자일 경우 게시글 쓰기 권한 있음
         }else noticeWriteRole= "none";
-        int listSize = 10;
+        int listSize = 5;
 
         Integer totalNoticePage = getNoticeTotalPage(currentPage, listSize); //전체 페이지 정보를 가져온다.
         if (currentPage > totalNoticePage - 1) {//요청된 페이지가 전체 페이지 보다 클경우
@@ -139,12 +140,11 @@ public class NoticeServiceImpl implements NoticeService {
          *
          */
         @Override
-        public void getNoticeDetailInfo (HttpServletRequest request, Authentication authentication, Integer noticeNo){
+        public NoticeDetailDto getNoticeDetailInfo (Authentication authentication, Integer noticeNo){
+            boolean updateRoleCheck = false;
             log.info("getNoticeDetailInfo noticeNo -> [" + noticeNo + "]");
             if (AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
-                request.setAttribute("updateRoleCheck", true); //조회한 유저가 관리자면 게시글 수정 권한이 있음
-            } else {
-                request.setAttribute("updateRoleCheck", false);
+                updateRoleCheck = true; //조회한 유저가 관리자면 게시글 수정 권한이 있음
             }
             if (noticeNo != null) {//조회한 공지사항 번호가 null 값이 아닐 경우
                 Optional<NoticeDto> noticeDetailInfo = noticeRepository.findById(noticeNo);
@@ -154,10 +154,10 @@ public class NoticeServiceImpl implements NoticeService {
                     noticeDetail.setTitle(HtmlUtil.escapeDataPlusSpan(noticeDetail.getTitle()));
                     noticeDetail.setContent(HtmlUtil.escapeDataPlusSpan(noticeDetail.getContent()));
                     DateDto dateDto = getDateInfo(noticeDetail);
-                    request.setAttribute("noticeDetail", noticeDetail); //객체 저장
-                    request.setAttribute("dateDto", dateDto); //날짜 객체 저장
+                    return new NoticeDetailDto(noticeDetail,dateDto,updateRoleCheck);
                 }
             }
+            return null;
         }
 
         /**

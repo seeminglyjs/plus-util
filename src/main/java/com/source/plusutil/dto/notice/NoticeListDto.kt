@@ -7,7 +7,7 @@ class NoticeListDto (
         val startPage:Int,
         val endPage:Int,
         val totalPage:Int,
-        val noticePageList: Page<NoticeDto>,
+        val noticePageList: Page<NoticeDto?>,
         val currentPage:Int,
         val noticeWriteRole:String
 ){
