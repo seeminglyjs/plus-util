@@ -1,10 +1,7 @@
 package com.source.plusutil.service.noticeService;
 
 import com.source.plusutil.dto.etc.DateDto;
-import com.source.plusutil.dto.notice.NoticeDetailDto;
-import com.source.plusutil.dto.notice.NoticeDto;
-import com.source.plusutil.dto.notice.NoticeListDto;
-import com.source.plusutil.dto.notice.NoticeWriteDto;
+import com.source.plusutil.dto.notice.*;
 import com.source.plusutil.enums.UserRolePlusEnum;
 import com.source.plusutil.repository.noticeRepository.NoticeRepository;
 import com.source.plusutil.utils.auth.AuthObjectUtil;
@@ -97,8 +94,7 @@ public class NoticeServiceImpl implements NoticeService {
          * @param authentication
          */
         @Override
-        public void writeNotice (String noticeTitle, String noticeContent, String category, HttpServletRequest
-        request, Authentication authentication){
+        public NoticeWriteResponseDto writeNotice (String noticeTitle, String noticeContent, String category, Authentication authentication){
             if (AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
                 Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
                 String userEmail = ((UserDetails) principal).getUsername();
@@ -111,9 +107,10 @@ public class NoticeServiceImpl implements NoticeService {
                         , DateUtil.getDateString());
                 log.info("noticeWriteDto -> " + noticeWriteDto.toString());
                 noticeRepository.save(NoticeDto.writeNotice(noticeWriteDto));
+                return new NoticeWriteResponseDto(true);
             } else {
                 log.info("writeNotice authentication Deny");
-                return;
+                return new NoticeWriteResponseDto();
             }
         }
 

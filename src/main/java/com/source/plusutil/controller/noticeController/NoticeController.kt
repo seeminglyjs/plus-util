@@ -2,6 +2,7 @@ package com.source.plusutil.controller.noticeController
 
 import com.source.plusutil.dto.notice.NoticeDetailDto
 import com.source.plusutil.dto.notice.NoticeListDto
+import com.source.plusutil.dto.notice.NoticeWriteResponseDto
 import com.source.plusutil.enums.UserRolePlusEnum
 import com.source.plusutil.enums.regex.RegexExpressionEnum
 import com.source.plusutil.service.noticeService.NoticeServiceImpl
@@ -26,44 +27,43 @@ class NoticeController(private val noticeService: NoticeServiceImpl) {
     /**
      * 공지사항 작성 페이지 호출
      *
-     * @param request
      * @param authentication
      * @param currentPage
      * @return
      */
-    @GetMapping("/write")
-    fun noticeWrite(request: HttpServletRequest, authentication: Authentication?, currentPage: Int?): String {
+    @PostMapping("/write")
+    @ResponseBody
+    fun noticeWrite(
+            noticeTitle: String?, noticeContent: String?, category: String?, authentication: Authentication?, currentPage: Int?): NoticeWriteResponseDto {
         return if (AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
-            request.setAttribute("regexAllPermit", RegexExpressionEnum.ALL_PERMIT.regex)
-            "/notice/noticeWrite"
+            noticeService.writeNotice(noticeTitle, noticeContent, category, authentication)
         } else {
-            noticeService.getNoticeList(authentication, currentPage)
-            "/notice/noticeMain"
+            return NoticeWriteResponseDto();
         }
     }
 
-    /**
-     * 공지사항 작성 호출
-     *
-     * @param noticeTitle
-     * @param noticeContent
-     * @param request
-     * @param authentication
-     * @param currentPage
-     * @return
-     */
-    @PostMapping("/write/action")
-    fun noticeWriteAction(
-            noticeTitle: String?, noticeContent: String?, category: String?, request: HttpServletRequest?, authentication: Authentication?, currentPage: Int?): String {
-        return if (AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
-            noticeService.writeNotice(noticeTitle, noticeContent, category, request, authentication)
-            noticeService.getNoticeList(authentication, currentPage)
-            "/notice/noticeMain"
-        } else {
-            noticeService.getNoticeList(authentication, currentPage)
-            "/notice/noticeMain"
-        }
-    }
+//    /**
+//     * 공지사항 작성 호출
+//     *
+//     * @param noticeTitle
+//     * @param noticeContent
+//     * @param request
+//     * @param authentication
+//     * @param currentPage
+//     * @return
+//     */
+//    @PostMapping("/write/action")
+//    fun noticeWriteAction(
+//            noticeTitle: String?, noticeContent: String?, category: String?, request: HttpServletRequest?, authentication: Authentication?, currentPage: Int?): String {
+//        return if (AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
+//            noticeService.writeNotice(noticeTitle, noticeContent, category, request, authentication)
+//            noticeService.getNoticeList(authentication, currentPage)
+//            "/notice/noticeMain"
+//        } else {
+//            noticeService.getNoticeList(authentication, currentPage)
+//            "/notice/noticeMain"
+//        }
+//    }
 
     /**
      * 공지사항 상세페이지 이동 호출
