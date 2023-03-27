@@ -11,6 +11,7 @@ import com.source.plusutil.utils.html.HtmlUtil;
 import com.source.plusutil.utils.protect.XSSUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -93,16 +94,18 @@ public class NoticeServiceImpl implements NoticeService {
          * @param request
          * @param authentication
          */
+        @NotNull
         @Override
-        public NoticeWriteResponseDto writeNotice (String noticeTitle, String noticeContent, String category, Authentication authentication){
+        public NoticeWriteResponseDto writeNotice (@NotNull NoticeWriteRequestDto noticeWriteRequestDto, Authentication authentication){
+            log.info("noticeTitle->");
             if (AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
                 Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
                 String userEmail = ((UserDetails) principal).getUsername();
 
                 NoticeWriteDto noticeWriteDto = new NoticeWriteDto(
-                        XSSUtils.stripXSS(noticeTitle)
-                        , XSSUtils.stripXSS(HtmlUtil.containLineSeparatorDataPlusBr(noticeContent))
-                        , category
+                        XSSUtils.stripXSS(noticeWriteRequestDto.getNoticeTitle())
+                        , XSSUtils.stripXSS(HtmlUtil.containLineSeparatorDataPlusBr(noticeWriteRequestDto.getNoticeContent()))
+                        , noticeWriteRequestDto.getCategory()
                         , userEmail
                         , DateUtil.getDateString());
                 log.info("noticeWriteDto -> " + noticeWriteDto.toString());
@@ -114,7 +117,7 @@ public class NoticeServiceImpl implements NoticeService {
             }
         }
 
-        /**
+        /*
          * 전체 페이지 정보를 카운트 한다.
          *
          * @param currentPage
