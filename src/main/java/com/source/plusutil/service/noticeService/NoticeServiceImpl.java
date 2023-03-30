@@ -192,17 +192,18 @@ public class NoticeServiceImpl implements NoticeService {
          *
          */
         @Override
-        public void deleteNoticeInfo (HttpServletRequest request, Authentication authentication, Integer noticeNo){
+        public NoticeDeleteResponseDto deleteNoticeInfo (Integer noticeNo, Integer currentPage){
             log.info("deleteNoticeInfo noticeNo -> [" + noticeNo + "]");
-            if (!AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
-                return; //권한 없으면 리턴
+            if (!AuthObjectUtil.authenticationConfirm(SecurityContextHolder.getContext().getAuthentication(), UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
+                return new NoticeDeleteResponseDto(); //권한 없으면 리턴
             } else {
                 if (noticeNo == null) {
-                    log.info("noticeNo [uull parameter] Return");
-                    return;
+                    log.info("noticeNo [null parameter] Return");
+                    return new NoticeDeleteResponseDto();
                 }
                 noticeRepository.deleteById(noticeNo); //공지사항 번호 기준으로 해당 게시글 삭제
             }
+            return new NoticeDeleteResponseDto(true, currentPage);
         }
 
         /**

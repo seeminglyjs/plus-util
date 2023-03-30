@@ -1,9 +1,6 @@
 package com.source.plusutil.controller.noticeController
 
-import com.source.plusutil.dto.notice.NoticeDetailDto
-import com.source.plusutil.dto.notice.NoticeListDto
-import com.source.plusutil.dto.notice.NoticeWriteRequestDto
-import com.source.plusutil.dto.notice.NoticeWriteResponseDto
+import com.source.plusutil.dto.notice.*
 import com.source.plusutil.enums.UserRolePlusEnum
 import com.source.plusutil.enums.regex.RegexExpressionEnum
 import com.source.plusutil.service.noticeService.NoticeServiceImpl
@@ -44,29 +41,6 @@ class NoticeController(private val noticeService: NoticeServiceImpl) {
         }
     }
 
-//    /**
-//     * 공지사항 작성 호출
-//     *
-//     * @param noticeTitle
-//     * @param noticeContent
-//     * @param request
-//     * @param authentication
-//     * @param currentPage
-//     * @return
-//     */
-//    @PostMapping("/write/action")
-//    fun noticeWriteAction(
-//            noticeTitle: String?, noticeContent: String?, category: String?, request: HttpServletRequest?, authentication: Authentication?, currentPage: Int?): String {
-//        return if (AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
-//            noticeService.writeNotice(noticeTitle, noticeContent, category, request, authentication)
-//            noticeService.getNoticeList(authentication, currentPage)
-//            "/notice/noticeMain"
-//        } else {
-//            noticeService.getNoticeList(authentication, currentPage)
-//            "/notice/noticeMain"
-//        }
-//    }
-
     /**
      * 공지사항 상세페이지 이동 호출
      *
@@ -89,16 +63,14 @@ class NoticeController(private val noticeService: NoticeServiceImpl) {
      * @return
      */
     @PostMapping("/delete")
+    @ResponseBody
     fun deleteNotice(
-            request: HttpServletRequest?, authentication: Authentication?, noticeNo: Int?, currentPage: Int?
-    ): String {
-        return if (AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
-            noticeService.deleteNoticeInfo(request, authentication, noticeNo)
-            noticeService.getNoticeList(authentication, currentPage)
-            "/notice/noticeMain"
+            noticeNo: Int?, currentPage: Int?
+    ): NoticeDeleteResponseDto? {
+        return if (AuthObjectUtil.authenticationConfirm(SecurityContextHolder.getContext().authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
+            noticeService.deleteNoticeInfo(noticeNo, currentPage);
         } else {
-            noticeService.getNoticeList(authentication, currentPage)
-            "/notice/noticeMain"
+            NoticeDeleteResponseDto();
         }
     }
 
