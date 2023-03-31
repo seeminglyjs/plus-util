@@ -21,6 +21,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -101,21 +102,24 @@ public class NoticeServiceImpl implements NoticeService {
             if (AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
                 Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
                 String userEmail = ((UserDetails) principal).getUsername();
-
-                NoticeWriteDto noticeWriteDto = new NoticeWriteDto(
-                        XSSUtils.stripXSS(noticeWriteRequestDto.getNoticeTitle())
-                        , XSSUtils.stripXSS(HtmlUtil.containLineSeparatorDataPlusBr(noticeWriteRequestDto.getNoticeContent()))
-                        , noticeWriteRequestDto.getCategory()
-                        , userEmail
-                        , DateUtil.getDateString());
-                log.info("noticeWriteDto -> " + noticeWriteDto.toString());
-                noticeRepository.save(NoticeDto.writeNotice(noticeWriteDto));
+                log.info(noticeWriteRequestDto.toString() + " / " + userEmail);
+                noticeRepository.save(NoticeDto.writeNotice(makeNoticeWriteDto(userEmail,noticeWriteRequestDto)));
                 return new NoticeWriteResponseDto(true);
             } else {
                 log.info("writeNotice authentication Deny");
                 return new NoticeWriteResponseDto();
             }
         }
+
+        public NoticeWriteDto makeNoticeWriteDto(String userEmail, NoticeWriteRequestDto noticeWriteRequestDto){
+            return new NoticeWriteDto(
+                    XSSUtils.stripXSS(noticeWriteRequestDto.getNoticeTitle())
+                    , XSSUtils.stripXSS(HtmlUtil.containLineSeparatorDataPlusBr(Objects.requireNonNull(noticeWriteRequestDto.getNoticeContent())))
+                    , noticeWriteRequestDto.getCategory()
+                    , userEmail
+                    , DateUtil.getDateString());
+        }
+
 
         /*
          * 전체 페이지 정보를 카운트 한다.
@@ -140,7 +144,7 @@ public class NoticeServiceImpl implements NoticeService {
          *
          */
         @Override
-        public NoticeDetailDto getNoticeDetailInfo (Authentication authentication, Integer noticeNo){
+        public NoticeDetailDto getNoticeDetailInfo (Authentication authentication, Long noticeNo){
             boolean updateRoleCheck = false;
             log.info("getNoticeDetailInfo noticeNo -> [" + noticeNo + "]");
             if (AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
@@ -192,7 +196,7 @@ public class NoticeServiceImpl implements NoticeService {
          *
          */
         @Override
-        public NoticeDeleteResponseDto deleteNoticeInfo (Integer noticeNo, Integer currentPage){
+        public NoticeDeleteResponseDto deleteNoticeInfo (Long noticeNo, Integer currentPage){
             log.info("deleteNoticeInfo noticeNo -> [" + noticeNo + "]");
             if (!AuthObjectUtil.authenticationConfirm(SecurityContextHolder.getContext().getAuthentication(), UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
                 return new NoticeDeleteResponseDto(); //권한 없으면 리턴
@@ -211,7 +215,7 @@ public class NoticeServiceImpl implements NoticeService {
          *
          */
         @Override
-        public void updateNoticeInfo (HttpServletRequest request, Authentication authentication, Integer
+        public void updateNoticeInfo (HttpServletRequest request, Authentication authentication, Long
         noticeNo, String noticeTitle, String noticeContent, String category){
             log.info("updateNoticeInfo noticeNo -> [" + noticeNo + "]" + "noticeTitle ->[" + noticeTitle + "]" + "noticeContent -> [" + noticeContent + "]");
             if (!AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크

@@ -4,7 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.source.plusutil.dto.notice.NoticeDto;
 
-public interface NoticeRepository extends JpaRepository<NoticeDto, Integer> {
+public interface NoticeRepository extends JpaRepository<NoticeDto, Long> {
+
 
 
 }

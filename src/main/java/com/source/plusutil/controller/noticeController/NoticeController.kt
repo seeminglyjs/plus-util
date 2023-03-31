@@ -3,7 +3,7 @@ package com.source.plusutil.controller.noticeController
 import com.source.plusutil.dto.notice.*
 import com.source.plusutil.enums.UserRolePlusEnum
 import com.source.plusutil.enums.regex.RegexExpressionEnum
-import com.source.plusutil.service.noticeService.NoticeServiceImpl
+import com.source.plusutil.service.noticeService.NoticeService
 import com.source.plusutil.utils.auth.AuthObjectUtil
 import com.source.plusutil.utils.html.HtmlUtil
 import lombok.RequiredArgsConstructor
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest
 @RestController
 @RequestMapping("/plus/notice")
 @RequiredArgsConstructor
-class NoticeController(private val noticeService: NoticeServiceImpl) {
+class NoticeController(private val noticeService: NoticeService) {
 
     @GetMapping("/list")
     @ResponseBody
@@ -50,7 +50,7 @@ class NoticeController(private val noticeService: NoticeServiceImpl) {
      */
     @GetMapping("/detail")
     @ResponseBody
-    fun noticeDetail(authentication: Authentication?, noticeNo: Int?): NoticeDetailDto? {
+    fun noticeDetail(authentication: Authentication?, noticeNo: Long?): NoticeDetailDto? {
         return noticeService.getNoticeDetailInfo(authentication,noticeNo);
     }
 
@@ -65,7 +65,7 @@ class NoticeController(private val noticeService: NoticeServiceImpl) {
     @PostMapping("/delete")
     @ResponseBody
     fun deleteNotice(
-            noticeNo: Int?, currentPage: Int?
+            noticeNo: Long?, currentPage: Int?
     ): NoticeDeleteResponseDto? {
         return if (AuthObjectUtil.authenticationConfirm(SecurityContextHolder.getContext().authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
             noticeService.deleteNoticeInfo(noticeNo, currentPage);
@@ -76,7 +76,7 @@ class NoticeController(private val noticeService: NoticeServiceImpl) {
 
     @GetMapping("/update/main")
     fun updateNotice(
-            request: HttpServletRequest, authentication: Authentication?, noticeNo: Int?, noticeTitle: String?, noticeContent: String?, category: String?
+            request: HttpServletRequest, authentication: Authentication?, noticeNo: Long?, noticeTitle: String?, noticeContent: String?, category: String?
     ): String {
         return if (AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
             request.setAttribute("regexAllPermit", RegexExpressionEnum.ALL_PERMIT.regex)
@@ -93,7 +93,7 @@ class NoticeController(private val noticeService: NoticeServiceImpl) {
 
     @PostMapping("/update/action")
     fun updateNoticeAction(
-            request: HttpServletRequest?, authentication: Authentication?, noticeNo: Int?, noticeTitle: String?, noticeContent: String?, category: String?
+            request: HttpServletRequest?, authentication: Authentication?, noticeNo: Long?, noticeTitle: String?, noticeContent: String?, category: String?
     ): String {
         return if (AuthObjectUtil.authenticationConfirm(authentication, UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
             noticeService.updateNoticeInfo(request, authentication, noticeNo, noticeTitle, noticeContent, category)

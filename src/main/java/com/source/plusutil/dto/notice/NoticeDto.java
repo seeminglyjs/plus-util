@@ -23,7 +23,7 @@ public class NoticeDto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="notice_no") //명시적으로 적어두는게 좋다.
-	private Integer noticeNo;
+	private Long noticeNo;
 	
 	@Column(name="title") //명시적으로 적어두는게 좋다.
 	private String title;
