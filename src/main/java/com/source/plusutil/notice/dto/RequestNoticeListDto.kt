@@ -1,4 +1,4 @@
-package com.source.plusutil.dto.notice
+package com.source.plusutil.notice.dto
 
 class RequestNoticeListDto(var currentPage : Int) {
 }

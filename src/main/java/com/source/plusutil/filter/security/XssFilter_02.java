@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Map;
 
-@WebFilter(urlPatterns= {"/plus/*"})
-@Order(2)
+//@WebFilter(urlPatterns= {"/plus/*"})
+//@Order(2)
 @Slf4j
 public class XssFilter_02 implements Filter {
 
