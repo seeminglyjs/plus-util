@@ -1,7 +1,7 @@
 package com.source.plusutil.encrypt.dto
 
-class AesDecryptRequestDto(val aes256Key: String, val aes256Iv:String, val aes256Content :String, val type : String = "256") {
+class AesDecryptRequestDto(val aesKey: String, val aesIv:String, val aesContent :String, val type : String = "256") {
     override fun toString(): String {
-        return "AesDecryptRequestDto(aes256Key='$aes256Key', aes256Iv='$aes256Iv', aes256Content='$aes256Content', type='$type')"
+        return "AesDecryptRequestDto(aes256Key='$aesKey', aes256Iv='$aesIv', aes256Content='$aesContent', type='$type')"
     }
 }

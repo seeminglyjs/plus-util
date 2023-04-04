@@ -21,13 +21,16 @@ public class AesEncryptTest {
 
     @Test
     public void aesEncryptTest(){
+        System.out.println();
+        System.out.println();
+        System.out.println();
         System.out.println("================ AesEncryptTest Start =====================");
-        AesEncryptRequestDto aes256RequestDto = new AesEncryptRequestDto(
+        AesEncryptRequestDto aesEncryptRequestDto = new AesEncryptRequestDto(
                 "asdqwe123sdasczxvsdgfqwer234234e"
                 ,"asdqwe123sdasc33"
                 ,"test"
                 ,"256");
-        AesEncryptResponseDto aesEncryptResponseDto =  encryptService.makeAseEncryptContent(aes256RequestDto);
+        AesEncryptResponseDto aesEncryptResponseDto =  encryptService.makeAseEncryptContent(aesEncryptRequestDto);
 
         MatcherAssert.assertThat("aesEncryptResponseDto is null", aesEncryptResponseDto, is(not(nullValue())));
         MatcherAssert.assertThat("aesEncryptResponseDto.getAes256Key is null", aesEncryptResponseDto.getAes256Key(), is(not(nullValue())));
@@ -43,7 +46,10 @@ public class AesEncryptTest {
     }
 
     @Test
-    public void aesDecryptTest() throws Exception {
+    public void aesDecryptTest(){
+        System.out.println();
+        System.out.println();
+        System.out.println();
         System.out.println("================ AesDecryptTest Start =====================");
         AesDecryptRequestDto aesDecryptRequestDto = new AesDecryptRequestDto(
                 "asdqwe123sdasczxvsdgfqwer234234e"

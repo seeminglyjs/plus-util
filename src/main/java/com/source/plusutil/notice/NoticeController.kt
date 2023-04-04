@@ -1,15 +1,11 @@
 package com.source.plusutil.notice
 
 import com.source.plusutil.enums.UserRolePlusEnum
-import com.source.plusutil.enums.regex.RegexExpressionEnum
 import com.source.plusutil.notice.dto.*
 import com.source.plusutil.utils.auth.AuthObjectUtil
-import com.source.plusutil.utils.html.HtmlUtil
 import lombok.RequiredArgsConstructor
-import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.bind.annotation.*
-import javax.servlet.http.HttpServletRequest
 
 @RestController
 @RequestMapping("/plus/notice")
