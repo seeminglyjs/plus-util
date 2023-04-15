@@ -33,9 +33,9 @@ public class AesEncryptTest {
         AesEncryptResponseDto aesEncryptResponseDto =  encryptService.makeAseEncryptContent(aesEncryptRequestDto);
 
         MatcherAssert.assertThat("aesEncryptResponseDto is null", aesEncryptResponseDto, is(not(nullValue())));
-        MatcherAssert.assertThat("aesEncryptResponseDto.getAes256Key is null", aesEncryptResponseDto.getAes256Key(), is(not(nullValue())));
-        MatcherAssert.assertThat("aesEncryptResponseDto.getAes256Iv is null", aesEncryptResponseDto.getAes256Iv(), is(not(nullValue())));
-        MatcherAssert.assertThat("aesEncryptResponseDto.getAes256Content is null", aesEncryptResponseDto.getAes256Content(), is(not(nullValue())));
+        MatcherAssert.assertThat("aesEncryptResponseDto.getAes256Key is null", aesEncryptResponseDto.getAesKey(), is(not(nullValue())));
+        MatcherAssert.assertThat("aesEncryptResponseDto.getAes256Iv is null", aesEncryptResponseDto.getAesIv(), is(not(nullValue())));
+        MatcherAssert.assertThat("aesEncryptResponseDto.getAes256Content is null", aesEncryptResponseDto.getAesContent(), is(not(nullValue())));
         MatcherAssert.assertThat("aesEncryptResponseDto.getEncryptContent is null", aesEncryptResponseDto.getEncryptContent(), is(not(nullValue())));
 
         System.out.println("aesEncryptResponseDto->" + aesEncryptResponseDto);

@@ -4,7 +4,7 @@ import com.source.plusutil.encrypt.dto.*
 import lombok.RequiredArgsConstructor
 import org.springframework.web.bind.annotation.*
 
-@RequestMapping("/plus/encrypt")
+@RequestMapping("/plus/enc")
 @RestController
 @RequiredArgsConstructor
 class EncryptController(private val encryptService: EncryptServiceImpl) {
@@ -12,7 +12,7 @@ class EncryptController(private val encryptService: EncryptServiceImpl) {
     /*
 	 * 요청 받은 정보를 aes256으로 암호화한다.
 	 */
-    @PostMapping("/aes256/encrypt")
+    @PostMapping("/aes/encrypt")
     @ResponseBody
     fun ase256Encrypt(@RequestBody aesEncryptRequestDto: AesEncryptRequestDto?): AesEncryptResponseDto {
         return encryptService.makeAseEncryptContent(aesEncryptRequestDto)
@@ -21,7 +21,7 @@ class EncryptController(private val encryptService: EncryptServiceImpl) {
     /*
 	 * 요청 받은 정보를 aes256으로 복호화한다.
 	 */
-    @PostMapping("/aes256/decrypt")
+    @PostMapping("/aes/decrypt")
     @ResponseBody
     fun ase256Decrypt(@RequestBody aesDecryptRequestDto: AesDecryptRequestDto?): AesDecryptResponseDto {
         return encryptService.makeAesDecryptContent(aesDecryptRequestDto!!)

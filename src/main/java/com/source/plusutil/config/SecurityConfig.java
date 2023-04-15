@@ -60,7 +60,7 @@ public class SecurityConfig {
                         "/plus/login/**"
                         ,"/plus/home"
                         , "/plus/join/**"
-                        , "/plus/encrypt/**"
+                        , "/plus/enc/**"
                         , "/plus/util/**"
                         , "/plus/notice/**"
                         , "/plus/algorithm/**"
