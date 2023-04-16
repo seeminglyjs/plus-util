@@ -1,7 +1,7 @@
 package com.source.plusutil.encrypt
 
 import com.source.plusutil.encrypt.dto.*
-import com.source.plusutil.utils.encrypt.Aes256Util
+import com.source.plusutil.utils.encrypt.AesUtil
 import com.source.plusutil.utils.encrypt.RsaUtil
 import lombok.RequiredArgsConstructor
 import org.springframework.stereotype.Service
@@ -11,7 +11,7 @@ import io.github.oshai.KotlinLogging
 private val logger = KotlinLogging.logger {}
 @Service
 @RequiredArgsConstructor
-class EncryptServiceImpl( private val aes256: Aes256Util, private val rsa: RsaUtil) : EncryptService {
+class EncryptServiceImpl(private val aes256: AesUtil, private val rsa: RsaUtil) : EncryptService {
 
     override fun makeAseEncryptContent(aesEncryptRequestDto: AesEncryptRequestDto?): AesEncryptResponseDto {
         logger.info("AesEncryptRequestDto info -> [" + Objects.requireNonNull(aesEncryptRequestDto) + "]")
