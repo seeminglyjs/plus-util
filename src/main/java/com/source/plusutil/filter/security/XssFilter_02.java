@@ -1,17 +1,13 @@
 package com.source.plusutil.filter.security;
 
-import com.source.plusutil.enums.urlPattern.UrlPatternEnum;
 import com.source.plusutil.utils.http.HttpParamCheckUtil;
 import com.source.plusutil.utils.protect.XSSRequestWrapper;
 import com.source.plusutil.utils.protect.XSSUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.EnumUtils;
 import org.json.JSONObject;
-import org.springframework.core.annotation.Order;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Map;

@@ -1,6 +1,5 @@
 package com.source.plusutil.config;
 
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -25,7 +24,7 @@ public class PropertiesConfig {
 
 	@Value("${DATASOURCE_USERNAME}")
 	private String datasourceUsername;
-	
+
 	@Value("${DATASOURCE_PASSWORD}")
 	private String datasourcePassword;
 	

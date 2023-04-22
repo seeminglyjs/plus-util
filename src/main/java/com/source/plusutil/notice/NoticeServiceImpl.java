@@ -1,13 +1,11 @@
 package com.source.plusutil.notice;
 
-import com.source.plusutil.dto.etc.DateDto;
+import com.source.plusutil.notice.dto.DateDto;
 import com.source.plusutil.enums.UserRolePlusEnum;
 import com.source.plusutil.notice.dto.*;
 import com.source.plusutil.utils.auth.AuthObjectUtil;
 import com.source.plusutil.utils.etc.DateUtil;
 import com.source.plusutil.utils.etc.PagingUtil;
-import com.source.plusutil.utils.html.HtmlUtil;
-import com.source.plusutil.utils.protect.XSSUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -19,7 +17,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
 import java.util.Optional;
 

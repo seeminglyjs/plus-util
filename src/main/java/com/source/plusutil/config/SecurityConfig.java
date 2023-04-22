@@ -19,7 +19,7 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 import com.source.plusutil.handler.login.UserLoginFailureHandler;
 import com.source.plusutil.handler.login.UserLoginSuccessHandler;
 import com.source.plusutil.handler.login.UserLogoutSuccessHandler;
-import com.source.plusutil.service.userService.UserInfoService;
+import com.source.plusutil.user.UserInfoService;
 
 import lombok.RequiredArgsConstructor;
 
