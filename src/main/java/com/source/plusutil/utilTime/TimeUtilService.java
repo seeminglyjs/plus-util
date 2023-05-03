@@ -1,8 +1,11 @@
 package com.source.plusutil.utilTime;
 
+import com.source.plusutil.utilTime.dto.TimeCalculateRequestDto;
+import com.source.plusutil.utilTime.dto.TimeCalculateResponseDto;
+
 import javax.servlet.http.HttpServletRequest;
 
 public interface TimeUtilService {
-    public void getDayOfTheWeek(String dayInfo, HttpServletRequest request);
-    public void calculateDate(String startDateStr, String EndDateStr, HttpServletRequest request);
+    void getDayOfTheWeek(String dayInfo, HttpServletRequest request);
+    TimeCalculateResponseDto calculateDate(TimeCalculateRequestDto timeCalculateRequestDto);
 }
