@@ -1,5 +1,12 @@
 package com.source.plusutil.utilTime.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class TimeCalculateRequestDto {
     String startDateStr;
     String endDateStr;
@@ -19,7 +26,7 @@ public class TimeCalculateRequestDto {
     }
 
     public void setEndDateStr(String endDateStr) {
-        endDateStr = endDateStr;
+        this.endDateStr = endDateStr;
     }
 
     @Override

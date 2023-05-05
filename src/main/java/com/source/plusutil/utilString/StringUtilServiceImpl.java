@@ -27,6 +27,7 @@ public class StringUtilServiceImpl implements StringUtilService{
 	 * 문자열 정보를 입력받아 바이트 수를 계산한다.
 	 * 
 	 */
+	@Deprecated
 	@Override
 	public void getStringByte(HttpServletRequest request, String stringContent, String encoding, String emptyYn) {
 		String stringContentByte = "에러가 발생했습니다.";

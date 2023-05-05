@@ -22,7 +22,8 @@ public class TimeController {
 	 * @param request
 	 * @return
 	 */
-	@GetMapping("/time/day/of/the/week")
+	@Deprecated
+	@PostMapping("/time/day/of/the/week")
 	@ResponseBody
 	public String requestGetDayOfTheWeekCall(String dayInfo, HttpServletRequest request) {
 		timeUtilService.getDayOfTheWeek(dayInfo, request);
@@ -37,9 +38,9 @@ public class TimeController {
 	 * @param request
 	 * @return
 	 */
-	@GetMapping("/time/calculate/day")
+	@PostMapping("/time/calculate/day")
 	@ResponseBody
-	public TimeCalculateResponseDto requestCalculateDayCall(TimeCalculateRequestDto timeCalculateRequestDto) {
+	public TimeCalculateResponseDto requestCalculateDayCall(@RequestBody TimeCalculateRequestDto timeCalculateRequestDto) {
 		return timeUtilService.calculateDate(timeCalculateRequestDto);
 	}
 }

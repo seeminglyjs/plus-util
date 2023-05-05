@@ -24,6 +24,7 @@ public class TimeUtilServiceImpl implements TimeUtilService {
     /*
      * 주어진 날짜를 기준으로 그날의 요일을 구한다.
      */
+    @Deprecated
     public void getDayOfTheWeek(String dayInfo, HttpServletRequest request) {
         Optional<String> dayInfoOp = Optional.ofNullable(dayInfo);
 
