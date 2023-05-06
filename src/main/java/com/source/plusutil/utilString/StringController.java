@@ -1,58 +1,37 @@
 package com.source.plusutil.utilString;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
 import com.source.plusutil.enums.regex.RegexExpressionEnum;
 import com.source.plusutil.enums.returnUrl.StringUtilReturnUrl;
-import org.springframework.security.core.Authentication;
+import com.source.plusutil.utilString.dto.StringConvertCaseRequestDto;
+import com.source.plusutil.utilString.dto.StringConvertCaseResponseDto;
+import com.source.plusutil.utilString.dto.StringInitialRequestDto;
+import com.source.plusutil.utilString.dto.StringInitialResponseDto;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping("/plus/util")
+@RequestMapping("/plus/util/string")
 @RequiredArgsConstructor
 public class StringController {
 
 	private final StringUtilServiceImpl stringUtilServiceImpl;
 
-	@GetMapping("/string/get/initial/main")
-	public String stringGetInitialMain(HttpServletRequest request, Authentication authentication) {
-		request.setAttribute("regexAllPermit", RegexExpressionEnum.ALL_PERMIT.getRegex());
-		return StringUtilReturnUrl.STRING_GET_STRING_INITIAL_MAIN.getUrl();
+	@PostMapping("/initial")
+	@ResponseBody
+	public StringInitialResponseDto stringGetInitialAction(@RequestBody StringInitialRequestDto stringInitialRequestDto) {
+		return stringUtilServiceImpl.getInitialString(stringInitialRequestDto);
 	}
 
-	@PostMapping("/string/get/initial/action")
-	public String stringGetInitialAction(HttpServletRequest request, Authentication authentication, String stringContent) {
-		stringUtilServiceImpl.getInitialString(request, stringContent);
-		request.setAttribute("regexAllPermit", RegexExpressionEnum.ALL_PERMIT.getRegex());
-		return StringUtilReturnUrl.STRING_GET_STRING_INITIAL_MAIN.getUrl();
+	@PostMapping("/convert/case")
+	@ResponseBody
+	public StringConvertCaseResponseDto stringConvertUpperAndLowerAction(@RequestBody StringConvertCaseRequestDto stringConvertCaseRequestDto) {
+		return stringUtilServiceImpl.convertUpperAndLowerMain(stringConvertCaseRequestDto);
 	}
 
-
-	@GetMapping("/string/convert/ual/main")
-	public String stringConvertUpperAndLowerMain(HttpServletRequest request) {
-		request.setAttribute("regexAllPermit", RegexExpressionEnum.ALL_PERMIT.getRegex());
-		return StringUtilReturnUrl.STRING_CONVERT_UPPER_AND_LOWER_MAIN.getUrl();
-	}
-
-	@PostMapping("/string/convert/ual/action")
-	public String stringConvertUpperAndLowerAction(HttpServletRequest request, String stringContent, String upperOrLower) {
-		stringUtilServiceImpl.convertUpperAndLowerMain(request, stringContent, upperOrLower);
-		request.setAttribute("regexAllPermit", RegexExpressionEnum.ALL_PERMIT.getRegex());
-		return StringUtilReturnUrl.STRING_CONVERT_UPPER_AND_LOWER_MAIN.getUrl();
-	}
-	@GetMapping("/string/check/similarity/main")
-	public String checkSimilarityMain(HttpServletRequest request){
-		request.setAttribute("regexAllPermit", RegexExpressionEnum.ALL_PERMIT.getRegex());
-		return StringUtilReturnUrl.STRING_CHECK_SIMILARITY.getUrl();
-	}
 	@PostMapping("/string/check/similarity/action")
 	public String checkSimilarityAction(HttpServletRequest request, String firstContent, String secondContent){
 		request.setAttribute("regexAllPermit", RegexExpressionEnum.ALL_PERMIT.getRegex());

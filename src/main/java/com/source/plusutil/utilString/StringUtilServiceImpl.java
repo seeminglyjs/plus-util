@@ -7,6 +7,11 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.source.plusutil.utilString.dto.StringConvertCaseRequestDto;
+import com.source.plusutil.utilString.dto.StringConvertCaseResponseDto;
+import com.source.plusutil.utilString.dto.StringInitialRequestDto;
+import com.source.plusutil.utilString.dto.StringInitialResponseDto;
+import com.source.plusutil.utilString.enums.StringCaseEnum;
 import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.springframework.stereotype.Service;
 
@@ -63,39 +68,40 @@ public class StringUtilServiceImpl implements StringUtilService{
 	}
 
 	@Override
-	public void getInitialString(HttpServletRequest request, String stringContent) {
-		String initialString = "";
-		Optional<String> stringContentOp = Optional.ofNullable(stringContent);
-		if(stringContentOp.isPresent()) {//전달 문자열 존재
-			for(int i = 0; i < stringContentOp.get().length(); i++) {
-				String stringLocationInfo = String.valueOf(stringContentOp.get().charAt(i)); //현재 위치의 한글자 추출
-				if(stringLocationInfo.matches(".*[가-힣]+.*")) {// 한글일 경우
-					if(stringLocationInfo.charAt(0) >= 0xAC00) // 음절 시작코드(10진값, 문자) : 0xAC00 (44032 ,'가' )
-					{
-						int unicode = stringLocationInfo.charAt(0) - 0xAC00;
-						int index = ((unicode - (unicode % 28))/28)/21;
-						initialString += INITIAL_STRING[index]; 
-					}
-
-				} else {//한글이 아닐경우
-					initialString += stringLocationInfo;//변환없이 그대로 저장
-				}
-			}
-			request.setAttribute("stringContent", stringContent);
-			request.setAttribute("initialString", initialString);
-		}else {
-			request.setAttribute("stringContent", "잘못된 정보가 입력되었습니다.");
-			request.setAttribute("initialString", initialString);
+	public StringInitialResponseDto getInitialString(StringInitialRequestDto stringInitialRequestDto) {
+		StringBuilder initialStringSb = new StringBuilder();
+		StringBuilder stringContentSb = new StringBuilder();
+		try{
+			stringContentSb.append(stringInitialRequestDto.getStringContent());
+		}catch (NullPointerException e){
+			return StringInitialResponseDto.builder().stringContent("").initialString("요청 정보가 존재하지 않습니다.").build();
 		}
+		Optional<String> stringContentOp = Optional.of(stringContentSb.toString());
+		//전달 문자열 존재
+		for(int i = 0; i < stringContentOp.get().length(); i++) {
+			String stringLocationInfo = String.valueOf(stringContentOp.get().charAt(i)); //현재 위치의 한글자 추출
+			if(stringLocationInfo.matches(".*[가-힣]+.*")) {// 한글일 경우
+				if(stringLocationInfo.charAt(0) >= 0xAC00) // 음절 시작코드(10진값, 문자) : 0xAC00 (44032 ,'가' )
+				{
+					int unicode = stringLocationInfo.charAt(0) - 0xAC00;
+					int index = ((unicode - (unicode % 28))/28)/21;
+					initialStringSb.append(INITIAL_STRING[index]);
+				}
+			} else {//한글이 아닐경우
+				initialStringSb.append(stringLocationInfo);//변환없이 그대로 저장
+			}
+		}
+		return StringInitialResponseDto.builder().stringContent(stringContentSb.toString()).initialString(initialStringSb.toString()).build();
 	}
 
-	/**
+	/*
 	 * 문자열에 길이를 계산하는 메소드
 	 *
 	 * @param request
 	 * @param stringContent
 	 * @return
 	 */
+	@Deprecated
 	@Override
 	public Map<String,String> getLengthString(HttpServletRequest request, String stringContent) {
 		Map<String,String> responseMap = new HashMap<>();
@@ -105,19 +111,38 @@ public class StringUtilServiceImpl implements StringUtilService{
 	}
 
 	@Override
-	public void convertUpperAndLowerMain(HttpServletRequest request, String stringContent, String upperOrLower) {
-		String convertStringContent = ""; //변환된 문자열이 들어갈 변수
-		Optional<String> caseInfo = Optional.ofNullable(upperOrLower);
-		//test
-		if(caseInfo.get().equals("upper")){
-			convertStringContent = stringContent.toUpperCase();
-		} else if (caseInfo.get().equals("lower")) {
-			convertStringContent = stringContent.toLowerCase();
+	public StringConvertCaseResponseDto convertUpperAndLowerMain(StringConvertCaseRequestDto stringConvertCaseRequestDto) {
+		StringBuilder stringContentSb = new StringBuilder();
+		StringBuilder upperOrLowerSb = new StringBuilder();
+		StringBuilder convertStringContentSb = new StringBuilder();
+		try{
+			stringContentSb.append(stringConvertCaseRequestDto.getStringContent());
+			upperOrLowerSb.append(stringConvertCaseRequestDto.getUpperOrLower());
+		}catch (NullPointerException e){
+			return StringConvertCaseResponseDto.builder()
+					.stringContent("")
+					.upperOrLower("")
+					.convertStringContent("요청 정보가 없습니다.")
+					.build();
 		}
-
-		request.setAttribute("convertStringContent", convertStringContent);
-		request.setAttribute("stringContent", stringContent);
-		request.setAttribute("upperOrLower", upperOrLower);
+		if(upperOrLowerSb.toString().equals(StringCaseEnum.UPPER.getStr()) || upperOrLowerSb.toString().equals(StringCaseEnum.LOWER.getStr())){
+			if(upperOrLowerSb.toString().equals(StringCaseEnum.UPPER.getStr())){
+				convertStringContentSb.append(stringConvertCaseRequestDto.getStringContent().toUpperCase());
+			} else if (upperOrLowerSb.toString().equals(StringCaseEnum.LOWER.getStr())) {
+				convertStringContentSb.append(stringConvertCaseRequestDto.getStringContent().toLowerCase());
+			}
+		}else{//대소문자 구분을 알 수 없을 경우
+			return StringConvertCaseResponseDto.builder()
+					.stringContent(stringContentSb.toString())
+					.upperOrLower(upperOrLowerSb.toString())
+					.convertStringContent("변환 값이 잘못되었습니다.")
+					.build();
+		}
+		return StringConvertCaseResponseDto.builder()
+				.stringContent(stringContentSb.toString())
+				.upperOrLower(upperOrLowerSb.toString())
+				.convertStringContent(convertStringContentSb.toString())
+				.build();
 	}
 
 	@Override
