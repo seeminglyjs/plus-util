@@ -5,6 +5,7 @@ buildscript {
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+		classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
     }
 }
 plugins {
@@ -18,7 +19,16 @@ group = 'com.source'
 version = '0.0.1-SNAPSHOT'
 apply plugin: 'war'
 apply plugin: 'kotlin'
+apply plugin: "kotlin-allopen"
 sourceCompatibility = '17'
+
+allOpen {
+	annotation("org.springframework.stereotype.Controller")
+	annotation("org.springframework.stereotype.Service")
+	annotation("org.springframework.stereotype.Repository")
+	annotation("org.springframework.boot.autoconfigure.SpringBootApplication")
+	annotation("org.springframework.context.annotation.Configuration")
+}
 
 configurations {
 	compileOnly {
