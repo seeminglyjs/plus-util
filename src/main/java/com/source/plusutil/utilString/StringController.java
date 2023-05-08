@@ -4,10 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.source.plusutil.enums.regex.RegexExpressionEnum;
 import com.source.plusutil.enums.returnUrl.StringUtilReturnUrl;
-import com.source.plusutil.utilString.dto.StringConvertCaseRequestDto;
-import com.source.plusutil.utilString.dto.StringConvertCaseResponseDto;
-import com.source.plusutil.utilString.dto.StringInitialRequestDto;
-import com.source.plusutil.utilString.dto.StringInitialResponseDto;
+import com.source.plusutil.utilString.dto.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,10 +29,9 @@ public class StringController {
 		return stringUtilServiceImpl.convertUpperAndLowerMain(stringConvertCaseRequestDto);
 	}
 
-	@PostMapping("/string/check/similarity/action")
-	public String checkSimilarityAction(HttpServletRequest request, String firstContent, String secondContent){
-		request.setAttribute("regexAllPermit", RegexExpressionEnum.ALL_PERMIT.getRegex());
-		stringUtilServiceImpl.checkSimilarity(request,firstContent,secondContent);
-		return StringUtilReturnUrl.STRING_CHECK_SIMILARITY.getUrl();
+	@PostMapping("/similarity")
+	@ResponseBody
+	public StringSimilarityResponseDto checkSimilarityAction(@RequestBody StringSimilarityRequestDto stringSimilarityRequestDto){
+		return stringUtilServiceImpl.checkSimilarity(stringSimilarityRequestDto);
 	}
 }

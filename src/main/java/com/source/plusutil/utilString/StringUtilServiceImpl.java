@@ -7,15 +7,13 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.source.plusutil.utilString.dto.StringConvertCaseRequestDto;
-import com.source.plusutil.utilString.dto.StringConvertCaseResponseDto;
-import com.source.plusutil.utilString.dto.StringInitialRequestDto;
-import com.source.plusutil.utilString.dto.StringInitialResponseDto;
+import com.source.plusutil.utilString.dto.*;
 import com.source.plusutil.utilString.enums.StringCaseEnum;
 import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 @Service
@@ -146,16 +144,18 @@ public class StringUtilServiceImpl implements StringUtilService{
 	}
 
 	@Override
-	public void checkSimilarity(HttpServletRequest request, String firstContent, String secondContent) {
-		int maxLen = Math.max(firstContent.length(), secondContent.length());
+	public StringSimilarityResponseDto checkSimilarity(StringSimilarityRequestDto stringSimilarityRequestDto) {
+		int maxLen = Math.max(stringSimilarityRequestDto.getFirstContent().length(), stringSimilarityRequestDto.getSecondContent().length());
 		LevenshteinDistance ld = new LevenshteinDistance();
-		double result = 0;
-		double temp = ld.apply(firstContent, secondContent);
+		double result;
+		double temp = ld.apply(stringSimilarityRequestDto.getFirstContent(), stringSimilarityRequestDto.getSecondContent());
 		result = (maxLen - temp) / maxLen;
 		String similarity = "유사성 : " + result * 100 + "% /";
 		similarity += "유사거리 : " + temp;
-		request.setAttribute("firstContent", firstContent);
-		request.setAttribute("secondContent", secondContent);
-		request.setAttribute("similarity", similarity);
+		return StringSimilarityResponseDto.builder()
+				.firstContent(stringSimilarityRequestDto.getFirstContent())
+				.secondContent(stringSimilarityRequestDto.getSecondContent())
+				.similarity(similarity)
+				.build();
 	}
 }

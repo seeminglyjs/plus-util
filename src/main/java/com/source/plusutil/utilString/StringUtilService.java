@@ -1,9 +1,6 @@
 package com.source.plusutil.utilString;
 
-import com.source.plusutil.utilString.dto.StringConvertCaseRequestDto;
-import com.source.plusutil.utilString.dto.StringConvertCaseResponseDto;
-import com.source.plusutil.utilString.dto.StringInitialRequestDto;
-import com.source.plusutil.utilString.dto.StringInitialResponseDto;
+import com.source.plusutil.utilString.dto.*;
 
 import java.util.Map;
 
@@ -21,5 +18,5 @@ public interface StringUtilService {
 
 	StringConvertCaseResponseDto convertUpperAndLowerMain(StringConvertCaseRequestDto stringConvertCaseRequestDto);
 
-    void checkSimilarity(HttpServletRequest request, String firstContent, String secondContent);
+	StringSimilarityResponseDto checkSimilarity(StringSimilarityRequestDto stringSimilarityRequestDto);
 }

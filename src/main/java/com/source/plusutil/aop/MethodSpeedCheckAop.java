@@ -24,7 +24,7 @@ public class MethodSpeedCheckAop {
         long startTime = System.currentTimeMillis();
         log.debug("\n[AOP] startTime ms -> " + startTime + "\n startTime s -> " + TimeUnit.MILLISECONDS.toSeconds(startTime));
         try {
-            return joinPoint.proceed();
+             return joinPoint.proceed();
         } catch (Throwable e) {
             throw new RuntimeException(e);
         } finally {
