@@ -16,8 +16,8 @@ public class BasicServiceImpl implements BasicService {
         //시작포인터 , 종료포인터, 카운트 변수, 합계 변수
         int start = 0, end = 0, count = 0, sum = 0;
 
-        while (start < arr.length - 1) {
-            if (sum > target || end == arr.length - 1) {
+        while (start < arr.length) {
+            if (sum > target || end == arr.length) {
                 sum -= Integer.parseInt(arr[start]);
                 start += 1;
             } else { // sum <= target

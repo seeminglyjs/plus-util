@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import lombok.RequiredArgsConstructor;
 
-@Controller
+@RestController
 @RequestMapping("/plus/util/string")
 @RequiredArgsConstructor
 public class StringController {
