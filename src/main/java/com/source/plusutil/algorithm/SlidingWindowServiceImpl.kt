@@ -17,17 +17,14 @@ class SlidingWindowServiceImpl : SlidingWindowService {
         var count = 0;
         var index = 0;
         for (numStr in arr) {
+            count++;
+            sum += numStr.toInt();
             if (count == range) {
-                if (maxValue < sum) {
-                    maxValue = sum
-                    logger.info("now maxValue $maxValue")
-                }
+                maxValue = sum.coerceAtLeast(maxValue); //Math.max
                 count--;
                 sum -= arr[index].toInt();
                 index++;
             };
-            count++;
-            sum += numStr.toInt();
         }
         return SlidingWindowResponseDto(
                 slidingWindowRequestDto.slidingWindowArr,

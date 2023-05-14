@@ -18,6 +18,7 @@ public class IpController {
 
     private final IpServiceImpl ipService;
 
+    @Deprecated
     @GetMapping("/my")
     @ResponseBody
     public MyIpCheckResponseDto myIpCheckMain(HttpServletRequest request){

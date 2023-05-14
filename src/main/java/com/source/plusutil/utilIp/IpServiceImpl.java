@@ -11,6 +11,7 @@ import java.util.Map;
 @Service
 @Slf4j
 public class IpServiceImpl implements IpService {
+    @Deprecated
     @Override
     public MyIpCheckResponseDto myIpCheck(HttpServletRequest request) {
         Map<String, String> myIpMap = HttpParamCheckUtil.localeCheck(request);

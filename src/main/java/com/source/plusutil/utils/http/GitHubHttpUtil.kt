@@ -12,12 +12,10 @@ import java.net.http.HttpResponse
 private val logger = KotlinLogging.logger {}
 class GitHubHttpUtil {
 
-    fun getGithubListRepositoryLanguages(token : String) : JSONObject{
+    fun getGithubListRepositoryLanguages(token : String, reposUrl : String) : JSONObject{
         val sb = StringBuilder();
         var resultJson = JSONObject();
-        var line = "";
-        val requestUrl = "https://api.github.com/repos/seeminglyjs/plus-util/languages";
-        val url = URL(requestUrl);
+        val url = URL(reposUrl);
 
         val con = url.openConnection() as HttpURLConnection;
         con.connectTimeout = 5000 //서버에 연결되는 Timeout 시간 설정
@@ -31,7 +29,7 @@ class GitHubHttpUtil {
         con.setRequestProperty("Authorization", token)
 
         if (con.responseCode == HttpURLConnection.HTTP_OK) {
-            logger.info("requestUrl Http 200 ->$requestUrl")
+            logger.info("requestUrl Http 200 ->$url")
             val br = BufferedReader(InputStreamReader(con.inputStream, "utf-8"))
             while (true){
                 if(br.ready()) sb.append(br.readLine())
