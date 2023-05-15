@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
-@Controller
+@RestController
 @RequestMapping("/plus/algorithm")
 @RequiredArgsConstructor
 public class BasicAlgorithmController {

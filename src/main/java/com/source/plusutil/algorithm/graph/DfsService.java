@@ -1,4 +1,4 @@
-package com.source.plusutil.algorithm;
+package com.source.plusutil.algorithm.graph;
 
 import javax.servlet.http.HttpServletRequest;
 

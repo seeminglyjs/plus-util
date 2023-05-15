@@ -1,4 +1,4 @@
-package com.source.plusutil.algorithm;
+package com.source.plusutil.algorithm.graph;
 
 import com.source.plusutil.utils.algorithm.DfsUtil;
 import lombok.extern.slf4j.Slf4j;

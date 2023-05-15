@@ -1,10 +1,12 @@
-package com.source.plusutil.algorithm;
+package com.source.plusutil.algorithm.graph;
 
 import java.util.LinkedList;
 import java.util.Queue;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.source.plusutil.algorithm.dto.BfsRequestDto;
+import com.source.plusutil.algorithm.dto.BfsResponseDto;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
@@ -12,60 +14,39 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class BfsServiceImpl implements BfsService {
-	
-	/**
-	 * bfs 기본형식
-	 *
-	 * @param bfsCol
-	 * @param bfsRow
-	 * @param bfsStartCol
-	 * @param bfsStartRow
-	 * @param bfsEndCol
-	 * @param bfsEndRow
-	 * @param request
-	 */
-	public void bfsDefault(int bfsRow, int bfsCol,  int bfsStartRow, int bfsStartCol,  int bfsEndRow, int bfsEndCol,  HttpServletRequest request) {
+
+	@Override
+	public BfsResponseDto bfsDefault(BfsRequestDto bfsRequestDto) {
 		int result = -1; //최단거리 출력
 		
 		//입력 값들은 15을 넘을 수 없음
-		try {
-			if(bfsCol > 15 || bfsRow > 15 | bfsStartCol > 14 | bfsStartRow > 14 | bfsEndCol > 15 | bfsEndRow > 15) {
-				return;
-			}else if(bfsCol < bfsEndCol || bfsEndCol < bfsStartCol) {
-				return;
-			}else if(bfsRow < bfsEndRow || bfsEndRow < bfsStartRow) {
-				return;
-			}
-		}catch (Exception e) {
-			log.info("exception",e);
-			return;
-		}
+		if(!bfsRequestDto.fieldCheck()) return BfsResponseDto.builder().bfsSearchResult(-1).build();
 
 		try {
-			log.info("startRow -> ["+bfsStartCol+"]"+" startCol ->["+bfsStartRow+"]"); //시작하는 위치 행/열
-			log.info("endRow -> ["+bfsEndCol+"]"+" endCol ->["+bfsEndRow+"]"); //도착을 원하는 위치  행/열
+			log.info("startRow -> ["+bfsRequestDto.getBfsStartCol()+"]"+" startCol ->["+bfsRequestDto.getBfsStartRow()+"]"); //시작하는 위치 행/열
+			log.info("endRow -> ["+bfsRequestDto.getBfsEndRow()+"]"+" endCol ->["+bfsRequestDto.getBfsEndCol()+"]"); //도착을 원하는 위치  행/열
 			
 			//배열의 길이이기 때문에 하나씩 더해줌
-			bfsEndCol += 1;
-			bfsEndRow += 1;
+			bfsRequestDto.setBfsEndCol(bfsRequestDto.getBfsEndCol() + 1);
+			bfsRequestDto.setBfsEndRow(bfsRequestDto.getBfsEndRow() + 1);
 			
-			if(bfsEndCol > bfsCol) {bfsEndCol = bfsCol;} //끝나는 값이 최대값보다 클수 없음
-			if(bfsEndRow > bfsRow) {bfsEndRow = bfsRow;}
+			if(bfsRequestDto.getBfsEndCol() > bfsRequestDto.getBfsCol()) {bfsRequestDto.setBfsEndCol(bfsRequestDto.getBfsCol());} //끝나는 값이 최대값보다 클수 없음
+			if(bfsRequestDto.getBfsEndRow() > bfsRequestDto.getBfsEndRow()) {bfsRequestDto.setBfsEndRow(bfsRequestDto.getBfsRow());}
 
-			int[][] visited = new int [bfsRow][bfsCol]; //방문배열 생성
+			int[][] visited = new int [bfsRequestDto.getBfsEndRow()][bfsRequestDto.getBfsCol()]; //방문배열 생성
 			
 			Queue<int[]> queue = new LinkedList<>();
-	        queue.add(new int[] {bfsStartRow, bfsStartCol}); //첫번째 위치 저장
+	        queue.add(new int[] {bfsRequestDto.getBfsStartCol(), bfsRequestDto.getBfsStartRow()}); //첫번째 위치 저장
 	        
 	        //q가 비지 않을때까지 실행
 	        while(!queue.isEmpty()) {
 	        	int [] node = queue.poll(); //현재 큐 최앞단 추출
-	        	if(node[0] == bfsEndRow -1 && node[1] == bfsEndCol -1 ) {//현재의 큐의 위치가 끝나는위치와 같으면,
+	        	if(node[0] == bfsRequestDto.getBfsEndRow() -1 && node[1] == bfsRequestDto.getBfsEndCol() -1 ) {//현재의 큐의 위치가 끝나는위치와 같으면,
 	        		result = visited[node[0]][node[1]]; //방문위치값을 대입
 	        	}
 	        	
 	        	//[행기준] 현재 노드가 도착위치보다 작고, 미방문 위치일 경우에
-	        	if(node[0] + 1 < bfsEndRow && visited[node[0]+1][node[1]] == 0) {
+	        	if(node[0] + 1 < bfsRequestDto.getBfsEndRow() && visited[node[0]+1][node[1]] == 0) {
 	        		queue.add(new int [] {node[0]+1, node[1]});// 큐에 다음 위치 저장
 	        		visited[node[0]+1][node[1]] = visited[node[0]][node[1]] + 1; //방문위치 더하기
 	        		printVisitedArr(visited);
@@ -77,7 +58,7 @@ public class BfsServiceImpl implements BfsService {
 	        		printVisitedArr(visited);
 	        	}
 	        	//[열기준] 현재 노드가 도착위치보다 작고, 미방문 위치일 경우에
-	        	if(node[1] + 1 < bfsEndCol && visited[node[0]][node[1]+1] == 0) {
+	        	if(node[1] + 1 < bfsRequestDto.getBfsEndCol() && visited[node[0]][node[1]+1] == 0) {
 	        		queue.add(new int [] {node[0], node[1]+1});// 큐에 다음 위치 저장
 	        		visited[node[0]][node[1]+1] = visited[node[0]][node[1]] + 1; //방문위치 더하기
 	        		printVisitedArr(visited);
@@ -92,17 +73,18 @@ public class BfsServiceImpl implements BfsService {
 			
 		}catch (Exception e) {
 			log.info("exception",e);
-			return;
+			return BfsResponseDto.builder().bfsSearchResult(-1).build();
 		}
-		
-		request.setAttribute("bfsSearchResult", result);
-		request.setAttribute("bfsCol", bfsCol);
-		request.setAttribute("bfsRow", bfsRow);
-		request.setAttribute("bfsStartRow", bfsStartRow);
-		request.setAttribute("bfsStartCol", bfsStartCol);
-		request.setAttribute("bfsEndRow", bfsEndRow-1);
-		request.setAttribute("bfsEndCol", bfsEndCol-1);
 
+		return BfsResponseDto.builder()
+				.bfsRow(bfsRequestDto.getBfsRow())
+				.bfsCol(bfsRequestDto.getBfsCol())
+				.bfsStartRow(bfsRequestDto.getBfsStartRow())
+				.bfsStartCol(bfsRequestDto.getBfsStartCol())
+				.bfsEndRow(bfsRequestDto.getBfsStartRow())
+				.bfsEndCol(bfsRequestDto.getBfsEndCol())
+				.bfsSearchResult(result)
+				.build();
 	}
 	
 	
