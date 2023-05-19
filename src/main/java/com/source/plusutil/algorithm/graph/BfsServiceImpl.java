@@ -27,16 +27,16 @@ public class BfsServiceImpl implements BfsService {
 			log.info("endRow -> ["+bfsRequestDto.getBfsEndRow()+"]"+" endCol ->["+bfsRequestDto.getBfsEndCol()+"]"); //도착을 원하는 위치  행/열
 			
 			//배열의 길이이기 때문에 하나씩 더해줌
-			bfsRequestDto.setBfsEndCol(bfsRequestDto.getBfsEndCol() + 1);
-			bfsRequestDto.setBfsEndRow(bfsRequestDto.getBfsEndRow() + 1);
+			bfsRequestDto.setBfsCol(bfsRequestDto.getBfsCol() + 1);
+			bfsRequestDto.setBfsRow(bfsRequestDto.getBfsRow() + 1);
 			
 			if(bfsRequestDto.getBfsEndCol() > bfsRequestDto.getBfsCol()) {bfsRequestDto.setBfsEndCol(bfsRequestDto.getBfsCol());} //끝나는 값이 최대값보다 클수 없음
-			if(bfsRequestDto.getBfsEndRow() > bfsRequestDto.getBfsEndRow()) {bfsRequestDto.setBfsEndRow(bfsRequestDto.getBfsRow());}
+			if(bfsRequestDto.getBfsEndRow() > bfsRequestDto.getBfsRow()) {bfsRequestDto.setBfsEndRow(bfsRequestDto.getBfsRow());}
 
-			int[][] visited = new int [bfsRequestDto.getBfsEndRow()][bfsRequestDto.getBfsCol()]; //방문배열 생성
+			int[][] visited = new int [bfsRequestDto.getBfsRow()][bfsRequestDto.getBfsCol()]; //방문배열 생성
 			
 			Queue<int[]> queue = new LinkedList<>();
-	        queue.add(new int[] {bfsRequestDto.getBfsStartCol(), bfsRequestDto.getBfsStartRow()}); //첫번째 위치 저장
+	        queue.add(new int[] {bfsRequestDto.getBfsStartRow(), bfsRequestDto.getBfsStartCol()}); //첫번째 위치 저장
 	        
 	        //q가 비지 않을때까지 실행
 	        while(!queue.isEmpty()) {
@@ -89,7 +89,7 @@ public class BfsServiceImpl implements BfsService {
 	
 	
 	
-	/**
+	/*
 	 * bfs 배열 형태의 기본 로직을 구현한 메소드
 	 * 
 	 * 
@@ -101,6 +101,7 @@ public class BfsServiceImpl implements BfsService {
 	 * @param block 배열에서 막혀있는곳 체크
 	 * @return
 	 */
+	@Deprecated
 	public int bfsArrDefault(int[][] maps, int startRow, int startCol, int endRow, int endCol, int block) {
 		int result = -1;
 		log.info("startRow -> ["+startRow+"]"+" startCol ->["+startCol+"]"); //시작하는 위치 행/열
@@ -165,7 +166,7 @@ public class BfsServiceImpl implements BfsService {
 		return result;
 	}
 	
-	/**
+	/*
 	 * bfs 방문 배열을 출력하는 메소드
 	 * 
 	 * @param visited
