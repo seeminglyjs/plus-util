@@ -23,7 +23,7 @@ public class BfsServiceImpl implements BfsService {
 		if(!bfsRequestDto.fieldCheck()) return BfsResponseDto.builder().bfsSearchResult(-1).build();
 
 		try {
-			log.info("startRow -> ["+bfsRequestDto.getBfsStartCol()+"]"+" startCol ->["+bfsRequestDto.getBfsStartRow()+"]"); //시작하는 위치 행/열
+			log.info("startRow -> ["+bfsRequestDto.getBfsStartRow()+"]"+" startCol ->["+bfsRequestDto.getBfsStartCol()+"]"); //시작하는 위치 행/열
 			log.info("endRow -> ["+bfsRequestDto.getBfsEndRow()+"]"+" endCol ->["+bfsRequestDto.getBfsEndCol()+"]"); //도착을 원하는 위치  행/열
 			
 			//배열의 길이이기 때문에 하나씩 더해줌

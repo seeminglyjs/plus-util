@@ -1,7 +1,10 @@
 package com.source.plusutil.algorithm.graph;
 
+import com.source.plusutil.algorithm.dto.DfsRequestDto;
+import com.source.plusutil.algorithm.dto.DfsResponseDto;
+
 import javax.servlet.http.HttpServletRequest;
 
 public interface DfsService {
-    public void dfsDefault(int dfsRow, int dfsCol, int dfsStartRow, int dfsStartCol, int dfsEndRow, int dfsEndCol, HttpServletRequest request);
+    DfsResponseDto dfsDefault(DfsRequestDto dfsRequestDto);
 }
