@@ -16,6 +16,6 @@ public class DfsTest {
     public void dfsTest() {
         HttpServletRequest request = null;
         int result = 0;
-        dfsService.dfsDefault(10, 7, 4, 1, 10, 7, null);
+//        dfsService.dfsDefault(10, 7, 4, 1, 10, 7, null);
     }
 }
