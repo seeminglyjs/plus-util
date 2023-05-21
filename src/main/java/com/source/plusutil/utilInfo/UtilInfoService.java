@@ -11,10 +11,10 @@ public interface UtilInfoService {
     List<UtilInfoDto> getUtilList(int limit);
     UtilInfoDto findUtilInfoById(long id);
     UtilInfoDto findUtilInfoByName(String name);
-    long insertUtilInfo(UtilInfoInsertRequestDto utilInfoInsertRequestDto);
-    long insertUtilInfoList(List<UtilInfoInsertRequestDto> utilInfoInsertRequestDtoList);
-    long updateUtilInfo(UtilInfoUpdateRequestDto utilInfoUpdateRequest);
-    long updateUtilInfoList(List<UtilInfoUpdateRequestDto> utilInfoUpdateRequestList);
+    UtilInfoDto insertUtilInfo(UtilInfoInsertRequestDto utilInfoInsertRequestDto);
+    List<UtilInfoInsertRequestDto> insertUtilInfoList(List<UtilInfoInsertRequestDto> utilInfoInsertRequestDtoList);
+    UtilInfoDto updateUtilInfo(UtilInfoUpdateRequestDto utilInfoUpdateRequest);
+    List<UtilInfoUpdateRequestDto> updateUtilInfoList(List<UtilInfoUpdateRequestDto> utilInfoUpdateRequestList);
     long deleteUtilInfo(UtilInfoDeleteRequestDto utilInfoDeleteRequestDto);
     long deleteUtilInfoList(List<UtilInfoDeleteRequestDto> utilInfoDeleteRequestDtoList);
 }
