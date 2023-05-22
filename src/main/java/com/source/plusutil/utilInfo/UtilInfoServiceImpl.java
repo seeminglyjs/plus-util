@@ -1,11 +1,14 @@
 package com.source.plusutil.utilInfo;
 
+import com.querydsl.core.BooleanBuilder;
 import com.source.plusutil.utilInfo.dto.UtilInfoDeleteRequestDto;
 import com.source.plusutil.utilInfo.dto.UtilInfoDto;
 import com.source.plusutil.utilInfo.dto.UtilInfoInsertRequestDto;
 import com.source.plusutil.utilInfo.dto.UtilInfoUpdateRequestDto;
 import com.source.plusutil.utils.etc.DateUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -19,25 +22,26 @@ public class UtilInfoServiceImpl implements UtilInfoService {
 
 
     @Override
-    public List<UtilInfoDto> getUtilList(int limit) {
+    public Page<UtilInfoDto> getUtilList(int limit) {
         if (limit == 0) { // 0일 경우 전체 조회
-            return utilInfoRepository.findAll(Sort.by(Sort.Direction.DESC, "util_no"));
+            return utilInfoRepository.findAll(PageRequest.of(0, Integer.MAX_VALUE,Sort.by(Sort.Direction.DESC, "utilNo")));
+        }else{
+            return utilInfoRepository.findAll(PageRequest.of(0,limit,Sort.by(Sort.Direction.DESC, "utilNo")));
         }
+    }
+
+    @Override
+    public UtilInfoDto getUtilInfoById(long id) {
         return null;
     }
 
     @Override
-    public UtilInfoDto findUtilInfoById(long id) {
+    public UtilInfoDto getUtilInfoByName(String name) {
         return null;
     }
 
     @Override
-    public UtilInfoDto findUtilInfoByName(String name) {
-        return null;
-    }
-
-    @Override
-    public UtilInfoDto insertUtilInfo(UtilInfoInsertRequestDto utilInfoInsertRequestDto) {
+    public UtilInfoDto addUtilInfo(UtilInfoInsertRequestDto utilInfoInsertRequestDto) {
         return utilInfoRepository.save(UtilInfoDto.builder()
                 .utilName(utilInfoInsertRequestDto.getUtilName())
                 .utilDescription(utilInfoInsertRequestDto.getUtilDescription())
@@ -48,27 +52,27 @@ public class UtilInfoServiceImpl implements UtilInfoService {
     }
 
     @Override
-    public List<UtilInfoInsertRequestDto> insertUtilInfoList(List<UtilInfoInsertRequestDto> utilInfoInsertRequestDtoList) {
+    public List<UtilInfoInsertRequestDto> addUtilInfoList(List<UtilInfoInsertRequestDto> utilInfoInsertRequestDtoList) {
         return null;
     }
 
     @Override
-    public UtilInfoDto updateUtilInfo(UtilInfoUpdateRequestDto utilInfoUpdateRequest) {
+    public UtilInfoDto modifyUtilInfo(UtilInfoUpdateRequestDto utilInfoUpdateRequest) {
         return null;
     }
 
     @Override
-    public List<UtilInfoUpdateRequestDto> updateUtilInfoList(List<UtilInfoUpdateRequestDto> utilInfoUpdateRequestList) {
+    public List<UtilInfoUpdateRequestDto> modifyUtilInfoList(List<UtilInfoUpdateRequestDto> utilInfoUpdateRequestList) {
         return null;
     }
 
     @Override
-    public long deleteUtilInfo(UtilInfoDeleteRequestDto utilInfoDeleteRequestDto) {
+    public long removeUtilInfo(UtilInfoDeleteRequestDto utilInfoDeleteRequestDto) {
         return 0;
     }
 
     @Override
-    public long deleteUtilInfoList(List<UtilInfoDeleteRequestDto> utilInfoDeleteRequestDtoList) {
+    public long removeUtilInfoList(List<UtilInfoDeleteRequestDto> utilInfoDeleteRequestDtoList) {
         return 0;
     }
 

@@ -4,17 +4,18 @@ import com.source.plusutil.utilInfo.dto.UtilInfoDeleteRequestDto;
 import com.source.plusutil.utilInfo.dto.UtilInfoInsertRequestDto;
 import com.source.plusutil.utilInfo.dto.UtilInfoDto;
 import com.source.plusutil.utilInfo.dto.UtilInfoUpdateRequestDto;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 public interface UtilInfoService {
-    List<UtilInfoDto> getUtilList(int limit);
-    UtilInfoDto findUtilInfoById(long id);
-    UtilInfoDto findUtilInfoByName(String name);
-    UtilInfoDto insertUtilInfo(UtilInfoInsertRequestDto utilInfoInsertRequestDto);
-    List<UtilInfoInsertRequestDto> insertUtilInfoList(List<UtilInfoInsertRequestDto> utilInfoInsertRequestDtoList);
-    UtilInfoDto updateUtilInfo(UtilInfoUpdateRequestDto utilInfoUpdateRequest);
-    List<UtilInfoUpdateRequestDto> updateUtilInfoList(List<UtilInfoUpdateRequestDto> utilInfoUpdateRequestList);
-    long deleteUtilInfo(UtilInfoDeleteRequestDto utilInfoDeleteRequestDto);
-    long deleteUtilInfoList(List<UtilInfoDeleteRequestDto> utilInfoDeleteRequestDtoList);
+    Page<UtilInfoDto> getUtilList(int limit);
+    UtilInfoDto getUtilInfoById(long id);
+    UtilInfoDto getUtilInfoByName(String name);
+    UtilInfoDto addUtilInfo(UtilInfoInsertRequestDto utilInfoInsertRequestDto);
+    List<UtilInfoInsertRequestDto> addUtilInfoList(List<UtilInfoInsertRequestDto> utilInfoInsertRequestDtoList);
+    UtilInfoDto modifyUtilInfo(UtilInfoUpdateRequestDto utilInfoUpdateRequest);
+    List<UtilInfoUpdateRequestDto> modifyUtilInfoList(List<UtilInfoUpdateRequestDto> utilInfoUpdateRequestList);
+    long removeUtilInfo(UtilInfoDeleteRequestDto utilInfoDeleteRequestDto);
+    long removeUtilInfoList(List<UtilInfoDeleteRequestDto> utilInfoDeleteRequestDtoList);
 }
