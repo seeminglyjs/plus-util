@@ -13,12 +13,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter //없으면 form 데이터를 받을 수 없음
-@ToString
-@Builder
 public class UserJoinDto {
 	
 	@NotBlank(message = "이메일은 필수값이며, 비어둘 수 없습니다.")
@@ -28,4 +26,28 @@ public class UserJoinDto {
 	@NotEmpty(message = "비밀번호는 필수값이며, 비어둘 수 없습니다.")
 	@Length(min = 8, max = 20, message = "비밀번호는 8자 이상, 20자 이하로 입력해주세요.")
 	private String userPassword;
+
+	@Override
+	public String toString() {
+		return "UserJoinDto{" +
+				"userEmail='" + userEmail + '\'' +
+				", userPassword='" + userPassword + '\'' +
+				'}';
+	}
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+
+	public String getUserPassword() {
+		return userPassword;
+	}
+
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
+	}
 }
