@@ -1,17 +1,22 @@
 buildscript {
-    ext.kotlin_version = '1.8.20-Beta'
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+	ext{
+		kotlin_version = '1.8.20-Beta'
+		queryDslVersion = "5.0.0" // QueryDSL
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 		classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
-    }
+	}
 }
 plugins {
 	id 'org.springframework.boot' version '2.7.3'
 	id 'io.spring.dependency-management' version '1.0.13.RELEASE'
 	id 'java'
+//	//querydsl 추가
+	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 	id 'org.springframework.experimental.aot' version '0.12.1'
 }
 
@@ -53,14 +58,10 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-configuration-processor
 	implementation group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: '3.0.3'
 
-	// https://mvnrepository.com/artifact/com.querydsl/querydsl-jpa
-	implementation group: 'com.querydsl', name: 'querydsl-jpa', version: '5.0.0'
-	// https://mvnrepository.com/artifact/com.querydsl/querydsl-apt
-	implementation group: 'com.querydsl', name: 'querydsl-apt', version: '5.0.0'
-	// https://mvnrepository.com/artifact/com.querydsl/querydsl-core
-	implementation group: 'com.querydsl', name: 'querydsl-core', version: '5.0.0'
-
-
+	// QueryDSL
+	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
+	implementation "com.querydsl:querydsl-core:${queryDslVersion}" // 한개 더 추가!
 
 	implementation 'io.github.oshai:kotlin-logging-jvm:4.0.0-beta-11'
 
@@ -76,7 +77,7 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.springframework/spring-jdbc
 	implementation group: 'org.springframework', name: 'spring-jdbc', version: '5.3.23'
 	// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
-	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'	
+	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation @NotBlank @Email
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.7.4'
 	// https://mvnrepository.com/artifact/nz.net.ultraq.thymeleaf/thymeleaf-layout-dialect
@@ -108,8 +109,8 @@ dependencies {
 
 
 	// https://mvnrepository.com/artifact/com.google.code.findbugs/jsr305
-    implementation 'com.google.code.findbugs:jsr305:3.0.2'
-    
+	implementation 'com.google.code.findbugs:jsr305:3.0.2'
+
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -124,24 +125,49 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
 	testImplementation 'org.springframework.security:spring-security-test'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
 
+//querydsl 추가 시작
+def querydslDir = "$buildDir/generated/querydsl"
+
+querydsl {
+	jpa = true
+	querydslSourcesDir = querydslDir
+}
+sourceSets {
+	main.java.srcDir querydslDir
+}
+compileQuerydsl{
+	options.annotationProcessorPath = configurations.querydsl
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+	querydsl.extendsFrom compileClasspath
+}
+//querydsl 추가 끝
+
+
+
+
 tasks.named('bootBuildImage') {
 	builder = 'paketobuildpacks/builder:tiny'
 	environment = ['BP_NATIVE_IMAGE': 'true']
 }
 compileKotlin {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+	kotlinOptions {
+		jvmTarget = "1.8"
+	}
 }
 compileTestKotlin {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+	kotlinOptions {
+		jvmTarget = "1.8"
+	}
 }
