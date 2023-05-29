@@ -15,7 +15,7 @@ plugins {
 	id 'org.springframework.boot' version '2.7.3'
 	id 'io.spring.dependency-management' version '1.0.13.RELEASE'
 	id 'java'
-//	//querydsl 추가
+	//QueryDSL
 	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 	id 'org.springframework.experimental.aot' version '0.12.1'
 }
@@ -58,10 +58,11 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-configuration-processor
 	implementation group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: '3.0.3'
 
-	// QueryDSL
+	// QueryDSL START
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
 	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
-	implementation "com.querydsl:querydsl-core:${queryDslVersion}" // 한개 더 추가!
+	implementation "com.querydsl:querydsl-core:${queryDslVersion}"
+	// QueryDSL END
 
 	implementation 'io.github.oshai:kotlin-logging-jvm:4.0.0-beta-11'
 
@@ -132,7 +133,7 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-//querydsl 추가 시작
+//QueryDSL START
 def querydslDir = "$buildDir/generated/querydsl"
 
 querydsl {
@@ -152,7 +153,7 @@ configurations {
 	}
 	querydsl.extendsFrom compileClasspath
 }
-//querydsl 추가 끝
+//QueryDSL END
 
 
 
