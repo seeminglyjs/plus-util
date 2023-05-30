@@ -1,9 +1,6 @@
 package com.source.plusutil.utilInfo;
 
-import com.source.plusutil.utilInfo.dto.UtilInfoDto;
-import com.source.plusutil.utilInfo.dto.UtilInfoInsertRequestDto;
-import com.source.plusutil.utilInfo.dto.UtilViewRequestDto;
-import com.source.plusutil.utilInfo.dto.UtilViewsDto;
+import com.source.plusutil.utilInfo.dto.*;
 import com.source.plusutil.utilInfo.repository.UtilViewRepository;
 import com.source.plusutil.utils.etc.DateUtil;
 import org.hamcrest.MatcherAssert;
@@ -28,37 +25,23 @@ public class UtilInfoTest {
     @Autowired
     UtilInfoSimpleService utilInfoSimpleService;
     @Autowired
-    UtilInfoSimpleService utilInfoService;
+    UtilInfoService utilInfoService;
     @Autowired
     UtilViewRepository utilViewRepository;
 
     @Test
-    @Transactional //클래스보다 메소드 단위의 Transactional 우선순위가 높다
-    public void utilInfoInsertTest() throws Exception {
-        UtilInfoInsertRequestDto utilInfoInsertRequestDto1 = UtilInfoInsertRequestDto.builder()
-                .utilName("test2")
-                .utilDescription("it is test2 util")
-                .utilLikes(0)
-                .utilViews(0)
-                .build();
-        UtilInfoDto utilInfoDto = utilInfoService.addUtilInfo(utilInfoInsertRequestDto1);
-        System.out.println(utilInfoDto);
-
-        MatcherAssert.assertThat("utilInfoDto is null Error", utilInfoDto, is(not(nullValue())));
-        MatcherAssert.assertThat("utilInfoDto Name is Not Equals Error", utilInfoDto.getUtilName(), is(utilInfoInsertRequestDto1.getUtilName()));
-        MatcherAssert.assertThat("utilInfoDto Description is Not Equals Error", utilInfoDto.getUtilDescription(), is(utilInfoInsertRequestDto1.getUtilDescription()));
-    }
-
-    @Test
-    @Transactional //클래스보다 메소드 단위의 Transactional 우선순위가 높다
+    @Transactional //클래스보다 메소드 단위의 Transactional 보다 우선순위가 높다
     public void utilInfoFindAllTest() {
-        Page<UtilInfoDto> utilList1 = utilInfoService.getUtilList(1);
+        Page<UtilInfoDto> utilList1 = utilInfoSimpleService.getUtilList(1);
         MatcherAssert.assertThat("utilList1.size() is not 1", utilList1.getSize(), is(1));
         System.out.println(utilList1.get());
     }
 
+    /*
+        유틸 조회정보 테스트
+     */
     @Test
-    @Transactional //클래스보다 메소드 단위의 Transactional 우선순위가 높다
+    @Transactional //클래스보다 메소드 단위의 Transactional 보다 우선순위가 높다
     public void getUtilInfoViewHistToday() {
         System.out.println("======= 존재하지 않는 정보 조회 테스트 [시작] =======\n ");
         long utilNo = 99999;
@@ -79,14 +62,17 @@ public class UtilInfoTest {
         System.out.println("======= 존재하는 정보 조회 테스트 [종료] =======\n ");
     }
 
+    /*
+     조회수 등록 실패건에 대한 테스트 작업
+     */
     @Test
-    public void addUtilView(){
+    public void addUtilView() {
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.setRemoteAddr("111.11.11.111");
 
         System.out.println("======= addUtilView 롤백 테스트 [시작] =======\n ");
         //해당 건은 실패 할 수 밖에 없다.
-        assertThrows(RuntimeException.class, ()->{
+        assertThrows(RuntimeException.class, () -> {
             utilInfoSimpleService.addUtilView(request,
                     UtilViewRequestDto.builder()
                             .utilNo(999999)
@@ -99,9 +85,44 @@ public class UtilInfoTest {
         System.out.println("======= addUtilView 롤백 테스트 [종료] =======\n ");
     }
 
-    @Test
-    public void utilInfoViewTest() {
 
+    /*
+        유틸 정보를 단순 등록 하는 것을 호출한다.
+        class : utilInfoSimpleService
+     */
+    @Test
+    @Transactional //클래스보다 메소드 단위의 Transactional 보다 우선순위가 높다
+    public void utilInfoInsertTest() throws Exception {
+        UtilInfoInsertRequestDto utilInfoInsertRequestDto1 = UtilInfoInsertRequestDto.builder()
+                .utilName("utilInfoInsertTest")
+                .utilDescription("it is test2 util")
+                .utilLikes(0)
+                .utilViews(0)
+                .build();
+        UtilInfoDto utilInfoDto = utilInfoSimpleService.addUtilInfo(utilInfoInsertRequestDto1);
+        System.out.println(utilInfoDto);
+
+        MatcherAssert.assertThat("utilInfoDto is null Error", utilInfoDto, is(not(nullValue())));
+        MatcherAssert.assertThat("utilInfoDto Name is Not Equals Error", utilInfoDto.getUtilName(), is(utilInfoInsertRequestDto1.getUtilName()));
+        MatcherAssert.assertThat("utilInfoDto Description is Not Equals Error", utilInfoDto.getUtilDescription(), is(utilInfoInsertRequestDto1.getUtilDescription()));
+    }
+
+
+    /*
+        유틸 정보 등록을 테스트 한다.
+        class : UtilInfoService
+     */
+    @Test
+    @Transactional //클래스보다 메소드 단위의 Transactional 보다 우선순위가 높다
+    public void enrollUtilInfoTest() {
+        UtilInfoInsertRequestDto utilInfoInsertRequestDto1 = UtilInfoInsertRequestDto.builder()
+                .utilName("enrollUtilInfoTest")
+                .utilDescription("it is test2 util")
+                .utilLikes(0)
+                .utilViews(0)
+                .build();
+        UtilInfoInsertResponseDto utilInfoInsertResponseDto = utilInfoService.enrollUtilInfo(utilInfoInsertRequestDto1);
+        MatcherAssert.assertThat("utilInfoInsertResponseDto is null Error", utilInfoInsertResponseDto, is(not(nullValue())));
     }
 
 }
