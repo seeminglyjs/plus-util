@@ -95,9 +95,11 @@ public class UtilInfoTest {
     public void utilInfoInsertTest() throws Exception {
         UtilInfoInsertRequestDto utilInfoInsertRequestDto1 = UtilInfoInsertRequestDto.builder()
                 .utilName("utilInfoInsertTest")
-                .utilDescription("it is test2 util")
+                .utilDescription("it is test1 util")
                 .utilLikes(0)
                 .utilViews(0)
+                .urlPath("/test/test1")
+                .category("test")
                 .build();
         UtilInfoDto utilInfoDto = utilInfoSimpleService.addUtilInfo(utilInfoInsertRequestDto1);
         System.out.println(utilInfoDto);

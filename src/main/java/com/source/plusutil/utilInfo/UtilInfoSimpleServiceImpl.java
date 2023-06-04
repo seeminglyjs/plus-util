@@ -55,6 +55,8 @@ public class UtilInfoSimpleServiceImpl implements UtilInfoSimpleService {
                 .utilEnrollDate(DateUtil.getDateStryyyyMMdd())
                 .utilViews(0)
                 .utilLikes(0)
+                .urlPath(utilInfoInsertRequestDto.getUrlPath())
+                .category(utilInfoInsertRequestDto.getCategory())
                 .build());
     }
 

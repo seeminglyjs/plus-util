@@ -46,6 +46,8 @@ public class UtilInfoServiceImpl implements UtilInfoService {
                         .utilDescription(utilInfoDto.getUtilDescription())
                         .utilViews(utilInfoDto.getUtilViews())
                         .utilLikes(utilInfoDto.getUtilLikes())
+                        .urlPath(utilInfoDto.getUrlPath())
+                        .category(utilInfoDto.getCategory())
                         .build();
             }else{ //유틸리티 등록 실패
                 return UtilInfoInsertResponseDto.builder().auth(false).build();

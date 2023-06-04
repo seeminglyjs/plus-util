@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("/util/info")
+@RequestMapping("/plus/util/info")
 @RequiredArgsConstructor
 public class UtilInfoController {
 
@@ -21,13 +21,13 @@ public class UtilInfoController {
 
     @PutMapping("/view/click")
     @ResponseBody
-    public UtilViewResponseDto clickUtilInfo(HttpServletRequest request, UtilViewRequestDto utilViewRequestDto){
+    public UtilViewResponseDto clickUtilInfo(HttpServletRequest request, @RequestBody UtilViewRequestDto utilViewRequestDto){
         return utilInfoService.clickUtilInfo(request,utilViewRequestDto);
     }
 
     @PostMapping("/enroll")
     @ResponseBody
-    public UtilInfoInsertResponseDto enrollUtilInfo(UtilInfoInsertRequestDto utilInfoInsertRequestDto){
+    public UtilInfoInsertResponseDto enrollUtilInfo(@RequestBody UtilInfoInsertRequestDto utilInfoInsertRequestDto){
           if (AuthObjectUtil.authenticationConfirm(SecurityContextHolder.getContext().getAuthentication(), UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
               return utilInfoService.enrollUtilInfo(utilInfoInsertRequestDto);
         } else {
@@ -36,5 +36,4 @@ public class UtilInfoController {
                     .build();
         }
     }
-
 }

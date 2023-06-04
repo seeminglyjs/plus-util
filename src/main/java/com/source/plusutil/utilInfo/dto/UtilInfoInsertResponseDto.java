@@ -14,6 +14,8 @@ public class UtilInfoInsertResponseDto {
     private String utilDescription;
     private long utilViews;
     private long utilLikes;
+    private String urlPath;
+    private String category;
 
     @Override
     public String toString() {
@@ -23,6 +25,8 @@ public class UtilInfoInsertResponseDto {
                 ", utilDescription='" + utilDescription + '\'' +
                 ", utilViews=" + utilViews +
                 ", utilLikes=" + utilLikes +
+                ", urlPath='" + urlPath + '\'' +
+                ", category='" + category + '\'' +
                 '}';
     }
 
@@ -64,5 +68,21 @@ public class UtilInfoInsertResponseDto {
 
     public void setUtilLikes(long utilLikes) {
         this.utilLikes = utilLikes;
+    }
+
+    public String getUrlPath() {
+        return urlPath;
+    }
+
+    public void setUrlPath(String urlPath) {
+        this.urlPath = urlPath;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

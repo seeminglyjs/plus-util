@@ -27,6 +27,10 @@ public class UtilInfoDto {
     private String utilEnrollDate;
     @Column(name="util_modify_date", length = 8)
     private String utilModifyDate;
+    @Column(name="url_path", nullable=false)
+    private String urlPath;
+    @Column(name="category", nullable=false)
+    private String category;
 
     @Override
     public String toString() {
@@ -38,6 +42,8 @@ public class UtilInfoDto {
                 ", utilLikes=" + utilLikes +
                 ", utilEnrollDate='" + utilEnrollDate + '\'' +
                 ", utilModifyDate='" + utilModifyDate + '\'' +
+                ", urlPath='" + urlPath + '\'' +
+                ", category='" + category + '\'' +
                 '}';
     }
 
@@ -95,5 +101,21 @@ public class UtilInfoDto {
 
     public void setUtilModifyDate(String utilModifyDate) {
         this.utilModifyDate = utilModifyDate;
+    }
+
+    public String getUrlPath() {
+        return urlPath;
+    }
+
+    public void setUrlPath(String urlPath) {
+        this.urlPath = urlPath;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }
