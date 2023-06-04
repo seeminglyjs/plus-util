@@ -120,6 +120,8 @@ public class UtilInfoTest {
         UtilInfoInsertRequestDto utilInfoInsertRequestDto1 = UtilInfoInsertRequestDto.builder()
                 .utilName("enrollUtilInfoTest")
                 .utilDescription("it is test2 util")
+                .urlPath("/test/test2")
+                .category("test")
                 .utilLikes(0)
                 .utilViews(0)
                 .build();
