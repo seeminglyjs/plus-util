@@ -138,4 +138,13 @@ public class UtilInfoSimpleServiceImpl implements UtilInfoSimpleService {
                 .viewCount(newViews)
                 .build();
     }
+
+    @Override
+    public List<UtilInfoDto> getUtilInfoList(UtilInfoGetRequestDto utilInfoGetRequestDto) {
+        if(utilInfoGetRequestDto.utilNameIsEmpty()){
+            return utilInfoRepository.findAll();
+        }else{
+            return utilInfoRepository.findByUtilName(utilInfoGetRequestDto.getUtilName());
+        }
+    }
 }

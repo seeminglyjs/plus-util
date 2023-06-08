@@ -14,6 +14,8 @@ import org.springframework.test.annotation.Rollback;
 
 import javax.transaction.Transactional;
 
+import java.util.List;
+
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNot.not;
@@ -127,6 +129,18 @@ public class UtilInfoTest {
                 .build();
         UtilInfoInsertResponseDto utilInfoInsertResponseDto = utilInfoService.enrollUtilInfo(utilInfoInsertRequestDto1);
         MatcherAssert.assertThat("utilInfoInsertResponseDto is null Error", utilInfoInsertResponseDto, is(not(nullValue())));
+    }
+
+    @Test
+    @Transactional //클래스보다 메소드 단위의 Transactional 보다 우선순위가 높다
+    public void getUtilInfoTest() {
+        UtilInfoGetRequestDto utilInfoGetRequestDto = new UtilInfoGetRequestDto();
+        List<UtilInfoDto> utilInfoDtoList = utilInfoSimpleService.getUtilInfoList(utilInfoGetRequestDto);
+        MatcherAssert.assertThat("utilInfoDtoList is null Error", utilInfoDtoList, is(not(nullValue()))); //단순 동작여부 체크
+
+        //리스트 null 체크
+
+        //
     }
 
 }

@@ -13,7 +13,6 @@ public class UtilInfoInsertRequestDto {
     private String utilDescription;
     private long utilViews;
     private long utilLikes;
-
     private String urlPath;
     private String category;
 

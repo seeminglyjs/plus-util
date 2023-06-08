@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 
 @Service
@@ -56,4 +57,28 @@ public class UtilInfoServiceImpl implements UtilInfoService {
             return UtilInfoInsertResponseDto.builder().auth(false).build();
         }
     }
+
+
+    @Override
+    public UtilInfoGetResponseDto getUtilInfoList(UtilInfoGetRequestDto utilInfoGetRequestDto) {
+        if (utilInfoGetRequestDto != null) {
+            List<UtilInfoDto> utilInfoDtoList = utilInfoSimpleService.getUtilInfoList(utilInfoGetRequestDto);
+            if(utilInfoDtoList == null || utilInfoDtoList.size() == 0){ //만약 저장된 정보가 없다면
+                return UtilInfoGetResponseDto.builder()
+                        .isEmpty(true)
+                        .build();
+            }else{
+                return UtilInfoGetResponseDto.builder()
+                        .utilInfoDtoList(utilInfoDtoList)
+                        .isEmpty(false)
+                        .build();
+            }
+        }else{//요청 객체 에러
+            return UtilInfoGetResponseDto.builder()
+                    .isEmpty(true)
+                    .build();
+        }
+    }
+
+
 }

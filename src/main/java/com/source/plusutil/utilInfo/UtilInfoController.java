@@ -44,7 +44,7 @@ public class UtilInfoController {
                     .isEmpty(true)
                     .build();
         } else {
-            return null;
+            return utilInfoService.getUtilInfoList(utilInfoGetRequestDto);
         }
     }
 
