@@ -10,5 +10,5 @@ import java.util.List;
 
 @Repository
 public interface UtilInfoRepository extends JpaRepository<UtilInfoDto, Long>{
-    List<UtilInfoDto> findByUtilName(String utilName);
+    UtilInfoDto findByUtilName(String utilName);
 }

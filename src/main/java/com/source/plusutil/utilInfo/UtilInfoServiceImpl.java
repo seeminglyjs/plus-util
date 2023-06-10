@@ -49,6 +49,7 @@ public class UtilInfoServiceImpl implements UtilInfoService {
                         .utilLikes(utilInfoDto.getUtilLikes())
                         .urlPath(utilInfoDto.getUrlPath())
                         .category(utilInfoDto.getCategory())
+                        .subject(utilInfoDto.getSubject())
                         .build();
             }else{ //유틸리티 등록 실패
                 return UtilInfoInsertResponseDto.builder().auth(false).build();
@@ -58,11 +59,10 @@ public class UtilInfoServiceImpl implements UtilInfoService {
         }
     }
 
-
     @Override
-    public UtilInfoGetResponseDto getUtilInfoList(UtilInfoGetRequestDto utilInfoGetRequestDto) {
-        if (utilInfoGetRequestDto != null) {
-            List<UtilInfoDto> utilInfoDtoList = utilInfoSimpleService.getUtilInfoList(utilInfoGetRequestDto);
+    public UtilInfoGetResponseDto getUtilInfoList(String utilName) {
+        if (utilName != null) {
+            List<UtilInfoDto> utilInfoDtoList = utilInfoSimpleService.getUtilInfoList(utilName);
             if(utilInfoDtoList == null || utilInfoDtoList.size() == 0){ //만약 저장된 정보가 없다면
                 return UtilInfoGetResponseDto.builder()
                         .isEmpty(true)
@@ -79,6 +79,5 @@ public class UtilInfoServiceImpl implements UtilInfoService {
                     .build();
         }
     }
-
 
 }

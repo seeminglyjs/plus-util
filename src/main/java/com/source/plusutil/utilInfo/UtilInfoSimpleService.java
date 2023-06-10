@@ -19,5 +19,5 @@ public interface UtilInfoSimpleService {
     long removeUtilInfoList(List<UtilInfoDeleteRequestDto> utilInfoDeleteRequestDtoList);
     UtilViewResponseDto addUtilView(HttpServletRequest request, UtilViewRequestDto utilViewRequestDto);
     UtilViewResponseDto getUtilViewResponseDto(UtilInfoDto utilInfoDto);
-    List<UtilInfoDto> getUtilInfoList(UtilInfoGetRequestDto utilInfoGetRequestDto);
+    List<UtilInfoDto> getUtilInfoList(String utilName);
 }

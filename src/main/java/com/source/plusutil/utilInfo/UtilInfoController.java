@@ -38,13 +38,13 @@ public class UtilInfoController {
 
     @GetMapping("/list")
     @ResponseBody
-    public UtilInfoGetResponseDto getUtilInfoList(@RequestBody UtilInfoGetRequestDto utilInfoGetRequestDto) {
+    public UtilInfoGetResponseDto getUtilInfoList(String utilName) {
         if (AuthObjectUtil.authenticationConfirm(SecurityContextHolder.getContext().getAuthentication(), UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
+            return utilInfoService.getUtilInfoList(utilName);
+        } else {
             return UtilInfoGetResponseDto.builder()
                     .isEmpty(true)
                     .build();
-        } else {
-            return utilInfoService.getUtilInfoList(utilInfoGetRequestDto);
         }
     }
 

@@ -1,5 +1,6 @@
 package com.source.plusutil.utilInfo;
 
+
 import com.source.plusutil.utilInfo.dto.*;
 import com.source.plusutil.utilInfo.repository.UtilInfoRepository;
 import com.source.plusutil.utilInfo.repository.UtilViewRepository;
@@ -49,6 +50,13 @@ public class UtilInfoSimpleServiceImpl implements UtilInfoSimpleService {
 
     @Override
     public UtilInfoDto addUtilInfo(UtilInfoInsertRequestDto utilInfoInsertRequestDto) {
+        UtilInfoDto utilInfoDto = utilInfoRepository.findByUtilName(utilInfoInsertRequestDto.getUtilName());
+        if (utilInfoDto != null && !utilInfoDto.utilNameIsEmpty()) {
+            log.info("===== 이미 등록되 정보가 있습니다. ======");
+            log.info("===== 등록된 유틸정보 -> [" + utilInfoDto + "] =====");
+            return null;
+        }
+
         return utilInfoRepository.save(UtilInfoDto.builder()
                 .utilName(utilInfoInsertRequestDto.getUtilName())
                 .utilDescription(utilInfoInsertRequestDto.getUtilDescription())
@@ -57,6 +65,7 @@ public class UtilInfoSimpleServiceImpl implements UtilInfoSimpleService {
                 .utilLikes(0)
                 .urlPath(utilInfoInsertRequestDto.getUrlPath())
                 .category(utilInfoInsertRequestDto.getCategory())
+                .subject(utilInfoInsertRequestDto.getSubject())
                 .build());
     }
 
@@ -140,11 +149,11 @@ public class UtilInfoSimpleServiceImpl implements UtilInfoSimpleService {
     }
 
     @Override
-    public List<UtilInfoDto> getUtilInfoList(UtilInfoGetRequestDto utilInfoGetRequestDto) {
-        if(utilInfoGetRequestDto.utilNameIsEmpty()){
+    public List<UtilInfoDto> getUtilInfoList(String utilName) {
+        if (utilName != null && !utilName.equals("")) {
             return utilInfoRepository.findAll();
-        }else{
-            return utilInfoRepository.findByUtilName(utilInfoGetRequestDto.getUtilName());
+        } else {
+            return utilInfoRepository.findAll();
         }
     }
 }

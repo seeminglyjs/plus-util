@@ -31,6 +31,12 @@ public class UtilInfoDto {
     private String urlPath;
     @Column(name="category", nullable=false)
     private String category;
+    @Column(name="subject", nullable = false)
+    private String subject;
+
+    public boolean utilNameIsEmpty(){
+        return this.utilName == null;
+    }
 
     @Override
     public String toString() {
@@ -44,6 +50,7 @@ public class UtilInfoDto {
                 ", utilModifyDate='" + utilModifyDate + '\'' +
                 ", urlPath='" + urlPath + '\'' +
                 ", category='" + category + '\'' +
+                ", subject='" + subject + '\'' +
                 '}';
     }
 
@@ -117,5 +124,13 @@ public class UtilInfoDto {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 }

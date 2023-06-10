@@ -3,10 +3,12 @@ package com.source.plusutil.utilInfo.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class UtilInfoInsertResponseDto {
 
     private boolean auth;
@@ -16,18 +18,14 @@ public class UtilInfoInsertResponseDto {
     private long utilLikes;
     private String urlPath;
     private String category;
+    private String subject;
 
-    @Override
-    public String toString() {
-        return "UtilInfoInsertResponseDto{" +
-                "auth=" + auth +
-                ", utilName='" + utilName + '\'' +
-                ", utilDescription='" + utilDescription + '\'' +
-                ", utilViews=" + utilViews +
-                ", utilLikes=" + utilLikes +
-                ", urlPath='" + urlPath + '\'' +
-                ", category='" + category + '\'' +
-                '}';
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
     public boolean isAuth() {

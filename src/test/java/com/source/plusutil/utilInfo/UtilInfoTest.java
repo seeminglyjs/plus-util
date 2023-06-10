@@ -134,8 +134,8 @@ public class UtilInfoTest {
     @Test
     @Transactional //클래스보다 메소드 단위의 Transactional 보다 우선순위가 높다
     public void getUtilInfoTest() {
-        UtilInfoGetRequestDto utilInfoGetRequestDto = new UtilInfoGetRequestDto();
-        List<UtilInfoDto> utilInfoDtoList = utilInfoSimpleService.getUtilInfoList(utilInfoGetRequestDto);
+        String utilName = "";
+        List<UtilInfoDto> utilInfoDtoList = utilInfoSimpleService.getUtilInfoList(utilName);
         MatcherAssert.assertThat("utilInfoDtoList is null Error", utilInfoDtoList, is(not(nullValue()))); //단순 동작여부 체크
 
         //리스트 null 체크

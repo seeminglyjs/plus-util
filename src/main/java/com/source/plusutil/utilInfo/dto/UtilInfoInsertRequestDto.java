@@ -15,6 +15,7 @@ public class UtilInfoInsertRequestDto {
     private long utilLikes;
     private String urlPath;
     private String category;
+    private String subject;
 
     @Override
     public String toString() {
@@ -25,6 +26,7 @@ public class UtilInfoInsertRequestDto {
                 ", utilLikes=" + utilLikes +
                 ", urlPath='" + urlPath + '\'' +
                 ", category='" + category + '\'' +
+                ", subject='" + subject + '\'' +
                 '}';
     }
 
@@ -75,4 +77,14 @@ public class UtilInfoInsertRequestDto {
     public void setCategory(String category) {
         this.category = category;
     }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
 }
+
+
