@@ -102,6 +102,7 @@ public class UtilInfoTest {
                 .utilViews(0)
                 .urlPath("/test/test1")
                 .category("test")
+                .subject("test")
                 .build();
         UtilInfoDto utilInfoDto = utilInfoSimpleService.addUtilInfo(utilInfoInsertRequestDto1);
         System.out.println(utilInfoDto);
