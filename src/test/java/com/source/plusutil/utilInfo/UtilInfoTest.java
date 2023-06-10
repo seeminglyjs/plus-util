@@ -125,6 +125,7 @@ public class UtilInfoTest {
                 .utilDescription("it is test2 util")
                 .urlPath("/test/test2")
                 .category("test")
+                .subject("test")
                 .utilLikes(0)
                 .utilViews(0)
                 .build();
