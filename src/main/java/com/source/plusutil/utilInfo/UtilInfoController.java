@@ -47,5 +47,10 @@ public class UtilInfoController {
                     .build();
         }
     }
+    @GetMapping("/detail")
+    @ResponseBody
+    public UtilInfoDto getUtilInfoDetail(long utilNo){
+        return null;
+    }
 
 }
