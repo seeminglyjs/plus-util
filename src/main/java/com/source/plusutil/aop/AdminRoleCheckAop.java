@@ -20,8 +20,8 @@ public class AdminRoleCheckAop {
 
 //    @Pointcut("execution(* (com.source.plusutil.utilInfo..*Service || com.source.plusutil.notice..*Service).*(..)) " +
 //            "&& !execution(* com.source.plusutil.utilInfo..*Service.clickUtilInfo(..))")
-    @Pointcut("execution(* (com.source.plusutil.utilInfo..*Service).*(..)) " +
-            "&& !execution(* com.source.plusutil.utilInfo..*Service.clickUtilInfo(..))")
+    @Pointcut("execution(* (com.source.plusutil.utilInfo..*Controller).*(..)) " +
+            "&& !execution(* com.source.plusutil.utilInfo..*Controller.clickUtilInfo(..))")
     private void cut() { }
 
     @Around("cut()")
