@@ -1,4 +1,4 @@
 package com.source.plusutil.notice.dto
 
-class NoticeWriteResponseDto(val writeOk : Boolean = false) {
+data class NoticeWriteResponseDto(val writeOk : Boolean = false) {
 }

@@ -1,5 +1,6 @@
 package com.source.plusutil.utilInfo;
 
+import com.source.plusutil.admin.dto.AdminRoleResponseDto;
 import com.source.plusutil.enums.UserRolePlusEnum;
 import com.source.plusutil.utilInfo.dto.*;
 import com.source.plusutil.utils.auth.AuthObjectUtil;
@@ -26,31 +27,28 @@ public class UtilInfoController {
 
     @PostMapping("/enroll")
     @ResponseBody
-    public UtilInfoInsertResponseDto enrollUtilInfo(@RequestBody UtilInfoInsertRequestDto utilInfoInsertRequestDto) {
-        if (AuthObjectUtil.authenticationConfirm(SecurityContextHolder.getContext().getAuthentication(), UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
-            return utilInfoService.enrollUtilInfo(utilInfoInsertRequestDto);
-        } else {
-            return UtilInfoInsertResponseDto.builder()
-                    .auth(false)
-                    .build();
-        }
+    public AdminRoleResponseDto enrollUtilInfo(@RequestBody UtilInfoInsertRequestDto utilInfoInsertRequestDto) {
+        return AdminRoleResponseDto.builder()
+                .auth(true)
+                .dto(utilInfoService.enrollUtilInfo(utilInfoInsertRequestDto))
+                .build();
     }
 
     @GetMapping("/list")
     @ResponseBody
-    public UtilInfoGetResponseDto getUtilInfoList(String utilName) {
-        if (AuthObjectUtil.authenticationConfirm(SecurityContextHolder.getContext().getAuthentication(), UserRolePlusEnum.ROLE_ADMIN.toString())) { //권한 체크
-            return utilInfoService.getUtilInfoList(utilName);
-        } else {
-            return UtilInfoGetResponseDto.builder()
-                    .isEmpty(true)
-                    .build();
-        }
+    public AdminRoleResponseDto getUtilInfoList(String utilName) {
+        return AdminRoleResponseDto.builder()
+                .auth(true)
+                .dto(utilInfoService.getUtilInfoList(utilName))
+                .build();
     }
     @GetMapping("/detail")
     @ResponseBody
-    public UtilInfoDto getUtilInfoDetail(long utilNo){
-        return null;
+    public AdminRoleResponseDto getUtilInfoDetail(long utilNo){
+        return AdminRoleResponseDto.builder()
+                .auth(true)
+                .dto(null)
+                .build();
     }
 
 }
