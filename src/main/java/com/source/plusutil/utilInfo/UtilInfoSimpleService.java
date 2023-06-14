@@ -4,8 +4,8 @@ import com.source.plusutil.utilInfo.dto.*;
 import org.springframework.data.domain.Page;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 public interface UtilInfoSimpleService {
     Page<UtilInfoDto> getUtilList(int limit);
@@ -20,4 +20,5 @@ public interface UtilInfoSimpleService {
     UtilViewResponseDto addUtilView(HttpServletRequest request, UtilViewRequestDto utilViewRequestDto);
     UtilViewResponseDto getUtilViewResponseDto(UtilInfoDto utilInfoDto);
     List<UtilInfoDto> getUtilInfoList(String utilName);
+    Optional<UtilInfoDto> getUtilInfoDetail(long utilNo);
 }

@@ -1,6 +1,9 @@
 package com.source.plusutil.utilInfo;
 
+import com.source.plusutil.notice.dto.NoticeDto;
+import com.source.plusutil.notice.dto.NoticeWriteRequestDto;
 import com.source.plusutil.utilInfo.dto.*;
+import com.source.plusutil.utilInfo.repository.UtilInfoRepository;
 import com.source.plusutil.utilInfo.repository.UtilViewRepository;
 import com.source.plusutil.utils.etc.DateUtil;
 import org.hamcrest.MatcherAssert;
@@ -15,6 +18,8 @@ import org.springframework.test.annotation.Rollback;
 import javax.transaction.Transactional;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
@@ -30,6 +35,27 @@ public class UtilInfoTest {
     UtilInfoService utilInfoService;
     @Autowired
     UtilViewRepository utilViewRepository;
+    @Autowired
+    UtilInfoRepository utilInfoRepository;
+
+    public UtilInfoDto makeUtilInfoDto(){
+        UtilInfoDto utilInfoDto = UtilInfoDto.builder()
+                .utilName("Test" + UUID.randomUUID().toString().split("-")[2])
+                .utilDescription("utilDescription" + UUID.randomUUID().toString().split("-")[2])
+                .utilLikes(0)
+                .utilViews(0)
+                .utilEnrollDate("20230614")
+                .urlPath("/test/test123/test")
+                .category("test")
+                .subject("test")
+                .build();
+        UtilInfoDto utilInfoDtoSave =  utilInfoRepository.save(utilInfoDto);
+        MatcherAssert.assertThat("==== getUtilNo is null  !!!!",utilInfoDtoSave.getUtilNo(), is(not(nullValue())));
+        MatcherAssert.assertThat("==== getUtilName is null  !!!!",utilInfoDtoSave.getUtilName(), is(not(nullValue())));
+        MatcherAssert.assertThat("==== Category is null  !!!!",utilInfoDtoSave.getCategory(), is(not(nullValue())));
+        return utilInfoDtoSave;
+
+    }
 
     @Test
     @Transactional //클래스보다 메소드 단위의 Transactional 보다 우선순위가 높다
@@ -145,4 +171,15 @@ public class UtilInfoTest {
         //
     }
 
+    @Test
+    @Transactional
+    public void getUtilInfoDetailTest(){
+        UtilInfoDto utilInfoDto =  makeUtilInfoDto();
+        if(utilInfoDto == null) return;
+        else {
+            UtilInfoDto utilInfoDtoDetail = utilInfoService.getUtilInfoDetail(utilInfoDto.getUtilNo());
+            MatcherAssert.assertThat("utilInfoDtoDetail is Null", utilInfoDtoDetail, is(not(nullValue())));
+            MatcherAssert.assertThat("utilInfoDtoDetail getUtilNo is Null", utilInfoDtoDetail.getUtilNo(), is(not(nullValue())));
+        }
+    }
 }

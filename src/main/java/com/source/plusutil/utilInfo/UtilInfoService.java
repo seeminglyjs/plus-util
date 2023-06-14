@@ -9,4 +9,6 @@ public interface UtilInfoService {
     UtilViewResponseDto clickUtilInfo(HttpServletRequest request, UtilViewRequestDto utilViewRequestDto);
     UtilInfoInsertResponseDto enrollUtilInfo(UtilInfoInsertRequestDto utilInfoInsertRequestDto);
     UtilInfoGetResponseDto getUtilInfoList(String utilName);
+    UtilInfoDto getUtilInfoDetail(long utilNo);
+
 }

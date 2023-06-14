@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -80,4 +81,9 @@ public class UtilInfoServiceImpl implements UtilInfoService {
         }
     }
 
+    @Override
+    public UtilInfoDto getUtilInfoDetail(long utilNo) {
+        Optional<UtilInfoDto> utilInfoDtoOp = utilInfoSimpleService.getUtilInfoDetail(utilNo);
+        return utilInfoDtoOp.orElse(null);
+    }
 }

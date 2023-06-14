@@ -156,4 +156,9 @@ public class UtilInfoSimpleServiceImpl implements UtilInfoSimpleService {
             return utilInfoRepository.findAll();
         }
     }
+
+    @Override
+    public Optional<UtilInfoDto> getUtilInfoDetail(long utilNo) {
+        return utilInfoRepository.findById(utilNo);
+    }
 }

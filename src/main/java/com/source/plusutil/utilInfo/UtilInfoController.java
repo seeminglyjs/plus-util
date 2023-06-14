@@ -42,13 +42,21 @@ public class UtilInfoController {
                 .dto(utilInfoService.getUtilInfoList(utilName))
                 .build();
     }
+
     @GetMapping("/detail")
     @ResponseBody
-    public AdminRoleResponseDto getUtilInfoDetail(long utilNo){
-        return AdminRoleResponseDto.builder()
-                .auth(true)
-                .dto(null)
-                .build();
+    public AdminRoleResponseDto getUtilInfoDetail(long utilNo) {
+        UtilInfoDto utilInfoDto = utilInfoService.getUtilInfoDetail(utilNo);
+        if (utilInfoDto == null) {
+            return AdminRoleResponseDto.builder()
+                    .auth(false)
+                    .dto(null)
+                    .build();
+        } else {
+            return AdminRoleResponseDto.builder()
+                    .auth(true)
+                    .dto(utilInfoDto)
+                    .build();
+        }
     }
-
 }
