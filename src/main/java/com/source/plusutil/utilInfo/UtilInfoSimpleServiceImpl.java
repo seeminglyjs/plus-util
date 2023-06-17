@@ -51,22 +51,37 @@ public class UtilInfoSimpleServiceImpl implements UtilInfoSimpleService {
     @Override
     public UtilInfoDto addUtilInfo(UtilInfoInsertRequestDto utilInfoInsertRequestDto) {
         UtilInfoDto utilInfoDto = utilInfoRepository.findByUtilName(utilInfoInsertRequestDto.getUtilName());
-        if (utilInfoDto != null && !utilInfoDto.utilNameIsEmpty()) {
-            log.info("===== 이미 등록되 정보가 있습니다. ======");
-            log.info("===== 등록된 유틸정보 -> [" + utilInfoDto + "] =====");
-            return null;
-        }
+        if(utilInfoInsertRequestDto.getUtilNo() != -1){ //유틸정보 수정 요청
+            return utilInfoRepository.save(UtilInfoDto.builder()
+                    .utilNo(utilInfoDto.getUtilNo())
+                    .utilName(utilInfoInsertRequestDto.getUtilName())
+                    .utilDescription(utilInfoInsertRequestDto.getUtilDescription())
+                    .utilEnrollDate(DateUtil.getDateStryyyyMMdd())
+                    .utilViews(0)
+                    .utilLikes(0)
+                    .urlPath(utilInfoInsertRequestDto.getUrlPath())
+                    .category(utilInfoInsertRequestDto.getCategory())
+                    .subject(utilInfoInsertRequestDto.getSubject())
+                    .build());
 
-        return utilInfoRepository.save(UtilInfoDto.builder()
-                .utilName(utilInfoInsertRequestDto.getUtilName())
-                .utilDescription(utilInfoInsertRequestDto.getUtilDescription())
-                .utilEnrollDate(DateUtil.getDateStryyyyMMdd())
-                .utilViews(0)
-                .utilLikes(0)
-                .urlPath(utilInfoInsertRequestDto.getUrlPath())
-                .category(utilInfoInsertRequestDto.getCategory())
-                .subject(utilInfoInsertRequestDto.getSubject())
-                .build());
+        }else{//유틸정보 신규 등록
+            if (utilInfoDto != null && !utilInfoDto.utilNameIsEmpty()) {
+                log.info("===== 이미 등록되 정보가 있습니다. ======");
+                log.info("===== 등록된 유틸정보 -> [" + utilInfoDto + "] =====");
+                return null;
+            }
+
+            return utilInfoRepository.save(UtilInfoDto.builder()
+                    .utilName(utilInfoInsertRequestDto.getUtilName())
+                    .utilDescription(utilInfoInsertRequestDto.getUtilDescription())
+                    .utilEnrollDate(DateUtil.getDateStryyyyMMdd())
+                    .utilViews(0)
+                    .utilLikes(0)
+                    .urlPath(utilInfoInsertRequestDto.getUrlPath())
+                    .category(utilInfoInsertRequestDto.getCategory())
+                    .subject(utilInfoInsertRequestDto.getSubject())
+                    .build());    
+        }
     }
 
     @Override

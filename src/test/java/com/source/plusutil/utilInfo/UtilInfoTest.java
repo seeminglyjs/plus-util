@@ -122,6 +122,7 @@ public class UtilInfoTest {
     @Transactional //클래스보다 메소드 단위의 Transactional 보다 우선순위가 높다
     public void utilInfoInsertTest() throws Exception {
         UtilInfoInsertRequestDto utilInfoInsertRequestDto1 = UtilInfoInsertRequestDto.builder()
+                .utilNo(-1)
                 .utilName("utilInfoInsertTest")
                 .utilDescription("it is test1 util")
                 .utilLikes(0)
@@ -147,6 +148,7 @@ public class UtilInfoTest {
     @Transactional //클래스보다 메소드 단위의 Transactional 보다 우선순위가 높다
     public void enrollUtilInfoTest() {
         UtilInfoInsertRequestDto utilInfoInsertRequestDto1 = UtilInfoInsertRequestDto.builder()
+                .utilNo(-1)
                 .utilName("enrollUtilInfoTest")
                 .utilDescription("it is test2 util")
                 .urlPath("/test/test2")

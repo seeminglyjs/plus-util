@@ -3,12 +3,15 @@ package com.source.plusutil.utilInfo.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class UtilInfoInsertRequestDto {
 
+    private long utilNo;
     private String utilName;
     private String utilDescription;
     private long utilViews;
@@ -17,17 +20,12 @@ public class UtilInfoInsertRequestDto {
     private String category;
     private String subject;
 
-    @Override
-    public String toString() {
-        return "UtilInfoInsertRequestDto{" +
-                "utilName='" + utilName + '\'' +
-                ", utilDescription='" + utilDescription + '\'' +
-                ", utilViews=" + utilViews +
-                ", utilLikes=" + utilLikes +
-                ", urlPath='" + urlPath + '\'' +
-                ", category='" + category + '\'' +
-                ", subject='" + subject + '\'' +
-                '}';
+    public long getUtilNo() {
+        return utilNo;
+    }
+
+    public void setUtilNo(long utilNo) {
+        this.utilNo = utilNo;
     }
 
     public String getUtilName() {
