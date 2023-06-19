@@ -18,4 +18,4 @@ class MainController (val mainService: MainService){
     fun mainPage(request: HttpServletRequest?): MainDataDto {
         return mainService.callMainPageMethod(request!!)
     }
-}
+}   
