@@ -13,6 +13,16 @@ public class MenuEnrollResponseDto {
     Object menuObject;
     String type;
 
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    boolean success;
+
     public Object getMenuObject() {
         return menuObject;
     }

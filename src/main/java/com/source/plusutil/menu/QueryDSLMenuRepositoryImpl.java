@@ -13,6 +13,13 @@ import java.util.List;
 public class QueryDSLMenuRepositoryImpl implements QueryDSLMenuRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
+
+    @Override
+    public List<NavDto> findAllNavList() {
+        QNavDto qNavDto = QNavDto.navDto;
+        return jpaQueryFactory.selectFrom(qNavDto).fetch();
+    }
+
     @Override
     public List<HeadDto> findAllHeadMenus() {
         QHeadDto qHeadDto = QHeadDto.headDto;
@@ -45,4 +52,5 @@ public class QueryDSLMenuRepositoryImpl implements QueryDSLMenuRepository {
                 .on(qHeadDto.headNo.eq(qMenuDto.headNo))
                 .fetch();
     }
+
 }
