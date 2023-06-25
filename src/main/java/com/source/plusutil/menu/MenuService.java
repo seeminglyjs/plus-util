@@ -1,14 +1,13 @@
 package com.source.plusutil.menu;
 
-import com.source.plusutil.menu.dto.MenuEnrollRequestDto;
-import com.source.plusutil.menu.dto.MenuEnrollResponseDto;
-import com.source.plusutil.menu.dto.MenuResponseDto;
-import com.source.plusutil.menu.dto.NavDto;
+import com.source.plusutil.menu.dto.*;
 
 import java.util.List;
 
 public interface MenuService {
     List<NavDto> getNavList();
-    List<MenuResponseDto> getMenuList();
+    List<HeadDto> getHeadList();
+    List<MenuDto> getMenuList();
+    List<MenuResponseDto> getAllMenuList();
     MenuEnrollResponseDto enrollMenuInfo(MenuEnrollRequestDto menuEnrollRequestDto);
 }

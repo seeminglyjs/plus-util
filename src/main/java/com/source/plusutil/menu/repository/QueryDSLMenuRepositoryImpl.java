@@ -1,4 +1,4 @@
-package com.source.plusutil.menu;
+package com.source.plusutil.menu.repository;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -15,9 +15,19 @@ public class QueryDSLMenuRepositoryImpl implements QueryDSLMenuRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<NavDto> findAllNavList() {
+    public List<NavDto> findNavList() {
         QNavDto qNavDto = QNavDto.navDto;
         return jpaQueryFactory.selectFrom(qNavDto).fetch();
+    }
+    @Override
+    public List<HeadDto> findHeadList() {
+        QHeadDto qHeadDto = QHeadDto.headDto;
+        return jpaQueryFactory.selectFrom(qHeadDto).fetch();
+    }
+    @Override
+    public List<MenuDto> findMenuList() {
+        QMenuDto qMenuDto = QMenuDto.menuDto;
+        return jpaQueryFactory.selectFrom(qMenuDto).fetch();
     }
 
     @Override

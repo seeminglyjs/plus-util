@@ -12,6 +12,18 @@ import lombok.ToString;
 public class MenuEnrollResponseDto {
     Object menuObject;
     String type;
+    boolean success;
+    String message;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+
 
     public boolean isSuccess() {
         return success;
@@ -20,8 +32,6 @@ public class MenuEnrollResponseDto {
     public void setSuccess(boolean success) {
         this.success = success;
     }
-
-    boolean success;
 
     public Object getMenuObject() {
         return menuObject;

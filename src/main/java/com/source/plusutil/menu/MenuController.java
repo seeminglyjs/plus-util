@@ -1,9 +1,6 @@
 package com.source.plusutil.menu;
 
-import com.source.plusutil.menu.dto.MenuEnrollRequestDto;
-import com.source.plusutil.menu.dto.MenuEnrollResponseDto;
-import com.source.plusutil.menu.dto.MenuResponseDto;
-import com.source.plusutil.menu.dto.NavDto;
+import com.source.plusutil.menu.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,11 +18,20 @@ public class MenuController {
     public List<NavDto> getNavList(){
         return menuService.getNavList();
     }
-
+    @GetMapping("/head/list")
+    @ResponseBody
+    public List<HeadDto> getHeadList(){
+        return menuService.getHeadList();
+    }
     @GetMapping("/menu/list")
     @ResponseBody
-    public List<MenuResponseDto> getMenuList() {
+    public List<MenuDto> getMenuList(){
         return menuService.getMenuList();
+    }
+    @GetMapping("/menu/all/list")
+    @ResponseBody
+    public List<MenuResponseDto> getAllMenuList() {
+        return menuService.getAllMenuList();
     }
 
     @PostMapping("/menu/enroll")

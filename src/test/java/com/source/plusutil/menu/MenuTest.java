@@ -2,6 +2,7 @@ package com.source.plusutil.menu;
 
 import com.source.plusutil.menu.dto.HeadDto;
 import com.source.plusutil.menu.dto.NavInfoDto;
+import com.source.plusutil.menu.repository.QueryDSLMenuRepository;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
