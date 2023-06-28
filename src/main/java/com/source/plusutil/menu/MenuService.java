@@ -10,4 +10,5 @@ public interface MenuService {
     List<MenuDto> getMenuList();
     List<MenuResponseDto> getAllMenuList();
     MenuEnrollResponseDto enrollMenuInfo(MenuEnrollRequestDto menuEnrollRequestDto);
+    List<NavInfoDto> getJoinMenuList();
 }

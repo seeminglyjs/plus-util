@@ -34,6 +34,9 @@ public class MenuController {
         return menuService.getAllMenuList();
     }
 
+    @GetMapping("/menu/join/list")
+    @ResponseBody
+    public List<NavInfoDto> getJoinMenuList(){return menuService.getJoinMenuList();}
     @PostMapping("/menu/enroll")
     @ResponseBody
     public MenuEnrollResponseDto enrollMenuInfo(@RequestBody MenuEnrollRequestDto menuEnrollRequestDto){

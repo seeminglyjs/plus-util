@@ -115,4 +115,9 @@ public class MenuServiceImpl implements MenuService {
             return MenuEnrollResponseDto.builder().success(false).build();
         }
     }
+
+    @Override
+    public List<NavInfoDto> getJoinMenuList() {
+        return queryDSLMenuRepository.findAllMenuList();
+    }
 }
