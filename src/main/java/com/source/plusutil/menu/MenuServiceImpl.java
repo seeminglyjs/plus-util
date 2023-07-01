@@ -63,6 +63,7 @@ public class MenuServiceImpl implements MenuService {
             else{
                 NavDto alredyNavDto = navRepository.findByNavName(navDto.getNavName()); //이미 존재하는 이름인지 확인
                 if(alredyNavDto != null) return MenuEnrollResponseDto.builder().success(false).message("네비게이션 이름이 이미 존재합니다.").build();
+                navDto.setUseYn("y");
                 return MenuEnrollResponseDto.builder()
                         .success(true)
                         .message("네비게이션 등록해 성공했습니다.")
@@ -83,6 +84,7 @@ public class MenuServiceImpl implements MenuService {
             else{
                 HeadDto alreadyHeadDto = headRepository.findByHeadName(headDto.getHeadName()); //이미 존재하는 이름인지 확인
                 if(alreadyHeadDto != null) return MenuEnrollResponseDto.builder().success(false).message("주 메뉴 이름이 이미 존재합니다.").build();
+                headDto.setUseYn("y");
                 return MenuEnrollResponseDto.builder()
                         .success(true)
                         .message("주 메뉴 등록에 성공했습니다.")
@@ -91,23 +93,24 @@ public class MenuServiceImpl implements MenuService {
                         .build();
             }
         } else if (menuEnrollRequestDto.getType().equals(MenuTypeEnum.MENU.getMenuType())) {
-            MenuDto MenuDto = null;
+            MenuDto menuDto = null;
             try {// Object to MenuDto
-                MenuDto = mapper.readValue(mapper.writeValueAsString(menuEnrollRequestDto.getMenuObject()), MenuDto.class);
+                menuDto = mapper.readValue(mapper.writeValueAsString(menuEnrollRequestDto.getMenuObject()), MenuDto.class);
             } catch (JsonProcessingException e) {
                 log.info("===== [JsonProcessingException] ERROR =====");
                 throw new RuntimeException(e);
             }
 
-            if(MenuDto == null) return MenuEnrollResponseDto.builder().success(false).message("요청 정보를 확인해 주세요.").build();
+            if(menuDto == null) return MenuEnrollResponseDto.builder().success(false).message("요청 정보를 확인해 주세요.").build();
             else{
-                MenuDto alreadyMenuDto = menuRepository.findByMenuNameOrUrl(MenuDto.getMenuName(), MenuDto.getUrl());
+                MenuDto alreadyMenuDto = menuRepository.findByMenuNameOrUrl(menuDto.getMenuName(), menuDto.getUrl());
                 if (alreadyMenuDto != null) return MenuEnrollResponseDto.builder().success(false).message("메뉴 이름 또는 경로 정보가 이미 존재합니다.").build();
+                menuDto.setUseYn("y");
                 return MenuEnrollResponseDto.builder()
                         .success(true)
                         .message("메뉴 등록에 성공했습니다.")
                         .type(MenuTypeEnum.MENU.getMenuType())
-                        .menuObject(menuRepository.save(MenuDto))
+                        .menuObject(menuRepository.save(menuDto))
                         .build();
             }
         } else {

@@ -33,7 +33,6 @@ public class MenuController {
     public List<MenuResponseDto> getAllMenuList() {
         return menuService.getAllMenuList();
     }
-
     @GetMapping("/menu/join/list")
     @ResponseBody
     public List<NavInfoDto> getJoinMenuList(){return menuService.getJoinMenuList();}

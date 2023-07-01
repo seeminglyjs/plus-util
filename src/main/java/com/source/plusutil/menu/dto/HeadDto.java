@@ -23,7 +23,14 @@ public class HeadDto {
     String navName;
     @Column(name="head_name")
     String headName;
-
+    @Column(name="use_yn")
+    String useYn;
+    public String getUseYn() {
+        return useYn;
+    }
+    public void setUseYn(String useYn) {
+        this.useYn = useYn;
+    }
     public long getNavNo() {
         return navNo;
     }

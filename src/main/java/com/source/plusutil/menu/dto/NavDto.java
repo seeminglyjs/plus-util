@@ -19,7 +19,14 @@ public class NavDto {
     long navNo;
     @Column(name="nav_name") //명시적으로 적어두는게 좋다.
     String navName;
-
+    @Column(name="use_yn")
+    String useYn;
+    public String getUseYn() {
+        return useYn;
+    }
+    public void setUseYn(String useYn) {
+        this.useYn = useYn;
+    }
     public long getNavNo() {
         return navNo;
     }

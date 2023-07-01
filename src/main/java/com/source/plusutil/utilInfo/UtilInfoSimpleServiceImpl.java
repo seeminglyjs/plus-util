@@ -66,11 +66,16 @@ public class UtilInfoSimpleServiceImpl implements UtilInfoSimpleService {
 
         }else{//유틸정보 신규 등록
             if (utilInfoDto != null && !utilInfoDto.utilNameIsEmpty()) {
-                log.info("===== 이미 등록되 정보가 있습니다. ======");
+                log.info("===== 이미 등록된 정보가 있습니다. ======");
                 log.info("===== 등록된 유틸정보 -> [" + utilInfoDto + "] =====");
                 return null;
             }
-
+            utilInfoDto = utilInfoRepository.findByUrlPath(utilInfoInsertRequestDto.getUrlPath());
+            if (utilInfoDto != null && !utilInfoDto.utilNameIsEmpty()) {
+                log.info("===== 이미 등록된 정보가 있습니다. ======");
+                log.info("===== 등록된 유틸정보 -> [" + utilInfoDto + "] =====");
+                return null;
+            }
             return utilInfoRepository.save(UtilInfoDto.builder()
                     .utilName(utilInfoInsertRequestDto.getUtilName())
                     .utilDescription(utilInfoInsertRequestDto.getUtilDescription())

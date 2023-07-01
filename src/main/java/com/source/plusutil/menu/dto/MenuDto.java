@@ -26,7 +26,14 @@ public class MenuDto {
     String menuName;
     @Column(name="url")
     String url;
-
+    @Column(name="use_yn")
+    String useYn;
+    public String getUseYn() {
+        return useYn;
+    }
+    public void setUseYn(String useYn) {
+        this.useYn = useYn;
+    }
     public long getMenuNo() {
         return menuNo;
     }

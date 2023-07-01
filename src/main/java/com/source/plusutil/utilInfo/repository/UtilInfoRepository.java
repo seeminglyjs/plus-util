@@ -11,4 +11,5 @@ import java.util.List;
 @Repository
 public interface UtilInfoRepository extends JpaRepository<UtilInfoDto, Long>{
     UtilInfoDto findByUtilName(String utilName);
+    UtilInfoDto findByUrlPath(String urlPath);
 }

@@ -56,9 +56,9 @@ public class QueryDSLMenuRepositoryImpl implements QueryDSLMenuRepository {
                         )
                 )
                 .from(qNavDto)
-                .innerJoin(qHeadDto)
+                .leftJoin(qHeadDto)
                 .on(qNavDto.navNo.eq(qHeadDto.navNo))
-                .innerJoin(qMenuDto)
+                .leftJoin(qMenuDto)
                 .on(qHeadDto.headNo.eq(qMenuDto.headNo))
                 .fetch();
     }
