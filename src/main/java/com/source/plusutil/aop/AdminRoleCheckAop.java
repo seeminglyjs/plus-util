@@ -21,7 +21,8 @@ public class AdminRoleCheckAop {
 //    @Pointcut("execution(* (com.source.plusutil.utilInfo..*Service || com.source.plusutil.notice..*Service).*(..)) " +
 //            "&& !execution(* com.source.plusutil.utilInfo..*Service.clickUtilInfo(..))")
     @Pointcut("execution(* (com.source.plusutil.utilInfo..*Controller).*(..)) " +
-            "&& !execution(* com.source.plusutil.utilInfo..*Controller.clickUtilInfo(..))")
+            "&& !execution(* com.source.plusutil.utilInfo..*Controller.clickUtilInfo(..))" +
+            "&& !execution(* com.source.plusutil.utilInfo..*Controller.getUtilTopList(..))")
     private void cut() { }
 
     @Around("cut()")

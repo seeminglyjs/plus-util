@@ -21,4 +21,5 @@ public interface UtilInfoSimpleService {
     UtilViewResponseDto getUtilViewResponseDto(UtilInfoDto utilInfoDto);
     List<UtilInfoDto> getUtilInfoList(String utilName);
     Optional<UtilInfoDto> getUtilInfoDetail(long utilNo);
+    List<UtilInfoDto> getUtilTopList();
 }

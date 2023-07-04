@@ -10,5 +10,5 @@ public interface UtilInfoService {
     UtilInfoInsertResponseDto enrollUtilInfo(UtilInfoInsertRequestDto utilInfoInsertRequestDto);
     UtilInfoGetResponseDto getUtilInfoList(String utilName);
     UtilInfoDto getUtilInfoDetail(long utilNo);
-
+    UtilInfoGetResponseDto getUtilTopList();
 }

@@ -2,6 +2,7 @@ package com.source.plusutil.utilInfo;
 
 
 import com.source.plusutil.utilInfo.dto.*;
+import com.source.plusutil.utilInfo.repository.UtilInfoQueryDSLRepository;
 import com.source.plusutil.utilInfo.repository.UtilInfoRepository;
 import com.source.plusutil.utilInfo.repository.UtilViewRepository;
 import com.source.plusutil.utils.etc.DateUtil;
@@ -28,6 +29,8 @@ public class UtilInfoSimpleServiceImpl implements UtilInfoSimpleService {
     private final UtilInfoRepository utilInfoRepository;
 
     private final UtilViewRepository utilViewRepository;
+
+    private final UtilInfoQueryDSLRepository utilInfoQueryDSLRepository;
 
     @Override
     public Page<UtilInfoDto> getUtilList(int limit) {
@@ -180,5 +183,10 @@ public class UtilInfoSimpleServiceImpl implements UtilInfoSimpleService {
     @Override
     public Optional<UtilInfoDto> getUtilInfoDetail(long utilNo) {
         return utilInfoRepository.findById(utilNo);
+    }
+
+    @Override
+    public List<UtilInfoDto> getUtilTopList() {
+        return utilInfoQueryDSLRepository.getTopFiveUtilInfo();
     }
 }

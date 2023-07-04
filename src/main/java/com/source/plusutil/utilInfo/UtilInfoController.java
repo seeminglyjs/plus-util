@@ -5,6 +5,7 @@ import com.source.plusutil.enums.UserRolePlusEnum;
 import com.source.plusutil.utilInfo.dto.*;
 import com.source.plusutil.utils.auth.AuthObjectUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/plus/util/info")
 @RequiredArgsConstructor
+@Slf4j
 public class UtilInfoController {
 
     private final UtilInfoService utilInfoService;
@@ -41,6 +43,12 @@ public class UtilInfoController {
                 .auth(true)
                 .dto(utilInfoService.getUtilInfoList(utilName))
                 .build();
+    }
+
+    @GetMapping("/top/list")
+    @ResponseBody
+    public UtilInfoGetResponseDto getUtilTopList(){
+        return utilInfoService.getUtilTopList();
     }
 
     @GetMapping("/detail")

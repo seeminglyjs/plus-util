@@ -86,4 +86,11 @@ public class UtilInfoServiceImpl implements UtilInfoService {
         Optional<UtilInfoDto> utilInfoDtoOp = utilInfoSimpleService.getUtilInfoDetail(utilNo);
         return utilInfoDtoOp.orElse(null);
     }
+
+    @Override
+    public UtilInfoGetResponseDto getUtilTopList() {
+        List<UtilInfoDto> utilInfoTopDtoList = utilInfoSimpleService.getUtilTopList();
+        if(utilInfoTopDtoList == null || utilInfoTopDtoList.isEmpty()) return UtilInfoGetResponseDto.builder().isEmpty(true).build();
+        else return UtilInfoGetResponseDto.builder().utilInfoDtoList(utilInfoTopDtoList).isEmpty(false).build();
+    }
 }
