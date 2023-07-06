@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNot.not;
@@ -167,7 +168,6 @@ public class UtilInfoTest {
         String utilName = "";
         List<UtilInfoDto> utilInfoDtoList = utilInfoSimpleService.getUtilInfoList(utilName);
         MatcherAssert.assertThat("utilInfoDtoList is null Error", utilInfoDtoList, is(not(nullValue()))); //단순 동작여부 체크
-
         //리스트 null 체크
 
         //
@@ -184,4 +184,16 @@ public class UtilInfoTest {
             MatcherAssert.assertThat("utilInfoDtoDetail getUtilNo is Null", utilInfoDtoDetail.getUtilNo(), is(not(nullValue())));
         }
     }
+
+    @Test
+    @Transactional
+    public void getTopList(){
+        UtilInfoGetResponseDto utilInfoGetResponseDto = null;
+        utilInfoGetResponseDto = utilInfoService.getUtilTopList();
+        MatcherAssert.assertThat("utilInfoGetResponseDto is Null", utilInfoGetResponseDto, is(not(nullValue())));
+        System.out.println(utilInfoGetResponseDto.getUtilInfoDtoList().size());
+        MatcherAssert.assertThat("utilInfoGetResponseDto.getUtilInfoDtoList is  < 1", utilInfoGetResponseDto.getUtilInfoDtoList().size(), is(greaterThan(0)));
+    }
+
+
 }
