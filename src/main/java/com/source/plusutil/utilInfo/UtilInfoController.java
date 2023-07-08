@@ -67,4 +67,9 @@ public class UtilInfoController {
                     .build();
         }
     }
+    @PostMapping("/detail/url")
+    @ResponseBody
+    public UtilPagePropsDto getUtilInfoDetail(@RequestBody UtilInfoGetByUrlPathRequestDto utilInfoGetByUrlPathRequestDto) {
+        return utilInfoService.getUtilInfoDetailByUrlPath(utilInfoGetByUrlPathRequestDto.getUrlPath());
+    }
 }

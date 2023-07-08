@@ -189,4 +189,9 @@ public class UtilInfoSimpleServiceImpl implements UtilInfoSimpleService {
     public List<UtilInfoDto> getUtilTopList() {
         return utilInfoQueryDSLRepository.getTopFiveUtilInfo();
     }
+
+    @Override
+    public UtilInfoDto getUtilInfoDetailByUrlPath(String urlPath) {
+        return utilInfoRepository.findByUrlPath(urlPath);
+    }
 }

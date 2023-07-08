@@ -11,4 +11,5 @@ public interface UtilInfoService {
     UtilInfoGetResponseDto getUtilInfoList(String utilName);
     UtilInfoDto getUtilInfoDetail(long utilNo);
     UtilInfoGetResponseDto getUtilTopList();
+    UtilPagePropsDto getUtilInfoDetailByUrlPath(String urlPath);
 }

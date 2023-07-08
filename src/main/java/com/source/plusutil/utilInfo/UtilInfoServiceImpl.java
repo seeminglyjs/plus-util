@@ -93,4 +93,19 @@ public class UtilInfoServiceImpl implements UtilInfoService {
         if(utilInfoTopDtoList == null || utilInfoTopDtoList.isEmpty()) return UtilInfoGetResponseDto.builder().isEmpty(true).build();
         else return UtilInfoGetResponseDto.builder().utilInfoDtoList(utilInfoTopDtoList).isEmpty(false).build();
     }
+
+    @Override
+    public UtilPagePropsDto getUtilInfoDetailByUrlPath(String urlPath) {
+        UtilInfoDto utilInfoDto = utilInfoSimpleService.getUtilInfoDetailByUrlPath(urlPath);
+        System.out.println(utilInfoDto);
+        if(utilInfoDto != null){
+            return UtilPagePropsDto.builder()
+                    .data(utilInfoDto)
+                    .build();
+        }else{
+            return UtilPagePropsDto.builder()
+                    .data(null)
+                    .build();
+        }
+    }
 }

@@ -22,4 +22,5 @@ public interface UtilInfoSimpleService {
     List<UtilInfoDto> getUtilInfoList(String utilName);
     Optional<UtilInfoDto> getUtilInfoDetail(long utilNo);
     List<UtilInfoDto> getUtilTopList();
+    UtilInfoDto getUtilInfoDetailByUrlPath(String urlPath);
 }
