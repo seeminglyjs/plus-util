@@ -1,17 +1,12 @@
 package com.source.plusutil.utilInfo;
 
 import com.source.plusutil.admin.dto.AdminRoleResponseDto;
-import com.source.plusutil.enums.UserRolePlusEnum;
 import com.source.plusutil.utilInfo.dto.*;
-import com.source.plusutil.utils.auth.AuthObjectUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/plus/util/info")
@@ -25,6 +20,18 @@ public class UtilInfoController {
     @ResponseBody
     public UtilViewResponseDto clickUtilInfo(HttpServletRequest request, @RequestBody UtilViewRequestDto utilViewRequestDto) {
         return utilInfoService.clickUtilInfo(request, utilViewRequestDto);
+    }
+
+    @PutMapping("/like")
+    @ResponseBody
+    public UtilLikeResponseDto likeUtilInfo(HttpServletRequest request, @RequestBody UtilLikeRequestDto utilLikeRequestDto) {
+        return utilInfoService.likeUtilInfo(request, utilLikeRequestDto);
+    }
+
+    @GetMapping("/like/check")
+    @ResponseBody
+    public UtilLikeCheckResponseDto checkLikeUtilInfo(HttpServletRequest request){
+        return utilInfoService.checkLikeUtilInfo(request);
     }
 
     @PostMapping("/enroll")

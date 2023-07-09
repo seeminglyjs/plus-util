@@ -108,4 +108,37 @@ public class UtilInfoServiceImpl implements UtilInfoService {
                     .build();
         }
     }
+
+    @Override
+    public UtilLikeResponseDto likeUtilInfo(HttpServletRequest request,  UtilLikeRequestDto utilLikeRequestDto) {
+        if (utilLikeRequestDto != null) {
+            UtilLikeResponseDto utilLikeResponseDto = utilInfoSimpleService.addUtilLike(request, utilLikeRequestDto);
+            if (utilLikeResponseDto == null) {
+                return UtilLikeResponseDto.builder()
+                        .utilNo(-1L)
+                        .build();
+            } else {
+                return utilLikeResponseDto;
+            }
+        }
+        return UtilLikeResponseDto.builder()
+                .utilNo(-1L)
+                .build();
+    }
+
+    @Override
+    public UtilLikeCheckResponseDto checkLikeUtilInfo(HttpServletRequest request) {
+        UtilLikesDto utilLikesDto =  utilInfoSimpleService.getLikeUtilInfo(request);
+        if(utilLikesDto != null) {
+            return UtilLikeCheckResponseDto.builder()
+                    .like(true)
+                    .ip(utilLikesDto.getLikeIp())
+                    .build();
+        }else{
+            return UtilLikeCheckResponseDto.builder()
+                    .like(false)
+                    .ip("unknown")
+                    .build();
+        }
+    }
 }

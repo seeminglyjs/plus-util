@@ -4,6 +4,7 @@ package com.source.plusutil.utilInfo;
 import com.source.plusutil.utilInfo.dto.*;
 import com.source.plusutil.utilInfo.repository.UtilInfoQueryDSLRepository;
 import com.source.plusutil.utilInfo.repository.UtilInfoRepository;
+import com.source.plusutil.utilInfo.repository.UtilLikeRepository;
 import com.source.plusutil.utilInfo.repository.UtilViewRepository;
 import com.source.plusutil.utils.etc.DateUtil;
 import com.source.plusutil.utils.http.HttpParamCheckUtil;
@@ -30,6 +31,8 @@ public class UtilInfoSimpleServiceImpl implements UtilInfoSimpleService {
 
     private final UtilViewRepository utilViewRepository;
 
+    private final UtilLikeRepository utilLikeRepository;
+
     private final UtilInfoQueryDSLRepository utilInfoQueryDSLRepository;
 
     @Override
@@ -54,7 +57,7 @@ public class UtilInfoSimpleServiceImpl implements UtilInfoSimpleService {
     @Override
     public UtilInfoDto addUtilInfo(UtilInfoInsertRequestDto utilInfoInsertRequestDto) {
         UtilInfoDto utilInfoDto = utilInfoRepository.findByUtilName(utilInfoInsertRequestDto.getUtilName());
-        if(utilInfoInsertRequestDto.getUtilNo() != -1){ //유틸정보 수정 요청
+        if (utilInfoInsertRequestDto.getUtilNo() != -1) { //유틸정보 수정 요청
             return utilInfoRepository.save(UtilInfoDto.builder()
                     .utilNo(utilInfoDto.getUtilNo())
                     .utilName(utilInfoInsertRequestDto.getUtilName())
@@ -67,7 +70,7 @@ public class UtilInfoSimpleServiceImpl implements UtilInfoSimpleService {
                     .subject(utilInfoInsertRequestDto.getSubject())
                     .build());
 
-        }else{//유틸정보 신규 등록
+        } else {//유틸정보 신규 등록
             if (utilInfoDto != null && !utilInfoDto.utilNameIsEmpty()) {
                 log.info("===== 이미 등록된 정보가 있습니다. ======");
                 log.info("===== 등록된 유틸정보 -> [" + utilInfoDto + "] =====");
@@ -88,7 +91,7 @@ public class UtilInfoSimpleServiceImpl implements UtilInfoSimpleService {
                     .urlPath(utilInfoInsertRequestDto.getUrlPath())
                     .category(utilInfoInsertRequestDto.getCategory())
                     .subject(utilInfoInsertRequestDto.getSubject())
-                    .build());    
+                    .build());
         }
     }
 
@@ -157,6 +160,9 @@ public class UtilInfoSimpleServiceImpl implements UtilInfoSimpleService {
         long newViews = utilInfoDto.getUtilViews() + 1; //기존 조회수에 +1을 한다.
         utilInfoRepository.save(UtilInfoDto.builder()
                 .utilNo(utilInfoDto.getUtilNo())
+                .category(utilInfoDto.getCategory())
+                .subject(utilInfoDto.getSubject())
+                .urlPath(utilInfoDto.getUrlPath())
                 .utilName(utilInfoDto.getUtilName())
                 .utilDescription(utilInfoDto.getUtilDescription())
                 .utilEnrollDate(utilInfoDto.getUtilEnrollDate())
@@ -173,11 +179,7 @@ public class UtilInfoSimpleServiceImpl implements UtilInfoSimpleService {
 
     @Override
     public List<UtilInfoDto> getUtilInfoList(String utilName) {
-        if (utilName != null && !utilName.equals("")) {
-            return utilInfoRepository.findAll();
-        } else {
-            return utilInfoRepository.findAll();
-        }
+        return utilInfoRepository.findAll();
     }
 
     @Override
@@ -193,5 +195,68 @@ public class UtilInfoSimpleServiceImpl implements UtilInfoSimpleService {
     @Override
     public UtilInfoDto getUtilInfoDetailByUrlPath(String urlPath) {
         return utilInfoRepository.findByUrlPath(urlPath);
+    }
+
+    @Override
+    public UtilLikeResponseDto addUtilLike(HttpServletRequest request, UtilLikeRequestDto utilLikeRequestDto) {
+        Map<String, String> myIpMap = HttpParamCheckUtil.localeCheck(request);
+
+        String dateInfo = DateUtil.getDateStryyyyMMdd();//조회시점의 날짜 정보 저장 찰나의 순간 날짜 변경을 예방하기 위해 변수화
+
+        //이미 저장된 건이 있는지 확인한다.
+        UtilLikesDto getUtilLikesDto = utilLikeRepository.findByUtilNoAndLikeIp(utilLikeRequestDto.getUtilNo(), myIpMap.get("ip"));
+        Optional<UtilInfoDto> utilInfoDtoOp = utilInfoRepository.findById(utilLikeRequestDto.getUtilNo());
+
+        if (getUtilLikesDto == null) {
+            //우선 조회 히스트 테이블에 저장한다.
+            utilLikeRepository.save(UtilLikesDto.builder()
+                    .utilNo(utilLikeRequestDto.getUtilNo())
+                    .likeIp(myIpMap.get("ip"))
+                    .build());
+
+            if (utilInfoDtoOp.isPresent()) {//유틸 정보 가지고 있음
+                return getUtilLikeResponseDto(utilInfoDtoOp.get());
+            } else {//utilInfo에 없는 데이터 요청시에 발생
+                throw new RuntimeException();
+            }
+        }else{
+            if (utilInfoDtoOp.isPresent()) {//유틸 정보 가지고 있음
+                return UtilLikeResponseDto.builder()
+                        .utilNo(utilLikeRequestDto.getUtilNo())
+                        .likeCount(utilInfoDtoOp.get().getUtilLikes())
+                        .viewCount(utilInfoDtoOp.get().getUtilViews())
+                        .build();
+            }else{
+                throw new RuntimeException();
+            }
+        }
+    }
+
+    @Override
+    public UtilLikeResponseDto getUtilLikeResponseDto(UtilInfoDto utilInfoDto) {
+        long newLikes = utilInfoDto.getUtilLikes() + 1; //기존 조회수에 +1을 한다.
+        utilInfoRepository.save(UtilInfoDto.builder()
+                .utilNo(utilInfoDto.getUtilNo())
+                .category(utilInfoDto.getCategory())
+                .subject(utilInfoDto.getSubject())
+                .urlPath(utilInfoDto.getUrlPath())
+                .utilName(utilInfoDto.getUtilName())
+                .utilDescription(utilInfoDto.getUtilDescription())
+                .utilEnrollDate(utilInfoDto.getUtilEnrollDate())
+                .utilLikes(newLikes)
+                .utilViews(utilInfoDto.getUtilViews())
+                .build());
+
+        return UtilLikeResponseDto.builder() //조회수 증가 완료된 객체 전달
+                .utilNo(utilInfoDto.getUtilNo())
+                .likeCount(utilInfoDto.getUtilLikes())
+                .viewCount(newLikes)
+                .build();
+    }
+
+    @Override
+    public UtilLikesDto getLikeUtilInfo(HttpServletRequest request) {
+        Map<String, String> myIpMap = HttpParamCheckUtil.localeCheck(request);
+        return utilLikeRepository.findByLikeIp(myIpMap.get("ip"));
     }
 }

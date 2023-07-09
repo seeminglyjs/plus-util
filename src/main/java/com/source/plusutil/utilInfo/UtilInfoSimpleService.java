@@ -23,4 +23,7 @@ public interface UtilInfoSimpleService {
     Optional<UtilInfoDto> getUtilInfoDetail(long utilNo);
     List<UtilInfoDto> getUtilTopList();
     UtilInfoDto getUtilInfoDetailByUrlPath(String urlPath);
+    UtilLikeResponseDto addUtilLike(HttpServletRequest request, UtilLikeRequestDto utilLikeRequestDto);
+    UtilLikeResponseDto getUtilLikeResponseDto(UtilInfoDto utilInfoDto);
+    UtilLikesDto getLikeUtilInfo(HttpServletRequest request);
 }

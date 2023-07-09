@@ -1,16 +1,15 @@
 package com.source.plusutil.utilInfo.dto;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
-public class UtilViewRequestDto {
+public class UtilLikeRequestDto {
     long utilNo;
 
     public long getUtilNo() {
