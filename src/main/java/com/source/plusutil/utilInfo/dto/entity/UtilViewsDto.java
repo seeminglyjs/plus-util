@@ -1,4 +1,4 @@
-package com.source.plusutil.utilInfo.dto;
+package com.source.plusutil.utilInfo.dto.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

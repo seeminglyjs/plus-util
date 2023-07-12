@@ -1,5 +1,6 @@
 package com.source.plusutil.utilInfo.dto;
 
+import com.source.plusutil.utilInfo.dto.entity.UtilInfoDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;

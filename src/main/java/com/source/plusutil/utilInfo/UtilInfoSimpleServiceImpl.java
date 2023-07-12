@@ -2,6 +2,9 @@ package com.source.plusutil.utilInfo;
 
 
 import com.source.plusutil.utilInfo.dto.*;
+import com.source.plusutil.utilInfo.dto.entity.UtilInfoDto;
+import com.source.plusutil.utilInfo.dto.entity.UtilLikesDto;
+import com.source.plusutil.utilInfo.dto.entity.UtilViewsDto;
 import com.source.plusutil.utilInfo.repository.UtilInfoQueryDSLRepository;
 import com.source.plusutil.utilInfo.repository.UtilInfoRepository;
 import com.source.plusutil.utilInfo.repository.UtilLikeRepository;

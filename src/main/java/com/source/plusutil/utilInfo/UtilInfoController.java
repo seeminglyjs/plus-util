@@ -2,6 +2,7 @@ package com.source.plusutil.utilInfo;
 
 import com.source.plusutil.admin.dto.AdminRoleResponseDto;
 import com.source.plusutil.utilInfo.dto.*;
+import com.source.plusutil.utilInfo.dto.entity.UtilInfoDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;

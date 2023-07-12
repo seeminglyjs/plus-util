@@ -1,6 +1,8 @@
 package com.source.plusutil.utilInfo;
 
 import com.source.plusutil.utilInfo.dto.*;
+import com.source.plusutil.utilInfo.dto.entity.UtilInfoDto;
+import com.source.plusutil.utilInfo.dto.entity.UtilLikesDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

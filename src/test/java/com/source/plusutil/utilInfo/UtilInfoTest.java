@@ -1,8 +1,8 @@
 package com.source.plusutil.utilInfo;
 
-import com.source.plusutil.notice.dto.NoticeDto;
-import com.source.plusutil.notice.dto.NoticeWriteRequestDto;
 import com.source.plusutil.utilInfo.dto.*;
+import com.source.plusutil.utilInfo.dto.entity.UtilInfoDto;
+import com.source.plusutil.utilInfo.dto.entity.UtilViewsDto;
 import com.source.plusutil.utilInfo.repository.UtilInfoRepository;
 import com.source.plusutil.utilInfo.repository.UtilViewRepository;
 import com.source.plusutil.utils.etc.DateUtil;
@@ -12,13 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.test.annotation.Rollback;
 
 
 import javax.transaction.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 import static org.hamcrest.Matchers.greaterThan;

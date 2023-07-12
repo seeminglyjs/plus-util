@@ -1,8 +1,8 @@
 package com.source.plusutil.utilInfo.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.source.plusutil.utilInfo.dto.QUtilInfoDto;
-import com.source.plusutil.utilInfo.dto.UtilInfoDto;
+import com.source.plusutil.utilInfo.dto.entity.QUtilInfoDto;
+import com.source.plusutil.utilInfo.dto.entity.UtilInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

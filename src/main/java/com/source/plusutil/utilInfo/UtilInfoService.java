@@ -1,6 +1,7 @@
 package com.source.plusutil.utilInfo;
 
 import com.source.plusutil.utilInfo.dto.*;
+import com.source.plusutil.utilInfo.dto.entity.UtilInfoDto;
 
 import javax.servlet.http.HttpServletRequest;
 

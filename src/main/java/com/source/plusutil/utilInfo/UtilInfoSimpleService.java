@@ -1,6 +1,8 @@
 package com.source.plusutil.utilInfo;
 
 import com.source.plusutil.utilInfo.dto.*;
+import com.source.plusutil.utilInfo.dto.entity.UtilInfoDto;
+import com.source.plusutil.utilInfo.dto.entity.UtilLikesDto;
 import org.springframework.data.domain.Page;
 
 import javax.servlet.http.HttpServletRequest;
