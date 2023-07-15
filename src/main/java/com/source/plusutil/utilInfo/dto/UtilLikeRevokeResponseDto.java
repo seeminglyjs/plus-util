@@ -6,39 +6,20 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Builder
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class UtilLikeResponseDto {
-
+@ToString
+public class UtilLikeRevokeResponseDto {
     long utilNo;
-    long viewCount;
     long likeCount;
-
-    public boolean isLike() {
-        return like;
-    }
-
-    public void setLike(boolean like) {
-        this.like = like;
-    }
-
     boolean like;
-
+    String ip;
     public long getUtilNo() {
         return utilNo;
     }
 
     public void setUtilNo(long utilNo) {
         this.utilNo = utilNo;
-    }
-
-    public long getViewCount() {
-        return viewCount;
-    }
-
-    public void setViewCount(long viewCount) {
-        this.viewCount = viewCount;
     }
 
     public long getLikeCount() {
@@ -48,4 +29,21 @@ public class UtilLikeResponseDto {
     public void setLikeCount(long likeCount) {
         this.likeCount = likeCount;
     }
+
+    public boolean isLike() {
+        return like;
+    }
+
+    public void setLike(boolean like) {
+        like = like;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
 }
+

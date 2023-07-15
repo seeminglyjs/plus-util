@@ -37,21 +37,21 @@ public class UtilInfoTest {
     @Autowired
     UtilInfoRepository utilInfoRepository;
 
-    public UtilInfoDto makeUtilInfoDto(){
+    public UtilInfoDto makeUtilInfoDto() {
         UtilInfoDto utilInfoDto = UtilInfoDto.builder()
                 .utilName("Test" + UUID.randomUUID().toString().split("-")[2])
                 .utilDescription("utilDescription" + UUID.randomUUID().toString().split("-")[2])
                 .utilLikes(0)
                 .utilViews(0)
                 .utilEnrollDate("20230614")
-                .urlPath("/test/test123/test")
+                .urlPath("/test/test123/test/" + UUID.randomUUID().toString().split("-")[2])
                 .category("test")
                 .subject("test")
                 .build();
-        UtilInfoDto utilInfoDtoSave =  utilInfoRepository.save(utilInfoDto);
-        MatcherAssert.assertThat("==== getUtilNo is null  !!!!",utilInfoDtoSave.getUtilNo(), is(not(nullValue())));
-        MatcherAssert.assertThat("==== getUtilName is null  !!!!",utilInfoDtoSave.getUtilName(), is(not(nullValue())));
-        MatcherAssert.assertThat("==== Category is null  !!!!",utilInfoDtoSave.getCategory(), is(not(nullValue())));
+        UtilInfoDto utilInfoDtoSave = utilInfoRepository.save(utilInfoDto);
+        MatcherAssert.assertThat("==== getUtilNo is null  !!!!", utilInfoDtoSave.getUtilNo(), is(not(nullValue())));
+        MatcherAssert.assertThat("==== getUtilName is null  !!!!", utilInfoDtoSave.getUtilName(), is(not(nullValue())));
+        MatcherAssert.assertThat("==== Category is null  !!!!", utilInfoDtoSave.getCategory(), is(not(nullValue())));
         return utilInfoDtoSave;
 
     }
@@ -121,7 +121,6 @@ public class UtilInfoTest {
     @Transactional //클래스보다 메소드 단위의 Transactional 보다 우선순위가 높다
     public void utilInfoInsertTest() throws Exception {
         UtilInfoInsertRequestDto utilInfoInsertRequestDto1 = UtilInfoInsertRequestDto.builder()
-                .utilNo(-1)
                 .utilName("utilInfoInsertTest")
                 .utilDescription("it is test1 util")
                 .utilLikes(0)
@@ -163,19 +162,20 @@ public class UtilInfoTest {
     @Test
     @Transactional //클래스보다 메소드 단위의 Transactional 보다 우선순위가 높다
     public void getUtilInfoTest() {
+        for (int i = 0; i < 6; i++) makeUtilInfoDto();
         String utilName = "";
         List<UtilInfoDto> utilInfoDtoList = utilInfoSimpleService.getUtilInfoList(utilName);
         MatcherAssert.assertThat("utilInfoDtoList is null Error", utilInfoDtoList, is(not(nullValue()))); //단순 동작여부 체크
-        //리스트 null 체크
-
-        //
+        MatcherAssert.assertThat("utilInfoDtoList is empty", utilInfoDtoList.size(), is(greaterThan(0))); //배열이 비었는지 체크
+        MatcherAssert.assertThat("utilInfoDtoList size is not more than 5", utilInfoDtoList.size(), is(greaterThan(5))); //5개 보다 적은지 체크
+        System.out.println("utilInfoDtoList.size() -> " + utilInfoDtoList.size());
     }
 
     @Test
     @Transactional
-    public void getUtilInfoDetailTest(){
-        UtilInfoDto utilInfoDto =  makeUtilInfoDto();
-        if(utilInfoDto == null) return;
+    public void getUtilInfoDetailTest() {
+        UtilInfoDto utilInfoDto = makeUtilInfoDto();
+        if (utilInfoDto == null) return;
         else {
             UtilInfoDto utilInfoDtoDetail = utilInfoService.getUtilInfoDetail(utilInfoDto.getUtilNo());
             MatcherAssert.assertThat("utilInfoDtoDetail is Null", utilInfoDtoDetail, is(not(nullValue())));
@@ -185,12 +185,35 @@ public class UtilInfoTest {
 
     @Test
     @Transactional
-    public void getTopList(){
+    public void getTopList() {
         UtilInfoGetResponseDto utilInfoGetResponseDto = null;
         utilInfoGetResponseDto = utilInfoService.getUtilTopList();
         MatcherAssert.assertThat("utilInfoGetResponseDto is Null", utilInfoGetResponseDto, is(not(nullValue())));
         System.out.println(utilInfoGetResponseDto.getUtilInfoDtoList().size());
         MatcherAssert.assertThat("utilInfoGetResponseDto.getUtilInfoDtoList is  < 1", utilInfoGetResponseDto.getUtilInfoDtoList().size(), is(greaterThan(0)));
+    }
+
+    @Test
+    @Transactional
+    public void checkUtilLikeFullProcess() {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.setRemoteAddr("211.11.11.53");
+        UtilLikeCheckResponseDto utilLikeCheckResponseDto = utilInfoService.checkLikeUtilInfo(request);
+        /*
+        신규 생성 좋아요 객체 상태 체크
+         */
+        MatcherAssert.assertThat("utilLikeCheckResponseDto.isLike() Not Yet But true", utilLikeCheckResponseDto.isLike(), is(false));
+        UtilInfoDto utilInfoDto = makeUtilInfoDto();
+        /*
+        신규 유틸 객체 생성 상태 체크
+         */
+        MatcherAssert.assertThat("utilInfoDto getUtilNo is Null", utilInfoDto.getUtilNo(), is(not(nullValue())));
+        long nowUtilLikeCount = utilInfoDto.getUtilLikes();
+        UtilLikeResponseDto utilLikeResponseDto = utilInfoService.likeUtilInfo(request, UtilLikeRequestDto.builder().utilNo(utilInfoDto.getUtilNo()).build());
+        /*
+        신규 유틸 좋아요 후 좋아요 이전과 좋아요 갯수 체크
+         */
+        MatcherAssert.assertThat("result less than nowUtilLikeCount after likeUtilInfo call", utilLikeResponseDto.getLikeCount(), is(greaterThan(nowUtilLikeCount)));
     }
 
 

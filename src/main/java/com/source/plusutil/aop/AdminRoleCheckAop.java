@@ -25,7 +25,8 @@ public class AdminRoleCheckAop {
             "&& !execution(* com.source.plusutil.utilInfo..*Controller.getUtilTopList(..))"+
             "&& !execution(* com.source.plusutil.utilInfo..*Controller.getUtilInfoDetail(..))"+
             "&& !execution(* com.source.plusutil.utilInfo..*Controller.checkLikeUtilInfo(..))"+
-            "&& !execution(* com.source.plusutil.utilInfo..*Controller.likeUtilInfo(..))"
+            "&& !execution(* com.source.plusutil.utilInfo..*Controller.likeUtilInfo(..))"+
+            "&& !execution(* com.source.plusutil.utilInfo..*Controller.revokeLikeUtilInfo(..))"
     )
     private void cut() { }
 

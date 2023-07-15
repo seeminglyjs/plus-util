@@ -29,10 +29,22 @@ public class UtilInfoController {
         return utilInfoService.likeUtilInfo(request, utilLikeRequestDto);
     }
 
+    /**
+     * 요청자의 좋아요 여부를 검증합니다.[IP 기준 검증]
+     * 
+     * @param request  HttpServletRequest
+     * @return UtilLikeCheckResponseDto
+     */
     @GetMapping("/like/check")
     @ResponseBody
     public UtilLikeCheckResponseDto checkLikeUtilInfo(HttpServletRequest request){
         return utilInfoService.checkLikeUtilInfo(request);
+    }
+
+    @PutMapping("/like/revoke")
+    @ResponseBody
+    public UtilLikeRevokeResponseDto revokeLikeUtilInfo(HttpServletRequest request, @RequestBody UtilLikeRevokeRequestDto UtilLikeRevokeRequestDto){
+        return utilInfoService.revokeLikeUtilInfo(request, UtilLikeRevokeRequestDto);
     }
 
     @PostMapping("/enroll")

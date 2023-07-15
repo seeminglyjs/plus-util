@@ -118,6 +118,7 @@ public class UtilInfoServiceImpl implements UtilInfoService {
             if (utilLikeResponseDto == null) {
                 return UtilLikeResponseDto.builder()
                         .utilNo(-1L)
+                        .like(false)
                         .build();
             } else {
                 return utilLikeResponseDto;
@@ -125,6 +126,7 @@ public class UtilInfoServiceImpl implements UtilInfoService {
         }
         return UtilLikeResponseDto.builder()
                 .utilNo(-1L)
+                .like(false)
                 .build();
     }
 
@@ -142,5 +144,10 @@ public class UtilInfoServiceImpl implements UtilInfoService {
                     .ip("unknown")
                     .build();
         }
+    }
+
+    @Override
+    public UtilLikeRevokeResponseDto revokeLikeUtilInfo(HttpServletRequest request, UtilLikeRevokeRequestDto utilLikeRevokeRequestDto) {
+        return  utilInfoSimpleService.revokeLikeUtilInfo(request,utilLikeRevokeRequestDto);
     }
 }

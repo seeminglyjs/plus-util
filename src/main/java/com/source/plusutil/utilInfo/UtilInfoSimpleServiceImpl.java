@@ -18,6 +18,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.List;
@@ -37,6 +39,8 @@ public class UtilInfoSimpleServiceImpl implements UtilInfoSimpleService {
     private final UtilLikeRepository utilLikeRepository;
 
     private final UtilInfoQueryDSLRepository utilInfoQueryDSLRepository;
+
+    private final EntityManagerFactory entityManagerFactory;
 
     @Override
     public Page<UtilInfoDto> getUtilList(int limit) {
@@ -134,7 +138,7 @@ public class UtilInfoSimpleServiceImpl implements UtilInfoSimpleService {
 
         if (getUtilViewsDto == null) {//오늘 일자 해당 아이피가 유틸 정보를 조회를 하지 않았다면
             //우선 조회 히스트 테이블에 저장한다.
-            UtilViewsDto saveUtilViewsDto = utilViewRepository.save(UtilViewsDto.builder()
+            utilViewRepository.save(UtilViewsDto.builder()
                     .utilNo(utilViewRequestDto.getUtilNo())
                     .viewIp(myIpMap.get("ip"))
                     .viewDate(dateInfo)
@@ -161,18 +165,14 @@ public class UtilInfoSimpleServiceImpl implements UtilInfoSimpleService {
     @Override
     public UtilViewResponseDto getUtilViewResponseDto(UtilInfoDto utilInfoDto) {
         long newViews = utilInfoDto.getUtilViews() + 1; //기존 조회수에 +1을 한다.
-        utilInfoRepository.save(UtilInfoDto.builder()
-                .utilNo(utilInfoDto.getUtilNo())
-                .category(utilInfoDto.getCategory())
-                .subject(utilInfoDto.getSubject())
-                .urlPath(utilInfoDto.getUrlPath())
-                .utilName(utilInfoDto.getUtilName())
-                .utilDescription(utilInfoDto.getUtilDescription())
-                .utilEnrollDate(utilInfoDto.getUtilEnrollDate())
-                .utilLikes(utilInfoDto.getUtilLikes())
-                .utilViews(newViews)
-                .build());
-
+        EntityManager entityManager = entityManagerFactory.createEntityManager(); //사용할 객체 entityManager 선언
+        try{
+            UtilInfoDto updateUtilInfoDto = entityManager.find(UtilInfoDto.class, utilInfoDto.getUtilNo());
+            updateUtilInfoDto.setUtilViews(newViews);
+            utilInfoRepository.save(updateUtilInfoDto);//객체 업데이트
+        }finally {
+            entityManager.close(); //사용 후 entityManager 종료
+        }
         return UtilViewResponseDto.builder() //조회수 증가 완료된 객체 전달
                 .utilNo(utilInfoDto.getUtilNo())
                 .likeCount(utilInfoDto.getUtilLikes())
@@ -204,8 +204,6 @@ public class UtilInfoSimpleServiceImpl implements UtilInfoSimpleService {
     public UtilLikeResponseDto addUtilLike(HttpServletRequest request, UtilLikeRequestDto utilLikeRequestDto) {
         Map<String, String> myIpMap = HttpParamCheckUtil.localeCheck(request);
 
-        String dateInfo = DateUtil.getDateStryyyyMMdd();//조회시점의 날짜 정보 저장 찰나의 순간 날짜 변경을 예방하기 위해 변수화
-
         //이미 저장된 건이 있는지 확인한다.
         UtilLikesDto getUtilLikesDto = utilLikeRepository.findByUtilNoAndLikeIp(utilLikeRequestDto.getUtilNo(), myIpMap.get("ip"));
         Optional<UtilInfoDto> utilInfoDtoOp = utilInfoRepository.findById(utilLikeRequestDto.getUtilNo());
@@ -218,42 +216,41 @@ public class UtilInfoSimpleServiceImpl implements UtilInfoSimpleService {
                     .build());
 
             if (utilInfoDtoOp.isPresent()) {//유틸 정보 가지고 있음
-                return getUtilLikeResponseDto(utilInfoDtoOp.get());
+                return getUtilLikeResponseDto(utilInfoDtoOp.get(),1);
             } else {//utilInfo에 없는 데이터 요청시에 발생
                 throw new RuntimeException();
             }
-        }else{
+        } else {
             if (utilInfoDtoOp.isPresent()) {//유틸 정보 가지고 있음
                 return UtilLikeResponseDto.builder()
                         .utilNo(utilLikeRequestDto.getUtilNo())
+                        .like(true)
                         .likeCount(utilInfoDtoOp.get().getUtilLikes())
                         .viewCount(utilInfoDtoOp.get().getUtilViews())
                         .build();
-            }else{
+            } else {
                 throw new RuntimeException();
             }
         }
     }
 
     @Override
-    public UtilLikeResponseDto getUtilLikeResponseDto(UtilInfoDto utilInfoDto) {
-        long newLikes = utilInfoDto.getUtilLikes() + 1; //기존 조회수에 +1을 한다.
-        utilInfoRepository.save(UtilInfoDto.builder()
-                .utilNo(utilInfoDto.getUtilNo())
-                .category(utilInfoDto.getCategory())
-                .subject(utilInfoDto.getSubject())
-                .urlPath(utilInfoDto.getUrlPath())
-                .utilName(utilInfoDto.getUtilName())
-                .utilDescription(utilInfoDto.getUtilDescription())
-                .utilEnrollDate(utilInfoDto.getUtilEnrollDate())
-                .utilLikes(newLikes)
-                .utilViews(utilInfoDto.getUtilViews())
-                .build());
+    public UtilLikeResponseDto getUtilLikeResponseDto(UtilInfoDto utilInfoDto, int count) {
+        long newLikes = utilInfoDto.getUtilLikes() + count; //기존 조회수에 +1을 한다.
+        EntityManager entityManager =  entityManagerFactory.createEntityManager();
+        try{
+            UtilInfoDto updateUtilInfoDto = entityManager.find(UtilInfoDto.class, utilInfoDto.getUtilNo());
+            updateUtilInfoDto.setUtilLikes(newLikes);
+            utilInfoRepository.save(updateUtilInfoDto);
+        }finally {
+            entityManager.close();
+        }
 
         return UtilLikeResponseDto.builder() //조회수 증가 완료된 객체 전달
                 .utilNo(utilInfoDto.getUtilNo())
                 .likeCount(utilInfoDto.getUtilLikes())
                 .viewCount(newLikes)
+                .like(true)
                 .build();
     }
 
@@ -261,5 +258,46 @@ public class UtilInfoSimpleServiceImpl implements UtilInfoSimpleService {
     public UtilLikesDto getLikeUtilInfo(HttpServletRequest request) {
         Map<String, String> myIpMap = HttpParamCheckUtil.localeCheck(request);
         return utilLikeRepository.findByLikeIp(myIpMap.get("ip"));
+    }
+
+    @Override
+    public UtilLikeRevokeResponseDto revokeLikeUtilInfo(HttpServletRequest request, UtilLikeRevokeRequestDto utilLikeRevokeRequestDto) {
+        Map<String, String> myIpMap = HttpParamCheckUtil.localeCheck(request);
+        if(myIpMap.get("ip").equals("unknown")){//ip 확인이 되지 않을 경우
+            return UtilLikeRevokeResponseDto.builder()
+                    .utilNo(utilLikeRevokeRequestDto.getUtilNo())
+                    .like(true)
+                    .likeCount(-1)
+                    .build();
+        }else{
+          utilLikeRepository.deleteByLikeIp(myIpMap.get("ip"));
+          Optional<UtilInfoDto> utilInfoDtoOp = utilInfoRepository.findById(utilLikeRevokeRequestDto.getUtilNo());
+          if(utilInfoDtoOp.isPresent()){
+              long nowLikeCount = utilInfoDtoOp.get().getUtilLikes();
+              UtilLikeResponseDto utilLikeResponseDto = getUtilLikeResponseDto(utilInfoDtoOp.get(),-1);
+              if(utilLikeResponseDto.getLikeCount() >= nowLikeCount){ //like 차감이 정상적으로 되지 않았다면
+                  return UtilLikeRevokeResponseDto.builder()
+                          .utilNo(utilLikeRevokeRequestDto.getUtilNo())
+                          .like(true)
+                          .likeCount(utilLikeResponseDto.getLikeCount())
+                          .build();
+              }else{//정상 케이스
+                  return UtilLikeRevokeResponseDto.builder()
+                          .utilNo(utilLikeRevokeRequestDto.getUtilNo())
+                          .like(false)
+                          .likeCount(utilLikeResponseDto.getLikeCount())
+                          .ip(myIpMap.get("ip"))
+                          .build();
+              }
+          }else{//유틸정보가 존재하지 않을 경우[등록 필요]
+              log.info("========================Util Info Empty========================");
+              log.info("========================Util Info 등록필요========================");
+              return UtilLikeRevokeResponseDto.builder()
+                      .utilNo(utilLikeRevokeRequestDto.getUtilNo())
+                      .like(true)
+                      .likeCount(-1)
+                      .build();
+          }
+        }
     }
 }

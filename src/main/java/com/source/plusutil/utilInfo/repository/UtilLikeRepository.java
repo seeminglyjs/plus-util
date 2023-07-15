@@ -6,4 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface UtilLikeRepository  extends JpaRepository<UtilLikesDto, Long> {
     UtilLikesDto findByLikeIp(String likeIp);
     UtilLikesDto findByUtilNoAndLikeIp(long utilNo, String likeIp);
+    void deleteByLikeIp(String likeIp);
+
 }
