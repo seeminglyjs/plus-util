@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -63,10 +64,10 @@ public class UtilInfoSimpleServiceImpl implements UtilInfoSimpleService {
 
     @Override
     public UtilInfoDto addUtilInfo(UtilInfoInsertRequestDto utilInfoInsertRequestDto) {
-        UtilInfoDto utilInfoDto = utilInfoRepository.findByUtilName(utilInfoInsertRequestDto.getUtilName());
-        if (utilInfoInsertRequestDto.getUtilNo() != -1) { //유틸정보 수정 요청
+        Optional<UtilInfoDto> utilInfoDtoOp = utilInfoRepository.findByUtilName(utilInfoInsertRequestDto.getUtilName());
+        if (utilInfoDtoOp.isPresent()) { //유틸정보 수정 요청
             return utilInfoRepository.save(UtilInfoDto.builder()
-                    .utilNo(utilInfoDto.getUtilNo())
+                    .utilNo(utilInfoDtoOp.get().getUtilNo())
                     .utilName(utilInfoInsertRequestDto.getUtilName())
                     .utilDescription(utilInfoInsertRequestDto.getUtilDescription())
                     .utilEnrollDate(DateUtil.getDateStryyyyMMdd())
@@ -78,15 +79,10 @@ public class UtilInfoSimpleServiceImpl implements UtilInfoSimpleService {
                     .build());
 
         } else {//유틸정보 신규 등록
-            if (utilInfoDto != null && !utilInfoDto.utilNameIsEmpty()) {
+            utilInfoDtoOp = utilInfoRepository.findByUrlPath(utilInfoInsertRequestDto.getUrlPath());
+            if (utilInfoDtoOp.isPresent()) {
                 log.info("===== 이미 등록된 정보가 있습니다. ======");
-                log.info("===== 등록된 유틸정보 -> [" + utilInfoDto + "] =====");
-                return null;
-            }
-            utilInfoDto = utilInfoRepository.findByUrlPath(utilInfoInsertRequestDto.getUrlPath());
-            if (utilInfoDto != null && !utilInfoDto.utilNameIsEmpty()) {
-                log.info("===== 이미 등록된 정보가 있습니다. ======");
-                log.info("===== 등록된 유틸정보 -> [" + utilInfoDto + "] =====");
+                log.info("===== 등록된 유틸정보 -> [" + utilInfoDtoOp.get() + "] =====");
                 return null;
             }
             return utilInfoRepository.save(UtilInfoDto.builder()
@@ -197,7 +193,8 @@ public class UtilInfoSimpleServiceImpl implements UtilInfoSimpleService {
 
     @Override
     public UtilInfoDto getUtilInfoDetailByUrlPath(String urlPath) {
-        return utilInfoRepository.findByUrlPath(urlPath);
+        Optional<UtilInfoDto> UtilInfoDtoOp = utilInfoRepository.findByUrlPath(urlPath);
+        return UtilInfoDtoOp.orElse(null);
     }
 
     @Override
@@ -240,6 +237,14 @@ public class UtilInfoSimpleServiceImpl implements UtilInfoSimpleService {
         EntityManager entityManager =  entityManagerFactory.createEntityManager();
         try{
             UtilInfoDto updateUtilInfoDto = entityManager.find(UtilInfoDto.class, utilInfoDto.getUtilNo());
+            if(updateUtilInfoDto == null){
+                return UtilLikeResponseDto.builder() //조회수 증가 완료된 객체 전달
+                        .utilNo(utilInfoDto.getUtilNo())
+                        .likeCount(utilInfoDto.getUtilLikes())
+                        .viewCount(utilInfoDto.getUtilLikes())
+                        .like(false)
+                        .build();
+            }
             updateUtilInfoDto.setUtilLikes(newLikes);
             utilInfoRepository.save(updateUtilInfoDto);
         }finally {
