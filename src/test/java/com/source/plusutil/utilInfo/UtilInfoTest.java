@@ -121,11 +121,11 @@ public class UtilInfoTest {
     @Transactional //클래스보다 메소드 단위의 Transactional 보다 우선순위가 높다
     public void utilInfoInsertTest() throws Exception {
         UtilInfoInsertRequestDto utilInfoInsertRequestDto1 = UtilInfoInsertRequestDto.builder()
-                .utilName("utilInfoInsertTest")
-                .utilDescription("it is test1 util")
+                .utilName("utilInfoInsertTest" + UUID.randomUUID().toString().split("-")[2])
+                .utilDescription("it is test1 util"+ UUID.randomUUID().toString().split("-")[2])
                 .utilLikes(0)
                 .utilViews(0)
-                .urlPath("/test/test1")
+                .urlPath("/test/test1" + UUID.randomUUID().toString().split("-")[2])
                 .category("test")
                 .subject("test")
                 .build();
