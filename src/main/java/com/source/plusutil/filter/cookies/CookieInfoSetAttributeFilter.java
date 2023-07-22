@@ -38,24 +38,24 @@ public class CookieInfoSetAttributeFilter implements Filter{
 
 
 		Optional<Cookie []> cookiesOpt = Optional.ofNullable(request.getCookies()); //최초 톰켓 실행시 cookie 없을때 발생하는 nullpointerexception 방지  
-		boolean cookieflag = false;
+		boolean cookieFlag = false;
 
 		if(cookiesOpt.isPresent()) { //쿠키가 하나라도 있을 경우
 			Cookie [] cookies = cookiesOpt.get();
 			for(Cookie cookie : cookies) { //쿠키값을 확인하며 로그인 정보 체크
 				if(cookie.getName().equals("loginOk")) {
-					cookieflag = true;
-					log.debug("loging ok cookie info -> " + cookie.getValue());
+					cookieFlag = true;
+					log.debug("login ok cookie info -> " + cookie.getValue());
 					break;
 				}
 			}
 		}
 
-		if(cookieflag) {//로그인 여부 확인
-			log.debug("cookieflag true =====");
+		if(cookieFlag) {//로그인 여부 확인
+			log.debug("cookieFlag true =====");
 			request.setAttribute("loginCookieInfo", "ok");
 		}else {
-			log.debug("cookieflag false =====");
+			log.debug("cookieFlag false =====");
 			request.setAttribute("loginCookieInfo", null);
 		}	
 

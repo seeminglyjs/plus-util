@@ -32,7 +32,7 @@ open class NoticeTest {
     /*
        테스트 용도의 게시글을 만드는 메소드
      */
-    fun makeNoticeWrtieDto(): NoticeDto {
+    private fun makeNoticeWriteDto(): NoticeDto {
         val randomTitle = "Title" + UUID.randomUUID().toString().split("-".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[2]
         val randomContent = "Content" + UUID.randomUUID().toString().split("-".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[2]
         val noticeWriteRequestDto = NoticeWriteRequestDto(randomTitle, randomContent, "notice", 0)
@@ -47,7 +47,7 @@ open class NoticeTest {
     open //클래스보다 메소드 단위의 Transactional 우선순위가 높다
     fun noticeDetailTest() {
         println("========noticeDetailTest Start!!!============")
-        val writeNoticeDto = makeNoticeWrtieDto()
+        val writeNoticeDto = makeNoticeWriteDto()
         entityManager!!.persist(writeNoticeDto)
         val noticeNo = writeNoticeDto.noticeNo
         println("noticeNo ->$noticeNo")
@@ -66,7 +66,7 @@ open class NoticeTest {
     open //클래스보다 메소드 단위의 Transactional 우선순위가 높다
     fun noticeWriteTest() {
         println("========noticeWriteTest Start!!!============")
-        val writeNoticeDto = makeNoticeWrtieDto()
+        val writeNoticeDto = makeNoticeWriteDto()
         entityManager!!.persist(writeNoticeDto)
         val noticeNo = writeNoticeDto.noticeNo
         println(noticeNo)
@@ -97,7 +97,7 @@ open class NoticeTest {
     //    @Rollback(false) // rollback 되지 않도록 설정
     fun noticeDeleteByNoticeNo() {
         println("=========noticeDeleteByNoticeNo start =============")
-        val writeNoticeDto = makeNoticeWrtieDto()
+        val writeNoticeDto = makeNoticeWriteDto()
         entityManager!!.persist(writeNoticeDto)
         val noticeNo = writeNoticeDto.noticeNo
         println(noticeNo)
@@ -124,7 +124,7 @@ open class NoticeTest {
     open //임의로 어드민 계정 만들어서 테스트 하기
     fun noticeUpdateByNoticeNo() {
         println("=========noticeUpdateByNoticeNo start =============")
-        val writeNoticeDto = makeNoticeWrtieDto()
+        val writeNoticeDto = makeNoticeWriteDto()
         val title = writeNoticeDto.title
         entityManager!!.persist(writeNoticeDto)
         val noticeNo = writeNoticeDto.noticeNo

@@ -164,6 +164,19 @@ public class UtilInfoSimpleServiceImpl implements UtilInfoSimpleService {
         EntityManager entityManager = entityManagerFactory.createEntityManager(); //사용할 객체 entityManager 선언
         try{
             UtilInfoDto updateUtilInfoDto = entityManager.find(UtilInfoDto.class, utilInfoDto.getUtilNo());
+            if(updateUtilInfoDto == null){
+                Optional<UtilInfoDto> updateUtilInfoDtoOp = utilInfoRepository.findById(utilInfoDto.getUtilNo()); //없으면 DB 찾음
+                if(updateUtilInfoDtoOp.isEmpty()){
+                    log.info("===== [updateUtilInfoDtoOp].isEmpty() =====");
+                    return UtilViewResponseDto.builder() //조회수 증가 완료된 객체 전달
+                            .utilNo(utilInfoDto.getUtilNo())
+                            .likeCount(utilInfoDto.getUtilLikes())
+                            .viewCount(utilInfoDto.getUtilViews()) //실패했으니 그대로 전달
+                            .build();
+                }else{
+                    updateUtilInfoDto = updateUtilInfoDtoOp.get();
+                }
+            }
             updateUtilInfoDto.setUtilViews(newViews);
             utilInfoRepository.save(updateUtilInfoDto);//객체 업데이트
         }finally {
@@ -236,21 +249,25 @@ public class UtilInfoSimpleServiceImpl implements UtilInfoSimpleService {
         long newLikes = utilInfoDto.getUtilLikes() + count; //기존 조회수에 +1을 한다.
         EntityManager entityManager =  entityManagerFactory.createEntityManager();
         try{
-            UtilInfoDto updateUtilInfoDto = entityManager.find(UtilInfoDto.class, utilInfoDto.getUtilNo());
+            UtilInfoDto updateUtilInfoDto = entityManager.find(UtilInfoDto.class, utilInfoDto.getUtilNo()); //캐시 먼저 찾음
             if(updateUtilInfoDto == null){
-                return UtilLikeResponseDto.builder() //조회수 증가 완료된 객체 전달
-                        .utilNo(utilInfoDto.getUtilNo())
-                        .likeCount(utilInfoDto.getUtilLikes())
-                        .viewCount(utilInfoDto.getUtilLikes())
-                        .like(false)
-                        .build();
+                Optional<UtilInfoDto> updateUtilInfoDtoOp = utilInfoRepository.findById(utilInfoDto.getUtilNo()); //없으면 DB 찾음
+                if(updateUtilInfoDtoOp.isEmpty()){
+                    return UtilLikeResponseDto.builder() //조회수 증가 완료된 객체 전달
+                            .utilNo(utilInfoDto.getUtilNo())
+                            .likeCount(utilInfoDto.getUtilLikes())
+                            .viewCount(utilInfoDto.getUtilLikes())
+                            .like(false)
+                            .build();
+                }else{
+                    updateUtilInfoDto = updateUtilInfoDtoOp.get();
+                }
             }
             updateUtilInfoDto.setUtilLikes(newLikes);
             utilInfoRepository.save(updateUtilInfoDto);
         }finally {
             entityManager.close();
         }
-
         return UtilLikeResponseDto.builder() //조회수 증가 완료된 객체 전달
                 .utilNo(utilInfoDto.getUtilNo())
                 .likeCount(utilInfoDto.getUtilLikes())

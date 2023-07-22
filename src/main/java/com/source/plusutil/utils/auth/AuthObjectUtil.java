@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,18 +14,17 @@ import java.util.Optional;
 public class AuthObjectUtil {
 
     public static boolean authenticationConfirm(Authentication authentication, String role) {
-        Optional<List<GrantedAuthority>> authListOp;
+        Collection<? extends GrantedAuthority> authList;
         try {
-            authListOp = Optional.ofNullable((List<GrantedAuthority>) authentication.getAuthorities());
+            authList = authentication.getAuthorities();
         }catch (NullPointerException e) {
             log.info("authentication.getAuthorities() -> Null");
             return false;
         }
 
-        if(authListOp.isEmpty()) {
+        if(authList == null || authList.isEmpty()) {
             return false;
         }else {
-            List<GrantedAuthority> authList = authListOp.get();
             log.info("권한 : ");
             boolean authCheck = false;
             for (GrantedAuthority grantedAuthority : authList) {

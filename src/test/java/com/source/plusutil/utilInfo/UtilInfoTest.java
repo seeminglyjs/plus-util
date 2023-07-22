@@ -7,6 +7,7 @@ import com.source.plusutil.utilInfo.repository.UtilInfoRepository;
 import com.source.plusutil.utilInfo.repository.UtilViewRepository;
 import com.source.plusutil.utils.etc.DateUtil;
 import org.hamcrest.MatcherAssert;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,8 +20,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertThrows;
@@ -37,8 +37,28 @@ public class UtilInfoTest {
     @Autowired
     UtilInfoRepository utilInfoRepository;
 
+    static UtilInfoDto utilInfoDto = null;
+
+    @Before
+    public void utilInfoNullCheck() {
+        if (utilInfoDto == null) makeDefaultUtilInfoDto();
+    }
+
+    public UtilInfoDto makeDefaultUtilInfoDto() {
+        System.out.println();
+        System.out.println("=================================Default Test Dto Make Start=================================");
+        UtilInfoDto utilInfoDtoSave = makeUtilInfoDto();
+        MatcherAssert.assertThat("==== getUtilNo is null  !!!!", utilInfoDtoSave.getUtilNo(), is(not(nullValue())));
+        MatcherAssert.assertThat("==== getUtilName is null  !!!!", utilInfoDtoSave.getUtilName(), is(not(nullValue())));
+        MatcherAssert.assertThat("==== Category is null  !!!!", utilInfoDtoSave.getCategory(), is(not(nullValue())));
+        System.out.println("=================================Default Test Dto Make End=================================");
+        System.out.println();
+        return utilInfoDtoSave;
+    }
+
+    @Transactional
     public UtilInfoDto makeUtilInfoDto() {
-        UtilInfoDto utilInfoDto = UtilInfoDto.builder()
+        return utilInfoRepository.save(UtilInfoDto.builder()
                 .utilName("Test" + UUID.randomUUID().toString().split("-")[2])
                 .utilDescription("utilDescription" + UUID.randomUUID().toString().split("-")[2])
                 .utilLikes(0)
@@ -47,13 +67,7 @@ public class UtilInfoTest {
                 .urlPath("/test/test123/test/" + UUID.randomUUID().toString().split("-")[2])
                 .category("test")
                 .subject("test")
-                .build();
-        UtilInfoDto utilInfoDtoSave = utilInfoRepository.save(utilInfoDto);
-        MatcherAssert.assertThat("==== getUtilNo is null  !!!!", utilInfoDtoSave.getUtilNo(), is(not(nullValue())));
-        MatcherAssert.assertThat("==== getUtilName is null  !!!!", utilInfoDtoSave.getUtilName(), is(not(nullValue())));
-        MatcherAssert.assertThat("==== Category is null  !!!!", utilInfoDtoSave.getCategory(), is(not(nullValue())));
-        return utilInfoDtoSave;
-
+                .build());
     }
 
     @Test
@@ -122,7 +136,7 @@ public class UtilInfoTest {
     public void utilInfoInsertTest() throws Exception {
         UtilInfoInsertRequestDto utilInfoInsertRequestDto1 = UtilInfoInsertRequestDto.builder()
                 .utilName("utilInfoInsertTest" + UUID.randomUUID().toString().split("-")[2])
-                .utilDescription("it is test1 util"+ UUID.randomUUID().toString().split("-")[2])
+                .utilDescription("it is test1 util" + UUID.randomUUID().toString().split("-")[2])
                 .utilLikes(0)
                 .utilViews(0)
                 .urlPath("/test/test1" + UUID.randomUUID().toString().split("-")[2])
@@ -174,7 +188,7 @@ public class UtilInfoTest {
     @Test
     @Transactional
     public void getUtilInfoDetailTest() {
-        UtilInfoDto utilInfoDto = makeUtilInfoDto();
+        UtilInfoDto utilInfoDto = makeDefaultUtilInfoDto();
         if (utilInfoDto == null) return;
         else {
             UtilInfoDto utilInfoDtoDetail = utilInfoService.getUtilInfoDetail(utilInfoDto.getUtilNo());
@@ -203,17 +217,76 @@ public class UtilInfoTest {
         신규 생성 좋아요 객체 상태 체크
          */
         MatcherAssert.assertThat("utilLikeCheckResponseDto.isLike() Not Yet But true", utilLikeCheckResponseDto.isLike(), is(false));
-        UtilInfoDto utilInfoDto = makeUtilInfoDto();
+        UtilInfoDto utilInfoDto = makeDefaultUtilInfoDto();
+        System.out.println(utilInfoDto);
         /*
         신규 유틸 객체 생성 상태 체크
          */
         MatcherAssert.assertThat("utilInfoDto getUtilNo is Null", utilInfoDto.getUtilNo(), is(not(nullValue())));
         long nowUtilLikeCount = utilInfoDto.getUtilLikes();
         UtilLikeResponseDto utilLikeResponseDto = utilInfoService.likeUtilInfo(request, UtilLikeRequestDto.builder().utilNo(utilInfoDto.getUtilNo()).build());
+        System.out.println(utilLikeResponseDto);
         /*
         신규 유틸 좋아요 후 좋아요 이전과 좋아요 갯수 체크 [수정 필요]
          */
-        //MatcherAssert.assertThat("result less than nowUtilLikeCount after likeUtilInfo call", utilLikeResponseDto.getLikeCount(), is(greaterThan(nowUtilLikeCount)));
+        MatcherAssert.assertThat("result less than nowUtilLikeCount after likeUtilInfo call", utilLikeResponseDto.getLikeCount(), is(greaterThan(nowUtilLikeCount)));
+    }
+
+    @Test
+    @Transactional
+    public void checkUtilViewFullProcess() {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.setRemoteAddr("211.11.11.53");
+        UtilInfoDto utilInfoDto = makeDefaultUtilInfoDto();
+
+
+        UtilViewRequestDto utilViewRequestDto = UtilViewRequestDto.builder()
+                .utilNo(utilInfoDto.getUtilNo())
+                .build();
+
+        MatcherAssert.assertThat("utilViewRequestDto getUtilNo is Null", utilViewRequestDto.getUtilNo(), is(not(nullValue())));
+        System.out.println("[checkUtilViewFullProcess | utilInfoDto] ->" + utilInfoDto);
+        long beforeViewCount = utilInfoDto.getUtilViews();
+
+        UtilViewResponseDto utilViewResponseDto = utilInfoService.clickUtilInfo(request, utilViewRequestDto);
+        MatcherAssert.assertThat("utilViewResponseDto getUtilNo is Null", utilViewResponseDto.getUtilNo(), is(not(nullValue())));
+        long afterViewCount = utilViewResponseDto.getViewCount();
+
+        MatcherAssert.assertThat("afterViewCount less than beforeViewCount", afterViewCount, is(greaterThan(beforeViewCount)));
+    }
+
+    @Test
+    @Transactional
+    public void revokeUtilInfoTest() {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.setRemoteAddr("211.11.11.53");
+        UtilInfoDto utilInfoDto = makeDefaultUtilInfoDto();
+
+        UtilLikeRevokeRequestDto utilLikeRevokeRequestDto = UtilLikeRevokeRequestDto.builder()
+                .utilNo(utilInfoDto.getUtilNo())
+                .build();
+
+        /*
+        생성 객체 체크
+         */
+        MatcherAssert.assertThat("utilLikeRevokeRequestDto getUtilNo is Null", utilLikeRevokeRequestDto.getUtilNo(), is(not(nullValue())));
+        System.out.println("[revokeUtilInfoTest | utilInfoDto] ->" + utilInfoDto);
+        UtilLikeResponseDto utilLikeResponseDto = utilInfoService.likeUtilInfo(request, UtilLikeRequestDto.builder().utilNo(utilInfoDto.getUtilNo()).build());
+        /*
+        좋아요 이후 객체 체크
+         */
+        MatcherAssert.assertThat("utilLikeResponseDto getUtilNo is Null", utilLikeResponseDto.getUtilNo(), is(not(nullValue())));
+        long beforeLikeCount = utilLikeResponseDto.getLikeCount();
+        UtilLikeRevokeResponseDto revokeLikeUtilInfo = utilInfoService.revokeLikeUtilInfo(request, utilLikeRevokeRequestDto);
+        /*
+        좋아요 취소 객체 체크
+         */
+        MatcherAssert.assertThat("revokeLikeUtilInfo getUtilNo is Null", revokeLikeUtilInfo.getUtilNo(), is(not(nullValue())));
+        long afterLikeCount = revokeLikeUtilInfo.getLikeCount();
+        /*
+        좋아요 후 및 취소 후 동일성 비교 체크
+         */
+        MatcherAssert.assertThat("beforeLikeCount == afterLikeCount", afterLikeCount, is(not(equalTo(beforeLikeCount))));
     }
 
 

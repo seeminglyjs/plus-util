@@ -28,8 +28,9 @@ public class XSSRequestWrapper extends HttpServletRequestWrapper {
 
     @Override
     public ServletInputStream getInputStream() throws IOException {
+        StringBuilder sb = new StringBuilder();
         if (rawData == null) {
-            rawData = IOUtils.toByteArray(this.request.getReader());
+            rawData = bufferedReaderToByteArray(this.request.getReader());
             servletStream.stream = new ByteArrayInputStream(rawData);
         }
         return servletStream;
@@ -38,7 +39,7 @@ public class XSSRequestWrapper extends HttpServletRequestWrapper {
     @Override
     public BufferedReader getReader() throws IOException {
         if (rawData == null) {
-            rawData = IOUtils.toByteArray(this.request.getReader());
+            rawData = bufferedReaderToByteArray(this.request.getReader());
             servletStream.stream = new ByteArrayInputStream(rawData);
         }
         return new BufferedReader(new InputStreamReader(servletStream));
@@ -68,4 +69,23 @@ public class XSSRequestWrapper extends HttpServletRequestWrapper {
 
         }
     }
+
+    /*
+     * BufferedReader 를 Byte[] 배열 형태로 바꿔서 리턴한다.
+     *
+     * @param bufferedReader
+     * @return byte[]
+     * @throws IOException
+     */
+    public byte[] bufferedReaderToByteArray(BufferedReader bufferedReader) throws IOException {
+        if(bufferedReader == null) return null;
+        StringBuilder stringBuilder = new StringBuilder();
+        String line;
+        while ((line = bufferedReader.readLine()) != null) {
+            stringBuilder.append(line);
+            stringBuilder.append(System.lineSeparator());
+        }
+        return stringBuilder.toString().getBytes();
+    }
+
 }
