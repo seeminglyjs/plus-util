@@ -35,10 +35,10 @@ public class UtilInfoController {
      * @param request  HttpServletRequest
      * @return UtilLikeCheckResponseDto
      */
-    @GetMapping("/like/check")
+    @GetMapping("/like/check/{utilNo}")
     @ResponseBody
-    public UtilLikeCheckResponseDto checkLikeUtilInfo(HttpServletRequest request){
-        return utilInfoService.checkLikeUtilInfo(request);
+    public UtilLikeCheckResponseDto checkLikeUtilInfo(HttpServletRequest request, @PathVariable long utilNo){
+        return utilInfoService.checkLikeUtilInfo(request,utilNo);
     }
 
     @PutMapping("/like/revoke")

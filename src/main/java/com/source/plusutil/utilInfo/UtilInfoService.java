@@ -14,6 +14,6 @@ public interface UtilInfoService {
     UtilInfoGetResponseDto getUtilTopList();
     UtilPagePropsDto getUtilInfoDetailByUrlPath(String urlPath);
     UtilLikeResponseDto likeUtilInfo(HttpServletRequest request,  UtilLikeRequestDto utilLikeRequestDto);
-    UtilLikeCheckResponseDto checkLikeUtilInfo(HttpServletRequest request);
+    UtilLikeCheckResponseDto checkLikeUtilInfo(HttpServletRequest request, long utilNo);
     UtilLikeRevokeResponseDto revokeLikeUtilInfo(HttpServletRequest request, UtilLikeRevokeRequestDto utilLikeRevokeRequestDto);
 }

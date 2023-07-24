@@ -7,7 +7,6 @@ import com.source.plusutil.utilInfo.repository.UtilInfoRepository;
 import com.source.plusutil.utilInfo.repository.UtilViewRepository;
 import com.source.plusutil.utils.etc.DateUtil;
 import org.hamcrest.MatcherAssert;
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -36,13 +35,6 @@ public class UtilInfoTest {
     UtilViewRepository utilViewRepository;
     @Autowired
     UtilInfoRepository utilInfoRepository;
-
-    static UtilInfoDto utilInfoDto = null;
-
-    @Before
-    public void utilInfoNullCheck() {
-        if (utilInfoDto == null) makeDefaultUtilInfoDto();
-    }
 
     public UtilInfoDto makeDefaultUtilInfoDto() {
         System.out.println();
@@ -95,7 +87,6 @@ public class UtilInfoTest {
         System.out.println("======= 존재하지 않는 정보 조회 테스트 [종료] =======\n ");
 
         System.out.println("======= 존재하는 정보 조회 테스트 [시작] =======\n ");
-        utilNo = 1;
 //        utilViewsDto = utilViewRepository.findByUtilNoAndViewIpAndViewDate(utilNo, ip, dateInfo);
 //        System.out.println("utilViewsDto is ->>>>>>" + utilViewsDto);
 //        MatcherAssert.assertThat("utilInfoDto is null", utilViewsDto, is(not(nullValue())));
@@ -133,7 +124,7 @@ public class UtilInfoTest {
      */
     @Test
     @Transactional //클래스보다 메소드 단위의 Transactional 보다 우선순위가 높다
-    public void utilInfoInsertTest() throws Exception {
+    public void utilInfoInsertTest() {
         UtilInfoInsertRequestDto utilInfoInsertRequestDto1 = UtilInfoInsertRequestDto.builder()
                 .utilName("utilInfoInsertTest" + UUID.randomUUID().toString().split("-")[2])
                 .utilDescription("it is test1 util" + UUID.randomUUID().toString().split("-")[2])
@@ -189,18 +180,16 @@ public class UtilInfoTest {
     @Transactional
     public void getUtilInfoDetailTest() {
         UtilInfoDto utilInfoDto = makeDefaultUtilInfoDto();
-        if (utilInfoDto == null) return;
-        else {
-            UtilInfoDto utilInfoDtoDetail = utilInfoService.getUtilInfoDetail(utilInfoDto.getUtilNo());
-            MatcherAssert.assertThat("utilInfoDtoDetail is Null", utilInfoDtoDetail, is(not(nullValue())));
-            MatcherAssert.assertThat("utilInfoDtoDetail getUtilNo is Null", utilInfoDtoDetail.getUtilNo(), is(not(nullValue())));
-        }
+
+        UtilInfoDto utilInfoDtoDetail = utilInfoService.getUtilInfoDetail(utilInfoDto.getUtilNo());
+        MatcherAssert.assertThat("utilInfoDtoDetail is Null", utilInfoDtoDetail, is(not(nullValue())));
+        MatcherAssert.assertThat("utilInfoDtoDetail getUtilNo is Null", utilInfoDtoDetail.getUtilNo(), is(not(nullValue())));
     }
 
     @Test
     @Transactional
     public void getTopList() {
-        UtilInfoGetResponseDto utilInfoGetResponseDto = null;
+        UtilInfoGetResponseDto utilInfoGetResponseDto;
         utilInfoGetResponseDto = utilInfoService.getUtilTopList();
         MatcherAssert.assertThat("utilInfoGetResponseDto is Null", utilInfoGetResponseDto, is(not(nullValue())));
         System.out.println(utilInfoGetResponseDto.getUtilInfoDtoList().size());
@@ -210,14 +199,14 @@ public class UtilInfoTest {
     @Test
     @Transactional
     public void checkUtilLikeFullProcess() {
+        UtilInfoDto utilInfoDto = makeDefaultUtilInfoDto();
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.setRemoteAddr("211.11.11.53");
-        UtilLikeCheckResponseDto utilLikeCheckResponseDto = utilInfoService.checkLikeUtilInfo(request);
+        UtilLikeCheckResponseDto utilLikeCheckResponseDto = utilInfoService.checkLikeUtilInfo(request, utilInfoDto.getUtilNo());
         /*
         신규 생성 좋아요 객체 상태 체크
          */
         MatcherAssert.assertThat("utilLikeCheckResponseDto.isLike() Not Yet But true", utilLikeCheckResponseDto.isLike(), is(false));
-        UtilInfoDto utilInfoDto = makeDefaultUtilInfoDto();
         System.out.println(utilInfoDto);
         /*
         신규 유틸 객체 생성 상태 체크

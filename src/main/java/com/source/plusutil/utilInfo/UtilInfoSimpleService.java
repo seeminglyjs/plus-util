@@ -27,6 +27,6 @@ public interface UtilInfoSimpleService {
     UtilInfoDto getUtilInfoDetailByUrlPath(String urlPath);
     UtilLikeResponseDto addUtilLike(HttpServletRequest request, UtilLikeRequestDto utilLikeRequestDto);
     UtilLikeResponseDto getUtilLikeResponseDto(UtilInfoDto utilInfoDto, int count);
-    UtilLikesDto getLikeUtilInfo(HttpServletRequest request);
+    UtilLikesDto getLikeUtilInfo(HttpServletRequest request, long utilNo);
     UtilLikeRevokeResponseDto revokeLikeUtilInfo(HttpServletRequest request, UtilLikeRevokeRequestDto utilLikeRevokeRequestDto);
 }

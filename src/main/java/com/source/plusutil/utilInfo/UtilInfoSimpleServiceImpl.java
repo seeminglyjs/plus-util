@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -215,10 +214,10 @@ public class UtilInfoSimpleServiceImpl implements UtilInfoSimpleService {
         Map<String, String> myIpMap = HttpParamCheckUtil.localeCheck(request);
 
         //이미 저장된 건이 있는지 확인한다.
-        UtilLikesDto getUtilLikesDto = utilLikeRepository.findByUtilNoAndLikeIp(utilLikeRequestDto.getUtilNo(), myIpMap.get("ip"));
+        Optional<UtilLikesDto> getUtilLikesDtoOp = utilLikeRepository.findByUtilNoAndLikeIp(utilLikeRequestDto.getUtilNo(), myIpMap.get("ip"));
         Optional<UtilInfoDto> utilInfoDtoOp = utilInfoRepository.findById(utilLikeRequestDto.getUtilNo());
 
-        if (getUtilLikesDto == null) {
+        if (getUtilLikesDtoOp.isEmpty()) {
             //우선 조회 히스트 테이블에 저장한다.
             utilLikeRepository.save(UtilLikesDto.builder()
                     .utilNo(utilLikeRequestDto.getUtilNo())
@@ -277,9 +276,10 @@ public class UtilInfoSimpleServiceImpl implements UtilInfoSimpleService {
     }
 
     @Override
-    public UtilLikesDto getLikeUtilInfo(HttpServletRequest request) {
+    public UtilLikesDto getLikeUtilInfo(HttpServletRequest request, long utilNo) {
         Map<String, String> myIpMap = HttpParamCheckUtil.localeCheck(request);
-        return utilLikeRepository.findByLikeIp(myIpMap.get("ip"));
+        Optional<UtilLikesDto> utilLikesDtoOp =  utilLikeRepository.findByUtilNoAndLikeIp(utilNo, myIpMap.get("ip"));
+        return utilLikesDtoOp.orElse(null);
     }
 
     @Override
@@ -292,7 +292,7 @@ public class UtilInfoSimpleServiceImpl implements UtilInfoSimpleService {
                     .likeCount(-1)
                     .build();
         }else{
-          utilLikeRepository.deleteByLikeIp(myIpMap.get("ip"));
+          utilLikeRepository.deleteByUtilNoAndLikeIp(utilLikeRevokeRequestDto.getUtilNo(),myIpMap.get("ip"));
           Optional<UtilInfoDto> utilInfoDtoOp = utilInfoRepository.findById(utilLikeRevokeRequestDto.getUtilNo());
           if(utilInfoDtoOp.isPresent()){
               long nowLikeCount = utilInfoDtoOp.get().getUtilLikes();

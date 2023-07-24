@@ -131,8 +131,8 @@ public class UtilInfoServiceImpl implements UtilInfoService {
     }
 
     @Override
-    public UtilLikeCheckResponseDto checkLikeUtilInfo(HttpServletRequest request) {
-        UtilLikesDto utilLikesDto =  utilInfoSimpleService.getLikeUtilInfo(request);
+    public UtilLikeCheckResponseDto checkLikeUtilInfo(HttpServletRequest request, long utilNo) {
+        UtilLikesDto utilLikesDto =  utilInfoSimpleService.getLikeUtilInfo(request, utilNo);
         if(utilLikesDto != null) {
             return UtilLikeCheckResponseDto.builder()
                     .like(true)
