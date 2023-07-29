@@ -6,6 +6,7 @@ import com.source.plusutil.main.MainDataDto
 import com.source.plusutil.utils.http.GitHubHttpUtil
 import io.github.oshai.KotlinLogging
 import org.json.simple.JSONObject
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import javax.servlet.http.HttpServletRequest
 import kotlin.math.roundToInt
@@ -15,7 +16,9 @@ private val logger = KotlinLogging.logger {}
 @Service
 class MainService (private val config : PropertiesConfig){
 
+    @Cacheable("mainDataDto", key = "#request.getRemoteAddr")
     fun callMainPageMethod(request: HttpServletRequest): MainDataDto {
+        logger.info("[First Access MainPage]")
         val reposList: MutableList<String> = ArrayList()
         reposList.add("https://api.github.com/repos/seeminglyjs/plus-util/languages"); //백엔드
         reposList.add("https://api.github.com/repos/seeminglyjs/plus-util-front/languages"); //프론트
