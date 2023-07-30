@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 public class SqlInjectionFilter_01 implements Filter {
 	
 	//Sql 인젝션 검증에 활용한 문자 배열
-	private static final String URL_ARR_NA[] = {
+	private static final String[] URL_ARR_NA = {
 			"SELECT", "CREATE", "DROP", "ALERT", "RENAME", "TRUNCATE", "GRANT", "REVOKE", "COMMIT", "ROLLBACK",
 			"INSERT", "UPDATE", "DELETE", "FROM", "DECLARE", "PROCEDURE", "SHOW", "SLEEP",
 			"DATABASE()", "INFORMATION_SCHEMA", "KILL", "FOUND_ROWS", "ROW_COUNT"

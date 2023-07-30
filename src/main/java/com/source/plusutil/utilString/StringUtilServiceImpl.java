@@ -13,12 +13,11 @@ import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 @Service
 @Slf4j
-public class StringUtilServiceImpl implements StringUtilService{
+public non-sealed class StringUtilServiceImpl implements StringUtilService{
 
 	static String [] INITIAL_STRING = {
 			"ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ", 
@@ -157,5 +156,18 @@ public class StringUtilServiceImpl implements StringUtilService{
 				.secondContent(stringSimilarityRequestDto.getSecondContent())
 				.similarity(similarity)
 				.build();
+	}
+
+	@Override
+	public StringReplaceResponseDto stringReplace(StringReplaceRequestDto stringReplaceRequestDto) {
+		if(Optional.ofNullable(stringReplaceRequestDto).isEmpty()) {
+			return new StringReplaceResponseDto("값을 입력해주세요.", "값을 입력해주세요.", "값을 입력해주세요.");
+		}else{
+			return new StringReplaceResponseDto(
+					stringReplaceRequestDto.getFindStr(),
+					stringReplaceRequestDto.getReplaceStr(),
+					stringReplaceRequestDto.getContent().replaceAll(stringReplaceRequestDto.getFindStr(),stringReplaceRequestDto.getReplaceStr())
+			);
+		}
 	}
 }

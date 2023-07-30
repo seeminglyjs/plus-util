@@ -6,7 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-public interface StringUtilService {
+public sealed interface StringUtilService permits StringUtilServiceImpl{
 
 	@Deprecated
 	void getStringByte(HttpServletRequest request, String stringContent, String encoding, String emptyYn);
@@ -19,4 +19,6 @@ public interface StringUtilService {
 	StringConvertCaseResponseDto convertUpperAndLowerMain(StringConvertCaseRequestDto stringConvertCaseRequestDto);
 
 	StringSimilarityResponseDto checkSimilarity(StringSimilarityRequestDto stringSimilarityRequestDto);
+
+    StringReplaceResponseDto stringReplace(StringReplaceRequestDto stringReplaceRequestDto);
 }
