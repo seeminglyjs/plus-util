@@ -1,4 +1,4 @@
 package com.source.plusutil.mypage.dto
 
-data class MyPageResponseDto(val userId : Long) {
+data class MyPageResponseDto(val userId : Int) {
 }

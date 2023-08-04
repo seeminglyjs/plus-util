@@ -43,6 +43,10 @@ abstract class PrimaryKeyEntity : Persistable<UUID> {
 
     override fun hashCode() = Objects.hashCode(id)
 
+    /*
+    @PostPersist와 @PostLoad는 JPA의 수명주기 이벤트에 대한 콜백 방법을 정의하는 것으로
+    각각 영속화 이후와 영속화한 데이터를 조회한 이후에 함수가 실행되도록 할 수 있습니다.
+     */
     @PostPersist
     @PostLoad
     protected fun load() {

@@ -6,7 +6,7 @@ import javax.persistence.*
 @Entity(name = "tb_my_page_info")
 class MyPageDto(
         @Column(name = "user_id", nullable = false)
-        val userId: Long,
+        val userId: Int,
 
         @Column(name = "nick_name", nullable = false)
         var nickName: String = UUID.randomUUID().toString().replace("-", ""),

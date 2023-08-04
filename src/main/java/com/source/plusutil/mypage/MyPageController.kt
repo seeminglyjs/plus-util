@@ -16,7 +16,7 @@ class MyPageController (private val myPageService: MyPageService){
 
     @GetMapping("/page")
     @ResponseBody
-    fun getMyPage(@RequestBody myPageRequestDto : MyPageRequestDto) : MyPageResponseDto {
+    fun getMyPage(@RequestBody myPageRequestDto : MyPageRequestDto) : MyPageResponseDto? {
         return myPageService.getMyPage(myPageRequestDto)
     }
 }
