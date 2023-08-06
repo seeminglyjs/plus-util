@@ -15,6 +15,7 @@ plugins {
 	id 'org.springframework.boot' version '2.7.3'
 	id 'io.spring.dependency-management' version '1.0.13.RELEASE'
 	id 'java'
+	id 'org.jetbrains.kotlin.plugin.jpa' version "$kotlin_version"
 	//QueryDSL
 	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 	id 'org.springframework.experimental.aot' version '0.12.1'
@@ -33,6 +34,10 @@ allOpen {
 	annotation("org.springframework.stereotype.Repository")
 	annotation("org.springframework.boot.autoconfigure.SpringBootApplication")
 	annotation("org.springframework.context.annotation.Configuration")
+	annotation("javax.persistence.Entity")
+	annotation("jakarta.persistence.Entity")
+	annotation("jakarta.persistence.Embeddable")
+	annotation("jakarta.persistence.MappedSuperclass")
 }
 
 configurations {
@@ -81,6 +86,8 @@ dependencies {
 	// https://mvnrepository.com/artifact/net.sf.ehcache/ehcache
 	implementation group: 'net.sf.ehcache', name: 'ehcache', version: '2.10.9.2'
 
+	// https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-reflect
+	runtimeOnly group: 'org.jetbrains.kotlin', name: 'kotlin-reflect', version: '1.9.0'
 
 
 	// https://mvnrepository.com/artifact/org.postgresql/postgresql

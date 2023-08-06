@@ -1,5 +1,6 @@
 package com.source.plusutil.mypage
 
+import com.source.plusutil.mypage.dto.MyPageDto
 import com.source.plusutil.mypage.dto.MyPageRequestDto
 import com.source.plusutil.mypage.dto.MyPageResponseDto
 import lombok.RequiredArgsConstructor
@@ -16,7 +17,7 @@ class MyPageController (private val myPageService: MyPageService){
 
     @GetMapping("/page")
     @ResponseBody
-    fun getMyPage(@RequestBody myPageRequestDto : MyPageRequestDto) : MyPageResponseDto? {
+    fun getMyPage(@RequestBody myPageRequestDto : MyPageRequestDto) : MyPageDto? {
         return myPageService.getMyPage(myPageRequestDto)
     }
 }

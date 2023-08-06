@@ -8,10 +8,11 @@ import java.util.*
 import javax.persistence.*
 import kotlin.jvm.Transient
 
+//https://spoqa.github.io/2022/08/16/kotlin-jpa-entity.html 참고 코드
 @MappedSuperclass
 abstract class PrimaryKeyEntity : Persistable<UUID> {
     @Id
-    @Column(columnDefinition = "uuid")
+    @Column(columnDefinition = "uuid", name ="id")
     private val id: UUID = UlidCreator.getMonotonicUlid().toUuid()
 
     @Transient
@@ -26,6 +27,9 @@ abstract class PrimaryKeyEntity : Persistable<UUID> {
             return false
         }
 
+        //Hibernate Proxy 때문입니다. JPA의 구현체인 Hibernate는 성능 최적화를 위해 연관관계 조회 시 꼭 필요할 때까지 조회 쿼리 호출을 지연시키는 지연 조회(Lazy Loading)를 지원합니다.
+        // 그래서 연관관계를 조회하는 쿼리가 실행되어 실제 Entity가 생성되기 전까지 Proxy 객체를 미리 생성해서 넣어두었다가 실제 조회가 되면 Entity를 Proxy와 교체하는 방식으로 동작합니다.
+        // 지연 로딩으로 인해 아직 쿼리가 실행되지 않았으므로 HibernateProxy객체로 존재하게 되는 것입니다.
         if (other !is HibernateProxy && this::class != other::class) {
             return false
         }
