@@ -13,12 +13,19 @@ import org.hamcrest.core.Is
 import org.hamcrest.core.IsNot
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.http.MediaType
 import org.springframework.mock.web.MockHttpServletRequest
+import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import java.util.*
 import javax.transaction.Transactional
 
 @SpringBootTest
+@AutoConfigureMockMvc
 open class MyPageTest {
 
     @Autowired
@@ -30,6 +37,8 @@ open class MyPageTest {
     @Autowired
     var userInfoRepository : UserInfoRepository? = null;
 
+    @Autowired
+    private lateinit var mockMvc: MockMvc
     /*
     테스트 계정 생성
      */
@@ -77,5 +86,24 @@ open class MyPageTest {
         두번 째 조회시일때는 viewCnt + 1 이 되어 있어야함
          */
         MatcherAssert.assertThat("firstViewCnt+1 == myPageDtoExist.viewCnt ", (firstViewCnt?.plus(1)) == myPageDtoExist?.viewCnt, Is.`is`(true))
+    }
+
+    @Test
+    @Transactional
+    open fun nickNameDuplicateCheck(){
+//        val requestJson = """
+//            {
+//                "nickName": "myNickname",
+//                "checkStatus": "SUCCESS"
+//            }
+//        """.trimIndent()
+//
+//        mockMvc.perform(
+//                get("/plus/my/check/nickname/duplicate")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(requestJson)
+//        )
+//                .andExpect(status().isOk)
+        // Add more assertions as needed
     }
 }

@@ -2,6 +2,7 @@ package com.source.plusutil.mypage
 
 import com.source.plusutil.mypage.dto.MyPageDto
 import com.source.plusutil.mypage.dto.MyPageRequestDto
+import com.source.plusutil.mypage.dto.NickNameDuplicateCheckDto
 import com.source.plusutil.mypage.repository.MyPageRepository
 import com.source.plusutil.user.UserInfoRepository
 import com.source.plusutil.user.dto.UserInfoDto
@@ -49,5 +50,8 @@ class MyPageServiceImpl (
         }finally {
             entityManger.close()
         }
+    }
+    override fun checkNickNameDuplicate(nickNameDuplicateCheckDto: NickNameDuplicateCheckDto): NickNameDuplicateCheckDto? {
+        TODO("Not yet implemented")
     }
 }

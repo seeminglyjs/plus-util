@@ -1,6 +1,8 @@
 package com.source.plusutil.user
 
 import com.source.plusutil.user.dto.LoginCheckDto
+import com.source.plusutil.utils.auth.AuthObjectUtil
+import com.source.plusutil.utils.auth.dto.AuthObject
 import lombok.RequiredArgsConstructor
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
@@ -58,7 +60,7 @@ class LoginController {
 
     @GetMapping("/auth")
     @ResponseBody
-    fun loginView(): Authentication {
-        return SecurityContextHolder.getContext().authentication
+    fun loginView(): AuthObject {
+        return AuthObjectUtil.makeAuthObject(SecurityContextHolder.getContext().authentication)
     }
 }
