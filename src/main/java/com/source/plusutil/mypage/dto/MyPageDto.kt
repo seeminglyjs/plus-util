@@ -18,7 +18,7 @@ import javax.persistence.*
 class MyPageDto(
         @Column(name = "user_no", nullable = false, unique = true) val userNo: Int,
         nickName: String = UUID.randomUUID().toString().replace("-", ""),
-        @Column(name = "description") var description: String? = null,
+        @Column(name = "description") var description: String? = "안녕하세요. 방문해 주셔서 감사드립니다.",
         @Column(name = "view_cnt", nullable = false) var viewCnt: Long = 0,
         @Column(name = "like_cnt", nullable = false) var likeCnt: Long = 0
 )  : PrimaryKeyEntity(){

@@ -10,17 +10,12 @@ import com.source.plusutil.user.dto.UserInfoDto
 import com.source.plusutil.user.dto.UserJoinDto
 import org.hamcrest.MatcherAssert
 import org.hamcrest.core.Is
-import org.hamcrest.core.IsNot
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.http.MediaType
 import org.springframework.mock.web.MockHttpServletRequest
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import java.util.*
 import javax.transaction.Transactional
 
@@ -67,7 +62,7 @@ open class MyPageTest {
     open fun getMyPageInfo(){
         val userInfoDtoOp : Optional<UserInfoDto>?  = makeUser();
         MatcherAssert.assertThat("userInfoDtoOp is null" , userInfoDtoOp?.isPresent ?: false, Is.`is`(true));
-        val myPageDto : MyPageDto? = myPageService?.getMyPage(MyPageRequestDto(userNo = userInfoDtoOp?.get()?.userNo ?: -1))
+        val myPageDto : MyPageDto? = myPageService?.getMyPage(userInfoDtoOp?.get()?.userNo ?: -1)
         println("최초 생성 myPageDto -> ${myPageDto.toString()}")
         val firstViewCnt = myPageDto?.viewCnt;
         MatcherAssert.assertThat("myPageInfo is null", myPageDto == null, Is.`is`(false))
@@ -75,7 +70,7 @@ open class MyPageTest {
         /*
         최초 마이페이지 접속 유저 페이지 생성 후 중복 생성 여부 체크 [중복으로 생성 되면 안됨 ]
          */
-        val myPageDtoExist : MyPageDto? = myPageService?.getMyPage(MyPageRequestDto(userNo = userInfoDtoOp?.get()?.userNo ?: -1))
+        val myPageDtoExist : MyPageDto? = myPageService?.getMyPage(userInfoDtoOp?.get()?.userNo ?: -1)
         MatcherAssert.assertThat("myPageDtoExist is null", myPageDtoExist == null, Is.`is`(false))
         MatcherAssert.assertThat("myPageDto != myPageDtoExist ", myPageDto?.id == myPageDtoExist?.id, Is.`is`(true))
         println("두번째 조회 후 최초 객체 myPageDto -> ${myPageDto.toString()}")

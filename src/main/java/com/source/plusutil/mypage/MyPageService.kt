@@ -1,11 +1,9 @@
 package com.source.plusutil.mypage
 
-import com.source.plusutil.mypage.dto.MyPageDto
-import com.source.plusutil.mypage.dto.MyPageRequestDto
-import com.source.plusutil.mypage.dto.MyPageResponseDto
-import com.source.plusutil.mypage.dto.NickNameDuplicateCheckDto
+import com.source.plusutil.mypage.dto.*
 
 interface MyPageService {
-    fun getMyPage(myPageRequestDto: MyPageRequestDto): MyPageDto?
+    fun getMyPage(userNo: Int): MyPageDto?
     fun checkNickNameDuplicate(nickNameDuplicateCheckDto: NickNameDuplicateCheckDto): NickNameDuplicateCheckDto?
+    fun modifyPage(myPageModifyRequestDto: MyPageModifyRequestDto): MyPageDto?
 }

@@ -8,5 +8,6 @@ import java.util.*
 @Repository
 interface MyPageRepository : JpaRepository<MyPageDto?, Long?> {
     fun findByUserNo(userNo: Int): MyPageDto?
-     fun findById(id: UUID): MyPageDto
+    fun findById(id: UUID): MyPageDto
+    fun findByNickName(nickName : String): MyPageDto?
 }

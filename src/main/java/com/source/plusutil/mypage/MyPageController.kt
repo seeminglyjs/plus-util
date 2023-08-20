@@ -1,15 +1,8 @@
 package com.source.plusutil.mypage
 
-import com.source.plusutil.mypage.dto.MyPageDto
-import com.source.plusutil.mypage.dto.MyPageRequestDto
-import com.source.plusutil.mypage.dto.MyPageResponseDto
-import com.source.plusutil.mypage.dto.NickNameDuplicateCheckDto
+import com.source.plusutil.mypage.dto.*
 import lombok.RequiredArgsConstructor
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.ResponseBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/plus/my")
@@ -17,13 +10,13 @@ import org.springframework.web.bind.annotation.RestController
 class MyPageController (private val myPageService: MyPageService){
 
     /**
-     * @param myPageRequestDto [마이페이지 정보 요청 객체]
-     * @return MyPageDto [마이페이지 정보를 가진 entity]
+     * @param userNo 유저 아이디
+     *
      */
     @GetMapping("/page")
     @ResponseBody
-    fun getMyPage(@RequestBody myPageRequestDto : MyPageRequestDto) : MyPageDto? {
-        return myPageService.getMyPage(myPageRequestDto)
+    fun getMyPage(@RequestParam userNo : Int) : MyPageDto? {
+        return myPageService.getMyPage(userNo)
     }
 
     /**
@@ -35,4 +28,10 @@ class MyPageController (private val myPageService: MyPageService){
         println(nickNameDuplicateCheckDto.toString())
         return myPageService.checkNickNameDuplicate(nickNameDuplicateCheckDto)
     }
+
+    @PutMapping("/modify/page")
+    fun modifyPage(@RequestBody myPageModifyRequestDto: MyPageModifyRequestDto) : MyPageDto?{
+        return myPageService.modifyPage(myPageModifyRequestDto)
+    }
+
 }
