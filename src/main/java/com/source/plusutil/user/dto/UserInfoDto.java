@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.AllArgsConstructor;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,11 +20,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.source.plusutil.enums.UserRoleEnum;
 
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Entity(name="tb_user_info") //db상에 테이블명을 명시한다. [다른 dto / vo 객체에 똑같은 entity 선언하면 충돌남]
 public class UserInfoDto implements UserDetails{
 	
@@ -76,14 +79,13 @@ public class UserInfoDto implements UserDetails{
 	
 	//회원가입 관련
     public static UserInfoDto makeUser(UserJoinDto userJoinDto, PasswordEncoder passwordEncoder) {
-    	UserInfoDto member = UserInfoDto.builder()
-                .userEmail(userJoinDto.getUserEmail())
-                .userPassword(passwordEncoder.encode(userJoinDto.getUserPassword()))
-                .userName("unKnown") //미설정 값
-                .userLockYN("N")  //잠금처리 N
-                .userRole(String.valueOf(UserRoleEnum.USER)) //기본룰
-                .build();
-        return member;
+		return UserInfoDto.builder()
+				.userEmail(userJoinDto.getUserEmail())
+				.userPassword(passwordEncoder.encode(userJoinDto.getUserPassword()))
+				.userName("unKnown") //미설정 값
+				.userLockYN("N")  //잠금처리 N
+				.userRole(String.valueOf(UserRoleEnum.USER)) //기본룰
+				.build();
     }
 
 	@Override //유저의 권한을 리턴해준다.
@@ -121,5 +123,85 @@ public class UserInfoDto implements UserDetails{
 	@Override //계정이 활성화(사용가능)인 지 리턴한다. (true: 활성화)
 	public boolean isEnabled() {
 		return true;
+	}
+
+	public Integer getUserNo() {
+		return userNo;
+	}
+
+	public void setUserNo(Integer userNo) {
+		this.userNo = userNo;
+	}
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+
+	public String getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(String userRole) {
+		this.userRole = userRole;
+	}
+
+	public String getUserPassword() {
+		return userPassword;
+	}
+
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getUserPhone() {
+		return userPhone;
+	}
+
+	public void setUserPhone(String userPhone) {
+		this.userPhone = userPhone;
+	}
+
+	public String getUserLockYN() {
+		return userLockYN;
+	}
+
+	public void setUserLockYN(String userLockYN) {
+		this.userLockYN = userLockYN;
+	}
+
+	public String getSubInfo1() {
+		return subInfo1;
+	}
+
+	public void setSubInfo1(String subInfo1) {
+		this.subInfo1 = subInfo1;
+	}
+
+	public String getSubInfo2() {
+		return subInfo2;
+	}
+
+	public void setSubInfo2(String subInfo2) {
+		this.subInfo2 = subInfo2;
+	}
+
+	public String getSubInfo3() {
+		return subInfo3;
+	}
+
+	public void setSubInfo3(String subInfo3) {
+		this.subInfo3 = subInfo3;
 	}
 }

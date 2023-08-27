@@ -15,7 +15,7 @@ class MyPageController (private val myPageService: MyPageService){
      */
     @GetMapping("/page")
     @ResponseBody
-    fun getMyPage(@RequestParam userNo : Int) : MyPageDto? {
+    fun getMyPage(@RequestParam userNo : Int) : MyPageInfoDto? {
         return myPageService.getMyPage(userNo)
     }
 
@@ -29,8 +29,8 @@ class MyPageController (private val myPageService: MyPageService){
         return myPageService.checkNickNameDuplicate(nickNameDuplicateCheckDto)
     }
 
-    @PutMapping("/modify/page")
-    fun modifyPage(@RequestBody myPageModifyRequestDto: MyPageModifyRequestDto) : MyPageDto?{
+    @GetMapping("/modify/page")
+    fun modifyPage(@RequestBody myPageModifyRequestDto: MyPageModifyDto) : MyPageInfoDto? {
         return myPageService.modifyPage(myPageModifyRequestDto)
     }
 
