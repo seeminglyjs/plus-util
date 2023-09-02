@@ -34,4 +34,9 @@ class MyPageController (private val myPageService: MyPageService){
         return myPageService.modifyPage(myPageModifyRequestDto)
     }
 
+    @PutMapping("/like/plus")
+    fun likePlus(@RequestParam userNo : Int) : MyPageInfoDto? {
+        return myPageService.likePlus(userNo)
+    }
+
 }

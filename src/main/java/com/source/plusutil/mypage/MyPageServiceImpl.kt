@@ -35,10 +35,10 @@ class MyPageServiceImpl(
         try {
             val userInfoDtoOp: Optional<UserInfoDto> = userRepository.findById(userNo);
             val myPageDto: MyPageDto? = myPageRepository.findByUserInfo(userInfoDtoOp.get())
-            logger.info("MyPage Get Result -> ${myPageDto.toString()}")
+            logger.info("[getMyPage] MyPage Get Result -> ${myPageDto.toString()}")
             return if (myPageDto != null) {
                 entityManger.persist(myPageDto)//객체 존제 영속화
-                makeResponseGetMyPageDto(myPageDto, entityManger)
+                makeResponseGetMyPageDto(myPageDto, entityManger, false)
             } else {
                 if (userInfoDtoOp.isPresent) {
                     logger.info("====== Make MyPage ======")
@@ -66,14 +66,18 @@ class MyPageServiceImpl(
 
     /**
      * myPage 정보 조회된 정보를 조회수 1증가시켜서 객체화 해준다.
+     * likeFlag 가 true 라면 좋아요도 올려준다.
      */
-    fun makeResponseGetMyPageDto(myPageDto: MyPageDto, entityManger: EntityManager): MyPageInfoDto {
+    fun makeResponseGetMyPageDto(myPageDto: MyPageDto, entityManger: EntityManager, pressLike : Boolean): MyPageInfoDto {
         val newMyPageView = myPageDto.viewCnt + 1
+        val newMyPageLike = when {pressLike -> myPageDto.likeCnt + 1 else -> myPageDto.likeCnt}
+
         try {
-            logger.info("====== MyPage View + 1 ======")
+            logger.info("====== MyPage GET View  ======")
             var persistMyPageDto: MyPageDto? = entityManger.find(MyPageDto::class.java, myPageDto.id) //영속성 우선 탐색
             persistMyPageDto = persistMyPageDto ?: myPageRepository.findById(myPageDto.id)
             persistMyPageDto.viewCnt = newMyPageView
+            persistMyPageDto.likeCnt = newMyPageLike
             val savedMyPageDto = myPageRepository.save(persistMyPageDto)
             return MyPageInfoDto(
                     userNo = savedMyPageDto.userInfo.userNo,
@@ -125,6 +129,24 @@ class MyPageServiceImpl(
             )
         } else {
             MyPageInfoDto()
+        }
+    }
+
+    override fun likePlus(userNo: Int): MyPageInfoDto? {
+        val entityManger: EntityManager = entityManagerFactory.createEntityManager()
+        try {
+            val userInfoDtoOp: Optional<UserInfoDto> = userRepository.findById(userNo);
+            val myPageDto: MyPageDto? = myPageRepository.findByUserInfo(userInfoDtoOp.get())
+            logger.info("[likePlus] MyPage Get Result -> ${myPageDto.toString()}")
+            return if (myPageDto != null) {
+                entityManger.persist(myPageDto)//객체 존제 영속화
+                makeResponseGetMyPageDto(myPageDto, entityManger, true)
+            } else {
+                    logger.info("====== UserInfo user_no is undefined return null ======")
+                    MyPageInfoDto(); //유저 아이디 정보 없음 잘못된 요청
+                }
+            }finally {//EntityManager 살아 있으면 종료시킨다.
+            if (entityManger.isOpen) entityManger.close()
         }
     }
 

@@ -9,6 +9,7 @@ import com.source.plusutil.user.UserInfoRepository
 import com.source.plusutil.user.dto.JoinResultDto
 import com.source.plusutil.user.dto.UserInfoDto
 import com.source.plusutil.user.dto.UserJoinDto
+import net.sf.ehcache.search.expression.GreaterThan
 import org.hamcrest.MatcherAssert
 import org.hamcrest.core.Is
 import org.junit.jupiter.api.Test
@@ -82,6 +83,14 @@ open class MyPageTest {
         두번 째 조회시일때는 viewCnt + 1 이 되어 있어야함
          */
         MatcherAssert.assertThat("firstViewCnt+1 == myPageDtoExist.viewCnt ", (firstViewCnt?.plus(1)) == myPageDtoExist?.viewCnt, Is.`is`(true))
+
+        /*
+        좋아요 테스트
+         */
+        val myPageLikeDto : MyPageInfoDto? = myPageService?.likePlus(myPageDto?.userNo ?: -1)
+        println("Before -> ${myPageDtoExist?.likeCnt!!}")
+        println("After -> ${myPageLikeDto?.likeCnt!!}")
+        MatcherAssert.assertThat("firstLikeCnt+1 > firstLikeCnt  is false", myPageLikeDto.likeCnt!! > myPageDtoExist.likeCnt!!, Is.`is`(true))
     }
 
     @Test
