@@ -69,7 +69,7 @@ class MyPageServiceImpl(
      * likeFlag 가 true 라면 좋아요도 올려준다.
      */
     fun makeResponseGetMyPageDto(myPageDto: MyPageDto, entityManger: EntityManager, pressLike : Boolean): MyPageInfoDto {
-        val newMyPageView = myPageDto.viewCnt + 1
+        val newMyPageView = when {pressLike -> myPageDto.viewCnt  else -> myPageDto.viewCnt + 1}
         val newMyPageLike = when {pressLike -> myPageDto.likeCnt + 1 else -> myPageDto.likeCnt}
 
         try {
