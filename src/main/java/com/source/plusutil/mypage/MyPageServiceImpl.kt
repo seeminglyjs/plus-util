@@ -115,17 +115,30 @@ class MyPageServiceImpl(
     override fun modifyPage(myPageModifyDto: MyPageModifyDto): MyPageInfoDto? {
         val userInfoDtoOp: Optional<UserInfoDto> = userRepository.findById(myPageModifyDto.userNo);
         val myPageDto: MyPageDto? = myPageRepository.findByUserInfo(userInfoDtoOp.get())
+
         return if (myPageDto != null) {
+            val willBeChangedUserInfoDto : UserInfoDto = userInfoDtoOp.get()
+            willBeChangedUserInfoDto.userName = when{myPageModifyDto.userName != null -> myPageModifyDto.userName else -> myPageDto.userInfo.userName}
+            willBeChangedUserInfoDto.userPhone = when{myPageModifyDto.userPhone != null -> myPageModifyDto.userPhone else -> myPageDto.userInfo.userPhone}
+
+            myPageDto.userInfo = willBeChangedUserInfoDto
+            myPageDto.nickName = when{myPageModifyDto.nickName != null -> myPageModifyDto.nickName else -> myPageDto.nickName}
+            myPageDto.description = when{myPageModifyDto.description != null -> myPageModifyDto.description else -> myPageDto.description}
+            myPageDto.phoneShow = when{myPageModifyDto.phoneShow != null -> myPageModifyDto.phoneShow else -> myPageDto.phoneShow}
+            myPageDto.nameShow = when{myPageModifyDto.nameShow != null -> myPageModifyDto.nameShow else -> myPageDto.nameShow}
+
+            val changedMyPageDto: MyPageDto = myPageRepository.save(myPageDto)
+
             return MyPageInfoDto(
-                    userNo = myPageDto.userInfo.userNo,
-                    nickName = myPageDto.nickName,
-                    description = myPageDto.description,
-                    viewCnt = myPageDto.viewCnt,
-                    likeCnt = myPageDto.likeCnt,
-                    userName = myPageDto.userInfo.userName,
-                    userPhone = myPageDto.userInfo.userPhone,
-                    phoneShow = myPageDto.phoneShow,
-                    nameShow = myPageDto.nameShow,
+                    userNo = changedMyPageDto.userInfo.userNo,
+                    nickName = changedMyPageDto.nickName,
+                    description = changedMyPageDto.description,
+                    viewCnt = changedMyPageDto.viewCnt,
+                    likeCnt = changedMyPageDto.likeCnt,
+                    userName = changedMyPageDto.userInfo.userName,
+                    userPhone = changedMyPageDto.userInfo.userPhone,
+                    phoneShow = changedMyPageDto.phoneShow,
+                    nameShow = changedMyPageDto.nameShow,
             )
         } else {
             MyPageInfoDto()

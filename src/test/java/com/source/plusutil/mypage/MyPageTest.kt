@@ -1,15 +1,13 @@
 package com.source.plusutil.mypage
 
 
-import com.source.plusutil.mypage.dto.MyPageDto
 import com.source.plusutil.mypage.dto.MyPageInfoDto
-import com.source.plusutil.mypage.dto.MyPageRequestDto
+import com.source.plusutil.mypage.dto.MyPageModifyDto
 import com.source.plusutil.user.JoinService
 import com.source.plusutil.user.UserInfoRepository
 import com.source.plusutil.user.dto.JoinResultDto
 import com.source.plusutil.user.dto.UserInfoDto
 import com.source.plusutil.user.dto.UserJoinDto
-import net.sf.ehcache.search.expression.GreaterThan
 import org.hamcrest.MatcherAssert
 import org.hamcrest.core.Is
 import org.junit.jupiter.api.Test
@@ -91,6 +89,24 @@ open class MyPageTest {
         println("Before -> ${myPageDtoExist?.likeCnt!!}")
         println("After -> ${myPageLikeDto?.likeCnt!!}")
         MatcherAssert.assertThat("firstLikeCnt+1 > firstLikeCnt  is false", myPageLikeDto.likeCnt!! > myPageDtoExist.likeCnt!!, Is.`is`(true))
+
+        val myPageModifyDto = MyPageModifyDto (
+                userNo = myPageLikeDto.userNo,
+                nickName = "testNick5599",
+                description = myPageLikeDto.description,
+                userName = myPageLikeDto.userName,
+                userPhone = myPageLikeDto.userPhone,
+                phoneShow = "y",
+                nameShow = "y",
+        )
+
+        /*
+        수정 테스트
+         */
+        val myPageInfoModifyDto : MyPageInfoDto? = myPageService?.modifyPage(myPageModifyDto)
+        MatcherAssert.assertThat("MyPageInfoModifyDto is null", myPageInfoModifyDto == null, Is.`is`(false))
+        MatcherAssert.assertThat("MyPageInfoModifyDto.nickName is not testNick5599", myPageInfoModifyDto?.nickName == "testNick5599", Is.`is`(true))
+
     }
 
     @Test

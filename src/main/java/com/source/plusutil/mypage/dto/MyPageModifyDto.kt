@@ -9,8 +9,10 @@ import lombok.ToString
 @ToString
 class MyPageModifyDto (
         val userNo : Int,
+        val nickName : String? = null,
+        val description : String? = null,
         val userName : String? = null,
         val userPhone : String? = null,
-        val nickName : String? = null,
-        val description : String? = null
+        val phoneShow: String? = null,
+        val nameShow: String? = null
 )
