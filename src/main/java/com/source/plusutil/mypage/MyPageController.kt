@@ -2,6 +2,7 @@ package com.source.plusutil.mypage
 
 import com.source.plusutil.mypage.dto.*
 import lombok.RequiredArgsConstructor
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -15,8 +16,8 @@ class MyPageController (private val myPageService: MyPageService){
      */
     @GetMapping("/page")
     @ResponseBody
-    fun getMyPage(@RequestParam userNo : Int) : MyPageInfoDto? {
-        return myPageService.getMyPage(userNo)
+    fun getMyPage(@RequestParam userNo : Int, @RequestParam(defaultValue = "yes", required = false) viewPlus : String) : MyPageInfoDto? {
+        return myPageService.getMyPage(userNo, viewPlus)
     }
 
     /**
@@ -29,7 +30,8 @@ class MyPageController (private val myPageService: MyPageService){
         return myPageService.checkNickNameDuplicate(nickNameDuplicateCheckDto)
     }
 
-    @GetMapping("/modify/page")
+    @PostMapping("/modify/page")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')") //user 또는 admin 만 접근 가능
     fun modifyPage(@RequestBody myPageModifyRequestDto: MyPageModifyDto) : MyPageInfoDto? {
         return myPageService.modifyPage(myPageModifyRequestDto)
     }

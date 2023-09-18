@@ -71,6 +71,7 @@ public class SecurityConfig {
                         , "/plus/menu/**"
                         , "/plus/my/page/"
                         , "/plus/my/like/**"
+                        , "/plus/my/modify/page"
                 ).permitAll() //누구나 접근가능한 페이지 적용
                 .antMatchers("/plus/setting/**", "/plus/admin/**").hasRole("ADMIN") //관리자(Admin)만 접근 허용
                 .antMatchers("/plus/user/**", "/plus/logout/**").hasAnyRole("USER", "ADMIN") //유저(USER) / 관리자(Admin)만 접근 허용

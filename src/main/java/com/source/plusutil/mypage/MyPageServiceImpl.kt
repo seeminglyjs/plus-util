@@ -10,7 +10,6 @@ import com.source.plusutil.user.UserInfoRepository
 import com.source.plusutil.user.dto.UserInfoDto
 import io.github.oshai.KotlinLogging
 import lombok.RequiredArgsConstructor
-import lombok.extern.slf4j.Slf4j
 import org.springframework.stereotype.Service
 import java.util.*
 import javax.persistence.EntityManager
@@ -30,7 +29,7 @@ class MyPageServiceImpl(
     /**
      * myPage 정보를 가져와서 보여주는 메소드
      */
-    override fun getMyPage(userNo: Int): MyPageInfoDto? {
+    override fun getMyPage(userNo: Int, viewPlus: String): MyPageInfoDto? {
         val entityManger: EntityManager = entityManagerFactory.createEntityManager()
         try {
             val userInfoDtoOp: Optional<UserInfoDto> = userRepository.findById(userNo);
@@ -38,7 +37,7 @@ class MyPageServiceImpl(
             logger.info("[getMyPage] MyPage Get Result -> ${myPageDto.toString()}")
             return if (myPageDto != null) {
                 entityManger.persist(myPageDto)//객체 존제 영속화
-                makeResponseGetMyPageDto(myPageDto, entityManger, false)
+                makeResponseGetMyPageDto(myPageDto, entityManger, when{viewPlus == "yes" -> true else -> false },false)
             } else {
                 if (userInfoDtoOp.isPresent) {
                     logger.info("====== Make MyPage ======")
@@ -68,8 +67,8 @@ class MyPageServiceImpl(
      * myPage 정보 조회된 정보를 조회수 1증가시켜서 객체화 해준다.
      * likeFlag 가 true 라면 좋아요도 올려준다.
      */
-    fun makeResponseGetMyPageDto(myPageDto: MyPageDto, entityManger: EntityManager, pressLike : Boolean): MyPageInfoDto {
-        val newMyPageView = when {pressLike -> myPageDto.viewCnt  else -> myPageDto.viewCnt + 1}
+    fun makeResponseGetMyPageDto(myPageDto: MyPageDto, entityManger: EntityManager, viewPlus : Boolean, pressLike : Boolean): MyPageInfoDto {
+        val newMyPageView = when {viewPlus -> myPageDto.viewCnt + 1  else -> myPageDto.viewCnt}
         val newMyPageLike = when {pressLike -> myPageDto.likeCnt + 1 else -> myPageDto.likeCnt}
 
         try {
@@ -153,7 +152,7 @@ class MyPageServiceImpl(
             logger.info("[likePlus] MyPage Get Result -> ${myPageDto.toString()}")
             return if (myPageDto != null) {
                 entityManger.persist(myPageDto)//객체 존제 영속화
-                makeResponseGetMyPageDto(myPageDto, entityManger, true)
+                makeResponseGetMyPageDto(myPageDto, entityManger,  false, true)
             } else {
                     logger.info("====== UserInfo user_no is undefined return null ======")
                     MyPageInfoDto(); //유저 아이디 정보 없음 잘못된 요청

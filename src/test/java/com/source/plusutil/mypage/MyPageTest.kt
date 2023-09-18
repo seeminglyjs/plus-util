@@ -62,7 +62,7 @@ open class MyPageTest {
     open fun getMyPageInfo(){
         val userInfoDtoOp : Optional<UserInfoDto>?  = makeUser();
         MatcherAssert.assertThat("userInfoDtoOp is null" , userInfoDtoOp?.isPresent ?: false, Is.`is`(true));
-        val myPageDto : MyPageInfoDto? = myPageService?.getMyPage(userInfoDtoOp?.get()?.userNo ?: -1)
+        val myPageDto : MyPageInfoDto? = myPageService?.getMyPage(userInfoDtoOp?.get()?.userNo ?: -1, "yes")
         println("최초 생성 myPageDto -> ${myPageDto.toString()}")
         val firstViewCnt = myPageDto?.viewCnt;
         MatcherAssert.assertThat("myPageInfo is null", myPageDto == null, Is.`is`(false))
@@ -70,7 +70,7 @@ open class MyPageTest {
         /*
         최초 마이페이지 접속 유저 페이지 생성 후 중복 생성 여부 체크 [중복으로 생성 되면 안됨 ]
          */
-        val myPageDtoExist : MyPageInfoDto? = myPageService?.getMyPage(myPageDto?.userNo ?: -1)
+        val myPageDtoExist : MyPageInfoDto? = myPageService?.getMyPage(myPageDto?.userNo ?: -1,"yes")
         MatcherAssert.assertThat("myPageDtoExist is null", myPageDtoExist == null, Is.`is`(false))
         MatcherAssert.assertThat("myPageDto != myPageDtoExist ", myPageDto?.userNo == myPageDtoExist?.userNo, Is.`is`(true))
         println("두번째 조회 후 최초 객체 myPageDto -> ${myPageDto.toString()}")
