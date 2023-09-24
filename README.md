@@ -1,6 +1,6 @@
 # Plus-Util [유틸리티 제공 서비스]
 ---
-![githubmainPage](https://user-images.githubusercontent.com/67782250/220030144-f832a38a-2c32-4ae3-8377-000a14d9abba.png)
+![githubmainPage](https://user-images.githubusercontent.com/67782250/270141957-ddcb395a-101c-4f8c-8b82-3c79b427614f.png)
  > 업무 및 개발과 관련되서 필요한 유틸리티 정보들을 한 곳에 모아 서비스 함에 목적이 있습니다.
 ---
 ## 구현 카테고리 목록
