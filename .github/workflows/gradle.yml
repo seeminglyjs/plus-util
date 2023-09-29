@@ -47,8 +47,10 @@ jobs:
     - uses: actions/checkout@v3
     - run: touch ./src/main/resources/application.properties
     - run: touch ./src/main/resources/config/api.properties
+    - run: touch ./src/main/resources/config/key.properties
     - run: echo "${{ secrets.APPLICATION_PROPERTIES }}" > ./src/main/resources/application.properties
     - run: echo "${{ secrets.API_PROPERTIES }}" > ./src/main/resources/config/api.properties
+    - run: echo "${{ secrets.KEY_PROPERTIES }}" > ./src/main/resources/config/key.properties
       
     - name: shutdown tomcat
       run: $targetDir/call-tomcat-stop.sh
