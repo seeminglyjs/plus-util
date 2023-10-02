@@ -28,7 +28,7 @@ class JoinController (val joinService: JoinService){
     @PostMapping("/join/action")
     @ResponseBody
     fun joinAction(
-            userJoinDto: @Valid UserJoinDto? //회원가입객체
+        @RequestBody userJoinDto: @Valid UserJoinDto? //회원가입객체
             , bindingResult: BindingResult //@Vaild 예외처리 위한 객체
             , request: HttpServletRequest?
     ): JoinResultDto {

@@ -11,26 +11,29 @@ import io.github.oshai.KotlinLogging
 private val logger = KotlinLogging.logger {}
 @Service
 @RequiredArgsConstructor
-class EncryptServiceImpl(private val aes256: AesUtil, private val rsa: RsaUtil) : EncryptService {
+class EncryptServiceImpl(private val rsa: RsaUtil) : EncryptService {
 
     override fun makeAseEncryptContent(aesEncryptRequestDto: AesEncryptRequestDto?): AesEncryptResponseDto {
         logger.info("AesEncryptRequestDto info -> [" + Objects.requireNonNull(aesEncryptRequestDto) + "]")
+        val aesMap : MutableMap<String, String> =  AesUtil.aes256Encrypt(aesEncryptRequestDto!!.aesKey, aesEncryptRequestDto.aesIv, aesEncryptRequestDto.aesContent)
         return AesEncryptResponseDto(
-                aesEncryptRequestDto!!.aesKey,
+                aesEncryptRequestDto.aesKey,
                 aesEncryptRequestDto.aesIv,
                 aesEncryptRequestDto.aesContent,
                 aesEncryptRequestDto.type,
-                aes256.aes256Encrypt(aesEncryptRequestDto.aesKey, aesEncryptRequestDto.aesIv, aesEncryptRequestDto.aesContent))
+                when{aesMap["result"] == "y" -> aesMap["encryptContent"]!!else -> aesMap["message"]!! }
+        )
     }
 
     override fun makeAesDecryptContent(aesDecryptRequestDto: AesDecryptRequestDto): AesDecryptResponseDto {
         logger.info("AesDecryptRequestDto info -> [" + Objects.requireNonNull(aesDecryptRequestDto) + "]")
+        val aesMap : MutableMap<String, String> =  AesUtil.aes256Decrypt(aesDecryptRequestDto.aesKey, aesDecryptRequestDto.aesIv, aesDecryptRequestDto.aesContent)
         return AesDecryptResponseDto(
                 aesDecryptRequestDto.aesKey,
                 aesDecryptRequestDto.aesIv,
                 aesDecryptRequestDto.aesContent,
                 aesDecryptRequestDto.type,
-                aes256.aes256Decrypt(aesDecryptRequestDto.aesKey, aesDecryptRequestDto.aesIv, aesDecryptRequestDto.aesContent)
+                when{aesMap["result"] == "y" -> aesMap["decryptContent"]!!else -> aesMap["message"]!! }
         )
     }
 

@@ -4,6 +4,7 @@ import com.source.plusutil.config.PropertiesConfig
 import com.source.plusutil.user.dto.JoinResultDto
 import com.source.plusutil.user.dto.UserInfoDto
 import com.source.plusutil.user.dto.UserJoinDto
+import com.source.plusutil.utils.encrypt.AesUtil
 import io.github.oshai.KotlinLogging
 import lombok.RequiredArgsConstructor
 import lombok.extern.slf4j.Slf4j
@@ -20,7 +21,8 @@ private val logger = KotlinLogging.logger {}
 @Slf4j
 class JoinService(val config: PropertiesConfig,
                   val passwordEncoder: PasswordEncoder,
-                  val userInfoRepository: UserInfoRepository) {
+                  val userInfoRepository: UserInfoRepository
+) {
     /*
 	 * 회원가입 유저 정보 저장 메소드
 	 * 
@@ -40,16 +42,27 @@ class JoinService(val config: PropertiesConfig,
                 joinResultDto.message ="정확한 정보가 입력되지 않았습니다."
                 return joinResultDto;
             }
-            if (validateDuplicateUser(userJoinDto?.userEmail ?: "-1")) { //유저 로그인 계정 중복 여부 체크
-                try {
-                    userInfoRepository.save(UserInfoDto.makeUser(userJoinDto, passwordEncoder)) //만들어진 유저정보 db 저장하기
-                    joinSuccess = true //에외없이 처리되면 회원가입 성공
-                } catch (e: Exception) {
-                    logger.info("[joinDataVaildCheck false] =====")
-                    logger.info("[Exception info]", e)
+            val aesDecEmailMap : MutableMap<String, String> =  AesUtil.aes256Decrypt(config.aes256key, config.aes256iv, userJoinDto?.userEmail)
+            val aesDecPasswordMap : MutableMap<String, String> =  AesUtil.aes256Decrypt(config.aes256key, config.aes256iv, userJoinDto?.userPassword)
+            if(aesDecEmailMap["result"] == "n" || aesDecPasswordMap["result"] == "n"){
+                joinResultDto.message = "정확한 정보가 입력되지 않았습니다. 확인 요청"
+                return joinResultDto
+            }else{
+                userJoinDto?.userEmail = aesDecEmailMap["decryptContent"];
+                userJoinDto?.userPassword = aesDecPasswordMap["decryptContent"];
+                logger.info("userEmail aes256Decrypt -> [" + (userJoinDto?.userEmail ?: "-1") + "]")
+                logger.info("userPassword aes256Decrypt -> [" + (userJoinDto?.userPassword ?: "-1") + "]")
+                if (validateDuplicateUser(userJoinDto?.userEmail ?: "-1")) { //유저 로그인 계정 중복 여부 체크
+                    try {
+                        userInfoRepository.save(UserInfoDto.makeUser(userJoinDto, passwordEncoder)) //만들어진 유저정보 db 저장하기
+                        joinSuccess = true //에외없이 처리되면 회원가입 성공
+                    } catch (e: Exception) {
+                        logger.info("[joinDataVaildCheck false] =====")
+                        logger.info("[Exception info]", e)
+                    }
+                } else {
+                    joinResultDto.message = "이미 존재하는 아이디입니다."
                 }
-            } else {
-                joinResultDto.message = "이미 존재하는 아이디입니다."
             }
         }
         joinResultDto.check = joinSuccess

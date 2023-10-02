@@ -1,25 +1,19 @@
 package com.source.plusutil.utils.encrypt;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.springframework.stereotype.Component;
-
-import com.source.plusutil.config.PropertiesConfig;
-
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@RequiredArgsConstructor
-@Component
 @Slf4j
 public class AesUtil {
 
-	private final PropertiesConfig config;
-	
 	/*
 	 * aes256 기준 암호화 하는 메소드
 	 * 
@@ -28,11 +22,12 @@ public class AesUtil {
 	 * @param content
 	 * @return
 	 */
-	public String aes256Encrypt(String aesKey, String aesIv, String content) {
+	public static Map<String, String> aes256Encrypt(String aesKey, String aesIv, String content) {
+		Map<String, String> returnMap = new HashMap<>();
 		String encryptContent = "";
 
 		//aes256 알고리즘 정보 연결
-		String alg = config.getAes256Alg();
+		String alg = "AES/CBC/PKCS5Padding";
 		
 		log.info("alg -> [" + alg + "] aesKey -> [" + aesKey + "] aesIv -> [" + aesIv + "] content -> [" + content + "]");
 		
@@ -54,9 +49,15 @@ public class AesUtil {
 
 		}catch (Exception e) {
 			log.info("[aes256Encrypt exception]",e);
-			return returnError(e);
+			returnMap.put("result", "n");
+			returnMap.put("encryptContent", encryptContent);
+			returnMap.put("message", returnError(e));
+			return returnMap;
 		}
-		return encryptContent;
+		returnMap.put("result", "y");
+		returnMap.put("encryptContent", encryptContent);
+		returnMap.put("message", "success");
+		return returnMap;
 	}
 	
 	/*
@@ -67,11 +68,12 @@ public class AesUtil {
 	 * @param content
 	 * @return
 	 */
-	public String aes256Decrypt(String aesKey, String aesIv, String content) {
+	public static Map<String, String> aes256Decrypt(String aesKey, String aesIv, String content) {
+		Map<String, String> returnMap = new HashMap<>();
 		String decryptContent = "";
 
 		//aes256 알고리즘 정보 연결
-		String alg = config.getAes256Alg();
+		String alg = "AES/CBC/PKCS5Padding";
 		
 		log.info("alg -> [" + alg + "] aesKey -> [" + aesKey + "] aesIv -> [" + aesIv + "] content -> [" + content + "]");
 
@@ -91,14 +93,20 @@ public class AesUtil {
 
 		}catch (Exception e) {
 			log.info("[aesDecrypt exception]",e);
-			return returnError(e);
+			returnMap.put("result", "n");
+			returnMap.put("decryptContent", decryptContent);
+			returnMap.put("message", returnError(e));
+			return returnMap;
 		}
 		//---------------------------------------------------------------------------
-		return decryptContent;
+		returnMap.put("result", "y");
+		returnMap.put("decryptContent", decryptContent);
+		returnMap.put("message", "success");
+		return returnMap;
 	}
 
 
-	public String returnError(Exception e){
+	public static String returnError(Exception e){
 		return "에러가 발생했습니다. [" + e.getMessage() +"]";
 	}
 }
