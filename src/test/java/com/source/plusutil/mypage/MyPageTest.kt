@@ -1,6 +1,7 @@
 package com.source.plusutil.mypage
 
 
+import com.source.plusutil.config.PropertiesConfig
 import com.source.plusutil.mypage.dto.MyPageInfoDto
 import com.source.plusutil.mypage.dto.MyPageModifyDto
 import com.source.plusutil.user.JoinService
@@ -8,6 +9,7 @@ import com.source.plusutil.user.UserInfoRepository
 import com.source.plusutil.user.dto.JoinResultDto
 import com.source.plusutil.user.dto.UserInfoDto
 import com.source.plusutil.user.dto.UserJoinDto
+import com.source.plusutil.utils.encrypt.AesUtil
 import org.hamcrest.MatcherAssert
 import org.hamcrest.core.Is
 import org.junit.jupiter.api.Test
@@ -33,14 +35,17 @@ open class MyPageTest {
     var userInfoRepository : UserInfoRepository? = null;
 
     @Autowired
+    var config : PropertiesConfig? = null;
+
+    @Autowired
     private lateinit var mockMvc: MockMvc
     /*
     테스트 계정 생성
      */
     private fun makeUser(): Optional<UserInfoDto>? {
         val userJoin : UserJoinDto = UserJoinDto()
-        userJoin.userEmail = "test@test.tese${UUID.randomUUID().toString().replace("-","")[1]}.com";
-        userJoin.userPassword = "!test123123!!";
+        userJoin.userEmail = AesUtil.aes256Encrypt(config?.aes256key, config?.aes256iv, "test@test.tese${UUID.randomUUID().toString().replace("-","")[1]}.com")["encryptContent"]
+        userJoin.userPassword = AesUtil.aes256Encrypt(config?.aes256key, config?.aes256iv, "!test123123!!")["encryptContent"]
         val result : JoinResultDto? =  joinService?.joinAction(userJoin, MockHttpServletRequest())
         return if(result?.check == true) userInfoRepository?.findByUserEmail(userJoin.userEmail)
         else null
