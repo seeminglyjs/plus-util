@@ -1,10 +1,13 @@
 package com.source.plusutil.config;
 
+import com.source.plusutil.auth.CustomAuthenticationProvider;
 import com.source.plusutil.enums.returnUrl.HomeReturnUrl;
 import com.source.plusutil.enums.returnUrl.LoginReturnUrl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -31,6 +34,7 @@ public class SecurityConfig {
     private final UserLoginSuccessHandler userLoginSuccessHandler; //로그인 성공 핸들러
     private final UserLoginFailureHandler userLoginFailureHandler; //로그인 실패 핸들러
     private final UserInfoService userInfoService;
+    private final PropertiesConfig config;
     //	private final UserInfoService userInfoService;
     //	어떠한 빈(Bean)에 생성자가 오직 하나만 있고,
     //	생성자의 파라미터 타입이 빈으로 등록 가능한 존재라면
@@ -42,9 +46,16 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        return new CustomAuthenticationProvider(userInfoService, passwordEncoder(),config);
+    }
     @Bean //스프링이 인증이 필요한 시점에 AuthenticationManager 을 호출한다.
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
+    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+        AuthenticationManagerBuilder authenticationManagerBuilder =
+                http.getSharedObject(AuthenticationManagerBuilder.class);
+        authenticationManagerBuilder.authenticationProvider(authenticationProvider());
+        return authenticationManagerBuilder.build();
     }
 
 //    //로그인 정보를가로체 계정 정보를 가져온다. 위에있는 내용으로 변경됨 
