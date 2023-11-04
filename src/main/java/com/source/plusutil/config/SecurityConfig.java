@@ -3,6 +3,7 @@ package com.source.plusutil.config;
 import com.source.plusutil.auth.CustomAuthenticationProvider;
 import com.source.plusutil.enums.returnUrl.HomeReturnUrl;
 import com.source.plusutil.enums.returnUrl.LoginReturnUrl;
+import com.source.plusutil.filter.login.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,9 +15,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 import com.source.plusutil.handler.login.UserLoginFailureHandler;
@@ -35,6 +38,7 @@ public class SecurityConfig {
     private final UserLoginFailureHandler userLoginFailureHandler; //로그인 실패 핸들러
     private final UserInfoService userInfoService;
     private final PropertiesConfig config;
+    private final JwtAuthenticationFilter jwtAuthFilter;
     //	private final UserInfoService userInfoService;
     //	어떠한 빈(Bean)에 생성자가 오직 하나만 있고,
     //	생성자의 파라미터 타입이 빈으로 등록 가능한 존재라면
@@ -65,7 +69,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests()//보호된 리소스 URI에 접근할 수 있는 권한을 설정
+        http.authorizeHttpRequests()//보호된 리소스 URI에 접근할 수 있는 권한을 설정
                 .antMatchers(HttpMethod.DELETE).hasRole("ADMIN")
                 .antMatchers(
                         "/plus/login/**"
@@ -105,10 +109,16 @@ public class SecurityConfig {
                 .csrf()//csrf 보안 설정을 비활성화
                 .disable();//해당 기능을 사용하기 위해서는 프론트단에서 csrf토큰값 보내줘야함 // Cross site Request forgery로 사이즈간 위조 요청인데, 즉 정상적인 사용자가 의도치 않은 위조요청을 보내는 것을 의미한다.
 
-
         http.sessionManagement()
-                .maximumSessions(1) // 최대 접속수를 1개로 제한한다. 다른 사용자가 로그인하면 이전 사용자 로그인 풀림
-                .expiredUrl(LoginReturnUrl.NEXT_LOGIN_MAIN.getUrl()); // 세션이 제한 되었을 경우 리다이렉트 할 URL
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
+
+//        http.sessionManagement()
+//                .maximumSessions(1) // 최대 접속수를 1개로 제한한다. 다른 사용자가 로그인하면 이전 사용자 로그인 풀림
+//                .expiredUrl(LoginReturnUrl.NEXT_LOGIN_MAIN.getUrl()); // 세션이 제한 되었을 경우 리다이렉트 할 URL
 
         http.rememberMe()
                 .rememberMeParameter("remember-me")

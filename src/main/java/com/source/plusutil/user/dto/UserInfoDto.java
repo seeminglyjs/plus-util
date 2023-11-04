@@ -4,12 +4,9 @@ import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+import com.source.plusutil.user.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
@@ -45,6 +42,7 @@ public class UserInfoDto implements UserDetails{
 	private String userEmail;
 	
 	@Column(name="user_role")
+//	@Enumerated(EnumType.STRING)
 	private String userRole; //유저권한 USER / ADMIN
 	
 	@Column(name="user_password")
@@ -87,6 +85,7 @@ public class UserInfoDto implements UserDetails{
 				.userRole(String.valueOf(UserRoleEnum.USER)) //기본룰
 				.build();
     }
+
 
 	@Override //유저의 권한을 리턴해준다.
 	public Collection<? extends GrantedAuthority> getAuthorities() {

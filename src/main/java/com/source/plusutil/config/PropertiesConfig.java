@@ -1,5 +1,6 @@
 package com.source.plusutil.config;
 
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -50,8 +51,22 @@ public class PropertiesConfig {
     @Value("${GITHUB.SECRET.TOKEN}")
     private String githubSecretToken;
 
+    @Value("JWT_SECRET_KEY")
+    private String jwtSecretKey;
+
+    @Value("JWT_EXPIRATION")
+    private String jwtExpiration;
+
     public String getAes256Alg() {
         return aes256Alg;
+    }
+
+    public String getAes256key() {
+        return aes256key;
+    }
+
+    public String getAes256iv() {
+        return aes256iv;
     }
 
     public String getDatasourceUrl() {
@@ -82,11 +97,11 @@ public class PropertiesConfig {
         return githubSecretToken;
     }
 
-    public String getAes256key() {
-        return aes256key;
+    public String getJwtSecretKey() {
+        return jwtSecretKey;
     }
 
-    public String getAes256iv() {
-        return aes256iv;
+    public String getJwtExpiration() {
+        return jwtExpiration;
     }
 }
