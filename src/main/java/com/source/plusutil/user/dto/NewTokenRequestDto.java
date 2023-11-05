@@ -14,7 +14,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class NewTokenRequestDto {
 
-    private Map<String,Object> playLoad;
+    private Map<String,Object> payLoad;
     private String userName;
     private Date IssueDate;
     private Date ExpirationDate;

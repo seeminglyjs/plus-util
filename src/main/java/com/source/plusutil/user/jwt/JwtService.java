@@ -8,7 +8,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -62,7 +61,7 @@ public class JwtService {
     public String generateToken(NewTokenRequestDto newTokenRequestDto) {
         return Jwts
                 .builder()
-                .setClaims(newTokenRequestDto.getPlayLoad())
+                .setClaims(newTokenRequestDto.getPayLoad())
                 .setSubject(newTokenRequestDto.getUserName())
                 .setIssuedAt(newTokenRequestDto.getIssueDate())
                 .setExpiration(newTokenRequestDto.getExpirationDate()) //만료 하루 지정
@@ -73,6 +72,11 @@ public class JwtService {
     public boolean isTokenValidate(String token, UserDetails userDetails){
         final String userName = extractUserName(token);
         return (userName.equals(userDetails.getUsername())) && !isTokenExpired(token);
+    }
+
+    public boolean isTokenValidate(String token, String userName){
+        final String userNameByToken = extractUserName(token);
+        return (userName.equals(userNameByToken) && !isTokenExpired(token));
     }
 
     private boolean isTokenExpired(String token) {

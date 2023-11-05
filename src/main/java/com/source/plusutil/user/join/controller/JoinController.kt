@@ -1,7 +1,8 @@
-package com.source.plusutil.user
+package com.source.plusutil.user.join.controller
 
-import com.source.plusutil.user.dto.JoinResultDto
+import com.source.plusutil.user.join.dto.JoinResultDto
 import com.source.plusutil.user.dto.UserJoinDto
+import com.source.plusutil.user.join.service.JoinService
 import io.github.oshai.KotlinLogging
 import lombok.RequiredArgsConstructor
 import lombok.extern.slf4j.Slf4j

@@ -51,10 +51,10 @@ public class PropertiesConfig {
     @Value("${GITHUB.SECRET.TOKEN}")
     private String githubSecretToken;
 
-    @Value("JWT_SECRET_KEY")
+    @Value("${JWT_SECRET_KEY}")
     private String jwtSecretKey;
 
-    @Value("JWT_EXPIRATION")
+    @Value("${JWT_EXPIRATION}")
     private String jwtExpiration;
 
     public String getAes256Alg() {

@@ -14,13 +14,15 @@ import org.springframework.web.bind.annotation.RestController
 import java.util.*
 
 import io.github.oshai.KotlinLogging
+import javax.servlet.http.Cookie
+import javax.servlet.http.HttpServletRequest
 
 private val logger = KotlinLogging.logger {}
 @RestController
 @RequestMapping("/plus")
 @RequiredArgsConstructor
 class LoginController {
-    @Deprecated("")
+    @Deprecated("로그인 요청에대한 맵핑을 따로 사용하지 않습니다.")
     @GetMapping("/login")
     @ResponseBody
     fun loginView(authentication: Authentication): LoginCheckDto {
@@ -58,9 +60,18 @@ class LoginController {
         return loginCheckDto
     }
 
-    @GetMapping("/auth")
-    @ResponseBody
-    fun loginView(): AuthObject {
-        return AuthObjectUtil.makeAuthObject(SecurityContextHolder.getContext().authentication)
-    }
+//    @Deprecated("인증 컨트롤러가 서비스 단으로 분리되었습니다.")
+//    @GetMapping("/auth2")
+//    @ResponseBody
+//    fun loginView(request: HttpServletRequest): AuthObject {
+//        val cookies: Array<Cookie> = request.cookies
+//        var userToken = ""
+//        for (cookie in cookies) {
+//            if (cookie.name.equals("userToken")) {
+//                userToken = cookie.value
+//                break
+//            }
+//        }
+//        return AuthObjectUtil.makeAuthObject(userToken, null)
+//    }
 }

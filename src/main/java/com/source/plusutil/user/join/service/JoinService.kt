@@ -1,7 +1,8 @@
-package com.source.plusutil.user
+package com.source.plusutil.user.join.service
 
 import com.source.plusutil.config.PropertiesConfig
-import com.source.plusutil.user.dto.JoinResultDto
+import com.source.plusutil.user.UserInfoRepository
+import com.source.plusutil.user.join.dto.JoinResultDto
 import com.source.plusutil.user.dto.UserInfoDto
 import com.source.plusutil.user.dto.UserJoinDto
 import com.source.plusutil.utils.encrypt.AesUtil

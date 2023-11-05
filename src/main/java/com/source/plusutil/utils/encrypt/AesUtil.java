@@ -59,6 +59,16 @@ public class AesUtil {
 		returnMap.put("message", "success");
 		return returnMap;
 	}
+
+	public static Map<String, String> aes256EncryptMultiple(String aesKey, String aesIv, String content, int count) {
+		Map<String, String> returnMap = new HashMap<>();
+		String multiContent = content;
+		for (int i = 1; i <= count; i++){
+			returnMap = aes256Encrypt(aesKey, aesIv, multiContent);
+			multiContent = returnMap.get("encryptContent");
+		}
+		return returnMap;
+	}
 	
 	/*
 	 * 암호화 기준 복호화 하는 메소드
@@ -102,6 +112,16 @@ public class AesUtil {
 		returnMap.put("result", "y");
 		returnMap.put("decryptContent", decryptContent);
 		returnMap.put("message", "success");
+		return returnMap;
+	}
+
+	public static Map<String, String> aes256DecryptMultiple(String aesKey, String aesIv, String content, int count) {
+		Map<String, String> returnMap = new HashMap<>();
+		String multiContent = content;
+		for (int i = 1; i <= count; i++){
+			returnMap = aes256Decrypt(aesKey, aesIv, multiContent);
+			multiContent = returnMap.get("decryptContent");
+		}
 		return returnMap;
 	}
 

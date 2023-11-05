@@ -32,10 +32,9 @@ public class AuthObjectUtil {
         if(authList == null || authList.isEmpty()) {
             return false;
         }else {
-            log.info("권한 : ");
             boolean authCheck = false;
             for (GrantedAuthority grantedAuthority : authList) {
-                log.info(grantedAuthority.getAuthority() + " ");
+                log.info("권한 : " + grantedAuthority.getAuthority() + " ");
                 if (grantedAuthority.getAuthority().equals(role)) {
                     authCheck = true;
                 }
@@ -50,7 +49,6 @@ public class AuthObjectUtil {
         return true;
     }
 
-
     public static AuthObject makeAuthObject(Authentication authentication){
         Collection<? extends GrantedAuthority> authList;
         try {
@@ -62,9 +60,8 @@ public class AuthObjectUtil {
         if(authList == null || authList.isEmpty()) {
             return AuthObject.builder().authenticated(false).userNo(-1).build();
         }else {
-            log.info("권한 : ");
             for (GrantedAuthority grantedAuthority : authList) {
-                log.info(grantedAuthority.getAuthority() + " ");
+                log.info("권한 : " + grantedAuthority.getAuthority() + " ");
                 if(grantedAuthority.getAuthority() != null){
 
                     try{

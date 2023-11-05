@@ -5,7 +5,7 @@
 //import javax.servlet.http.HttpServletRequest;
 //import javax.transaction.Transactional;
 //
-//import com.source.plusutil.user.dto.JoinResultDto;
+//import com.source.plusutil.user.join.dto.JoinResultDto;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 //import org.springframework.stereotype.Service;
 //
